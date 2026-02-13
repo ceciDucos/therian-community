@@ -2,28 +2,28 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VideoService } from '../../../core/services/video.service';
+import { I18nService } from '../../../core/services/i18n.service';
 import { EmbeddedVideo } from '../../../models/misc.model';
 import { SafePipe } from '../../../shared/pipes/safe.pipe';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
-    selector: 'app-video-gallery',
-    standalone: true,
-    imports: [CommonModule, SafePipe, CardComponent],
-    template: `
+  selector: 'app-video-gallery',
+  standalone: true,
+  imports: [CommonModule, SafePipe, CardComponent, TranslatePipe],
+  template: `
     <div class="container mx-auto py-8 px-4">
       <div class="flex justify-between items-center mb-8">
         <div>
-          <h1 class="text-3xl font-bold tracking-tight">Multimedia de la Manada</h1>
-          <p class="text-muted-foreground mt-2">Videos compartidos por y para la comunidad.</p>
+          <h1 class="text-3xl font-bold tracking-tight">{{ 'media.title' | translate }} 🎬</h1>
+          <p class="text-muted-foreground mt-2">{{ 'media.subtitle' | translate }}</p>
         </div>
-        <!-- Add Video Button (Admin/User feature for later) -->
-        <!-- <app-button variant="primary" size="sm">Compartir Video</app-button> -->
       </div>
 
       <div *ngIf="loading()" class="py-12 text-center text-muted-foreground">
-        Cargando videos...
+        {{ 'media.loading' | translate }}
       </div>
 
       <div *ngIf="!loading()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -58,7 +58,7 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
                   [href]="'https://www.youtube.com/watch?v=' + video.video_id" 
                   target="_blank" 
                   class="text-xs text-primary hover:underline flex items-center gap-1">
-                  Ver en YouTube
+                  {{ 'media.watchOnYoutube' | translate }}
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                </a>
             </div>
@@ -67,28 +67,29 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
       </div>
 
       <div *ngIf="!loading() && videos().length === 0" class="text-center py-12 text-muted-foreground">
-        No hay videos disponibles aún.
+        {{ 'media.empty' | translate }}
       </div>
     </div>
   `,
-    styles: []
+  styles: []
 })
 export class VideoGalleryComponent implements OnInit {
-    private videoService = inject(VideoService);
+  private videoService = inject(VideoService);
+  i18n = inject(I18nService);
 
-    videos = signal<EmbeddedVideo[]>([]);
-    loading = signal(true);
+  videos = signal<EmbeddedVideo[]>([]);
+  loading = signal(true);
 
-    async ngOnInit() {
-        await this.loadVideos();
+  async ngOnInit() {
+    await this.loadVideos();
+  }
+
+  async loadVideos() {
+    this.loading.set(true);
+    const { data } = await this.videoService.getVideos();
+    if (data) {
+      this.videos.set(data);
     }
-
-    async loadVideos() {
-        this.loading.set(true);
-        const { data } = await this.videoService.getVideos();
-        if (data) {
-            this.videos.set(data);
-        }
-        this.loading.set(false);
-    }
+    this.loading.set(false);
+  }
 }

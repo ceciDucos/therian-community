@@ -1,0 +1,156 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { I18nService } from '../../../core/services/i18n.service';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+
+@Component({
+  selector: 'app-normas',
+  standalone: true,
+  imports: [CommonModule, RouterLink, ButtonComponent, TranslatePipe],
+  template: `
+    <div class="max-w-4xl mx-auto py-8 px-4 space-y-10">
+      <!-- Header -->
+      <section class="text-center space-y-4">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-rose-400 to-pink-600 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-pink-600">
+          {{ 'normas.title' | translate }}
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+          {{ 'normas.subtitle' | translate }}
+        </p>
+      </section>
+
+      <!-- Core Values -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-center">{{ 'normas.valuesTitle' | translate }}</h2>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div *ngFor="let value of coreValues" class="bg-card rounded-xl border p-5 text-center space-y-2 hover:shadow-md transition-shadow">
+            <h3 class="font-semibold">{{ value.title }}</h3>
+            <p class="text-sm text-muted-foreground">{{ value.description }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rules -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-center">{{ 'normas.rulesTitle' | translate }}</h2>
+
+        <!-- Do's -->
+        <div class="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-6 space-y-4">
+          <h3 class="font-semibold text-emerald-700 dark:text-emerald-400 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            {{ 'normas.doTitle' | translate }}
+          </h3>
+          <ul class="space-y-3">
+            <li *ngFor="let rule of positiveRules" class="flex items-start gap-3">
+              <span class="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
+              <span class="text-sm leading-relaxed">{{ rule }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Don'ts -->
+        <div class="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-xl p-6 space-y-4">
+          <h3 class="font-semibold text-red-700 dark:text-red-400 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            {{ 'normas.dontTitle' | translate }}
+          </h3>
+          <ul class="space-y-3">
+            <li *ngFor="let rule of negativeRules" class="flex items-start gap-3">
+              <span class="text-red-500 mt-0.5 flex-shrink-0">✗</span>
+              <span class="text-sm leading-relaxed">{{ rule }}</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Moderation Process -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-center">{{ 'normas.modTitle' | translate }}</h2>
+        <div class="bg-card rounded-xl border p-6 space-y-6">
+          <p class="text-sm text-muted-foreground leading-relaxed">
+            {{ 'normas.modDesc' | translate }}
+          </p>
+
+          <div class="space-y-4">
+            <div *ngFor="let step of moderationSteps; let i = index" class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
+                   [ngClass]="stepColors[i]">
+                {{ i + 1 }}
+              </div>
+              <div>
+                <h4 class="font-medium text-sm">{{ step.title }}</h4>
+                <p class="text-xs text-muted-foreground mt-0.5">{{ step.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Consequences -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-center">{{ 'normas.consequencesTitle' | translate }}</h2>
+        <div class="bg-card rounded-xl border overflow-hidden">
+          <div *ngFor="let consequence of consequences; let last = last"
+               class="p-4 flex items-center gap-4"
+               [class.border-b]="!last">
+            <div>
+              <h4 class="font-medium text-sm">{{ consequence.level }}</h4>
+              <p class="text-xs text-muted-foreground">{{ consequence.description }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 text-center space-y-3">
+        <h3 class="font-semibold text-blue-700 dark:text-blue-400">{{ 'normas.contactTitle' | translate }}</h3>
+        <p class="text-sm text-blue-600 dark:text-blue-300" [innerHTML]="i18n.t('normas.contactText')"></p>
+      </section>
+
+      <!-- Navigation -->
+      <div class="flex flex-wrap justify-center gap-4 pt-4">
+        <app-button variant="outline" routerLink="/mitos">{{ 'normas.navMyths' | translate }}</app-button>
+        <app-button variant="outline" routerLink="/glosario">{{ 'normas.navGlossary' | translate }}</app-button>
+        <app-button variant="primary" routerLink="/register">{{ 'normas.navJoin' | translate }}</app-button>
+      </div>
+    </div>
+  `,
+  styles: []
+})
+export class NormasComponent {
+  i18n = inject(I18nService);
+
+  stepColors = [
+    'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+    'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300',
+    'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300',
+    'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300'
+  ];
+
+  get coreValues(): any[] {
+    return this.i18n.tArray('normas.values');
+  }
+
+  get positiveRules(): string[] {
+    return this.i18n.tArray('normas.doList');
+  }
+
+  get negativeRules(): string[] {
+    return this.i18n.tArray('normas.dontList');
+  }
+
+  get moderationSteps(): any[] {
+    return this.i18n.tArray('normas.modSteps');
+  }
+
+  get consequences(): any[] {
+    return this.i18n.tArray('normas.consequences');
+  }
+}

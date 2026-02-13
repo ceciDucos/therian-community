@@ -1,15 +1,17 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../../models/misc.model';
 import { CardComponent } from '../card/card.component';
 import { ButtonComponent } from '../button/button.component';
+import { I18nService } from '../../../core/services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
-    selector: 'app-product-card',
-    standalone: true,
-    imports: [CommonModule, CardComponent, ButtonComponent],
-    template: `
+  selector: 'app-product-card',
+  standalone: true,
+  imports: [CommonModule, CardComponent, ButtonComponent, TranslatePipe],
+  template: `
     <app-card class="h-full flex flex-col overflow-hidden">
       <!-- Image Aspect Ratio Container -->
       <div class="aspect-square w-full overflow-hidden bg-muted">
@@ -21,7 +23,7 @@ import { ButtonComponent } from '../button/button.component';
           loading="lazy"
         >
         <div *ngIf="!product.image_url" class="h-full w-full flex items-center justify-center bg-secondary text-secondary-foreground">
-           No Image
+           {{ 'store.noImage' | translate }}
         </div>
       </div>
 
@@ -42,14 +44,15 @@ import { ButtonComponent } from '../button/button.component';
 
         <div class="mt-auto pt-4 flex gap-2">
            <app-button variant="primary" size="sm" class="w-full">
-             Ver Detalles
+             {{ 'store.viewDetails' | translate }}
            </app-button>
         </div>
       </div>
     </app-card>
   `,
-    styles: []
+  styles: []
 })
 export class ProductCardComponent {
-    @Input({ required: true }) product!: Product;
+  @Input({ required: true }) product!: Product;
+  i18n = inject(I18nService);
 }

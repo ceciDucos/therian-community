@@ -1,0 +1,474 @@
+{
+    "nav": {
+        "community": "Comunidad",
+        "multimedia": "Multimedia",
+        "store": "Tienda",
+        "learn": "Aprender",
+        "learnWhat": "¿Qué es ser Therian?",
+        "learnGlossary": "Glosario",
+        "learnMyths": "Mitos y Realidades",
+        "learnRules": "Normas de Convivencia",
+        "login": "Iniciar Sesión",
+        "register": "Registrarse",
+        "logout": "Cerrar Sesión",
+        "toggleDark": "Cambiar a modo oscuro",
+        "toggleLight": "Cambiar a modo claro",
+        "toggleMenu": "Toggle Menu"
+    },
+    "footer": {
+        "builtBy": "Creado por",
+        "whatIs": "¿Qué es?",
+        "glossary": "Glosario",
+        "rules": "Normas"
+    },
+    "home": {
+        "heroTitle": "Therian Community",
+        "heroSubtitle": "Un espacio seguro para explorar tu identidad, conectar con tu manada y expresar tu verdadero ser.",
+        "joinCta": "Únete a la Manada",
+        "discoverCta": "Descubre Más",
+        "communityTitle": "Comunidad",
+        "communityDesc": "Conecta con otros therians",
+        "communityText": "Comparte tus experiencias, shifts y arte en un entorno moderado y seguro.",
+        "communityBtn": "Ir al Feed",
+        "storeTitle": "Tienda",
+        "storeDesc": "Gear y accesorios",
+        "storeText": "Encuentra máscaras, colas y accesorios hechos a mano por la comunidad.",
+        "storeBtn": "Visitar Tienda",
+        "resourcesTitle": "Recursos",
+        "resourcesDesc": "Aprende y crece",
+        "resourcesText": "Artículos educativos, guías de meditación y consejos para nuevos therians.",
+        "resourcesBtn": "Biblioteca"
+    },
+    "auth": {
+        "welcomeBack": "Bienvenido de nuevo",
+        "loginSubtitle": "Ingresa tus credenciales para acceder a tu cuenta",
+        "email": "Email",
+        "emailPlaceholder": "tu@email.com",
+        "password": "Contraseña",
+        "passwordPlaceholder": "••••••••",
+        "loggingIn": "Ingresando...",
+        "loginBtn": "Ingresar",
+        "noAccount": "¿No tienes cuenta?",
+        "signUp": "Regístrate",
+        "emailRequired": "El email es requerido",
+        "emailInvalid": "Email inválido",
+        "passwordRequired": "La contraseña es requerida",
+        "passwordMin": "Mínimo 6 caracteres",
+        "loginError": "Error al iniciar sesión",
+        "joinPack": "Únete a la Manada",
+        "registerSubtitle": "Crea tu cuenta para conectar con la comunidad",
+        "username": "Usuario",
+        "usernamePlaceholder": "KinaTheWolf",
+        "usernameHint": "Este será tu identificador único (@usuario)",
+        "usernameRequired": "El usuario es requerido",
+        "usernameMin": "Mínimo 3 caracteres",
+        "usernamePattern": "Solo letras, números y guión bajo",
+        "creatingAccount": "Creando cuenta...",
+        "createAccount": "Crear Cuenta",
+        "hasAccount": "¿Ya tienes cuenta?",
+        "signIn": "Inicia Sesión",
+        "accountCreated": "¡Cuenta creada! Por favor verifica tu email o inicia sesión.",
+        "registerError": "Error al crear cuenta"
+    },
+    "feed": {
+        "placeholder": "¿Qué está pasando en tu territorio?",
+        "posting": "Publicando...",
+        "postBtn": "Aullar",
+        "loading": "Cargando aullidos...",
+        "empty": "No hay publicaciones aún. ¡Sé el primero en aullar!",
+        "loginPrompt": "Iniciá sesión para publicar y participar en la comunidad."
+    },
+    "comments": {
+        "loading": "Cargando comentarios...",
+        "delete": "Eliminar",
+        "empty": "Aún no hay comentarios. ¡Sé el primero!",
+        "placeholder": "Compartí algo con la manada...",
+        "loginPrompt": "Iniciá sesión para publicar y participar en la comunidad.",
+        "send": "Enviar",
+        "loginToComment": "para comentar.",
+        "loginLink": "Inicia sesión"
+    },
+    "store": {
+        "title": "Tienda de la Manada",
+        "subtitle": "Gear y accesorios creados por la comunidad para la comunidad.",
+        "all": "Todos",
+        "masks": "Máscaras",
+        "tailsEars": "Colas y Orejas",
+        "quadrobics": "Quadrobics",
+        "digital": "Digitales",
+        "disclaimer": "Nota importante:",
+        "disclaimerText": "El gear (máscaras, colas, etc.) NO es un requisito para ser therian. Ser therian es una identidad interna y espiritual/psicológica, no depende de lo que llevas puesto. Estos artículos son solo para expresión y diversión.",
+        "loading": "Cargando productos...",
+        "empty": "No se encontraron productos en esta categoría.",
+        "viewDetails": "Ver Detalles",
+        "noImage": "No Image",
+        "backToStore": "← Volver a la Tienda",
+        "loadingProduct": "Cargando producto...",
+        "addToCart": "Añadir al Carrito (Demo)",
+        "demoNote": "* Nota: Esta tienda es una demostración. No se procesarán pagos reales.",
+        "viewExternal": "Ver en sitio externo",
+        "notFound": "Producto no encontrado",
+        "viewCatalog": "Ver Catálogo"
+    },
+    "media": {
+        "title": "Multimedia de la Manada",
+        "subtitle": "Videos compartidos por y para la comunidad.",
+        "loading": "Cargando videos...",
+        "empty": "No hay videos disponibles aún.",
+        "watchOnYoutube": "Ver en YouTube"
+    },
+    "profile": {
+        "title": "Tu Perfil Therian",
+        "loading": "Cargando perfil...",
+        "displayName": "Nombre para mostrar",
+        "displayNamePlaceholder": "Tu nombre en la manada",
+        "theriotype": "Theriotype(s)",
+        "theriotypePlaceholder": "Ej: Lobo Gris, Gato Montés",
+        "theriotypeHint": "Separa por comas si tienes varios",
+        "pronouns": "Pronombres",
+        "pronounsPlaceholder": "Ej: Ella/She, Él/He, Elle/They",
+        "bio": "Biografía",
+        "bioPlaceholder": "Cuéntanos sobre ti...",
+        "explorationStatus": "Estado de Exploración",
+        "exploring": "Explorando / Cuestionando",
+        "defined": "Identidad Definida",
+        "preferNotSay": "Prefiero no decir",
+        "saving": "Guardando...",
+        "saveChanges": "Guardar Cambios",
+        "updateError": "Error al actualizar perfil",
+        "updateSuccess": "Perfil actualizado correctamente"
+    },
+    "publicProfile": {
+        "loading": "Cargando perfil...",
+        "notFound": "Perfil no encontrado",
+        "notFoundDesc": "Este usuario no existe o su perfil es privado.",
+        "backHome": "Volver al inicio",
+        "theriotype": "Theriotype",
+        "definedLabel": "Identidad Definida",
+        "exploringLabel": "Explorando",
+        "bioLabel": "Biografía",
+        "interestsLabel": "Intereses",
+        "linksLabel": "Links",
+        "memberSince": "Miembro desde"
+    },
+    "queEs": {
+        "title": "¿Qué es ser Therian?",
+        "subtitle": "Una guía introductoria para entender la theriantropía con respeto, curiosidad y mente abierta.",
+        "defTitle": "¿Qué es la Theriantropía?",
+        "defP1": "La <strong>theriantropía</strong> es una identidad en la que una persona siente una conexión profunda e intrínseca con un animal, no humano, a nivel espiritual, psicológico o ambos. Esta conexión va más allá de simplemente \"gustar\" un animal — es sentir que una parte de tu identidad <em>es</em> ese animal.",
+        "defP2": "Las personas que se identifican como <strong>therians</strong> experimentan esta conexión de formas muy diversas. Algunos la describen como algo que siempre han sentido, mientras otros la descubren gradualmente. No hay una forma \"correcta\" de ser therian.",
+        "importantTitle": "Importante",
+        "importantText": "El theriotype (el animal con el que te identificas) no es algo que eliges — es algo que descubres sobre ti mismo.",
+        "expTitle": "Experiencias Comunes",
+        "experiences": [
+            {
+                "title": "Mental Shift",
+                "description": "Momentos en los que tu mentalidad se alinea más con la de tu theriotype. Podés sentirte más instintivo, alerta o conectado con la naturaleza."
+            },
+            {
+                "title": "Phantom Shift",
+                "description": "Sensación de tener partes del cuerpo de tu theriotype (cola, orejas, alas) aunque no las tengas físicamente. Como un \"miembro fantasma\"."
+            },
+            {
+                "title": "Dream Shift",
+                "description": "Soñar como tu theriotype o tener sueños recurrentes donde sos tu animal. Muchos therians descubren su theriotype a través de sueños."
+            },
+            {
+                "title": "Conexión con la Naturaleza",
+                "description": "Sentir una conexión profunda con el hábitat natural de tu theriotype, con la naturaleza en general, o con comportamientos instintivos."
+            },
+            {
+                "title": "Quadrobics",
+                "description": "Práctica de moverse en cuatro patas, imitando los movimientos de tu theriotype. Es una forma de expresión y ejercicio."
+            },
+            {
+                "title": "Awakening",
+                "description": "El momento en que reconocés por primera vez tu identidad therian. Puede ser gradual o repentino, y es una experiencia muy personal."
+            }
+        ],
+        "diffTitle": "Diferencias Importantes",
+        "diffTermHeader": "Término",
+        "diffDescHeader": "Descripción",
+        "differences": [
+            {
+                "term": "Therian",
+                "description": "Persona que se identifica intrínsecamente con un animal terrestre. Es una identidad, no un hobby."
+            },
+            {
+                "term": "Otherkin",
+                "description": "Término más amplio que incluye identificación con seres no necesariamente animales (dragones, elfos, etc.). Therians son un subgrupo."
+            },
+            {
+                "term": "Furry",
+                "description": "Fandom centrado en personajes animales antropomórficos. Es un hobby/comunidad. Alguien puede ser furry sin ser therian y viceversa."
+            },
+            {
+                "term": "Spirit Animal",
+                "description": "Concepto de algunas culturas indígenas sobre guías espirituales animales. No es lo mismo que ser therian. Usá el término con respeto cultural."
+            }
+        ],
+        "diffFootnote": "Estas categorías pueden superponerse. Una persona puede ser therian y furry al mismo tiempo, por ejemplo. Lo importante es el respeto mutuo.",
+        "wellbeingTitle": "Nota sobre Bienestar",
+        "wellbeingText": "Este sitio es un espacio de comunidad y educación. <strong>No reemplaza la orientación profesional.</strong> Si estás pasando por un momento difícil o necesitas apoyo emocional, te animamos a buscar ayuda de un profesional de salud mental. Tu bienestar siempre es lo primero.",
+        "moreTitle": "¿Querés saber más?",
+        "moreGlossary": "Ver Glosario",
+        "moreMyths": "Mitos y Realidades",
+        "moreRules": "Normas de Convivencia"
+    },
+    "glosario": {
+        "title": "Glosario Therian",
+        "subtitle": "Términos y conceptos importantes para entender la comunidad therian.",
+        "searchPlaceholder": "Buscar término...",
+        "showing": "Mostrando",
+        "of": "de",
+        "terms": "términos",
+        "emptySearch": "No se encontraron términos con",
+        "backLink": "← Volver a ¿Qué es ser Therian?",
+        "categories": {
+            "identity": "Identidad",
+            "experience": "Experiencia",
+            "community": "Comunidad",
+            "practice": "Práctica"
+        },
+        "termsList": [
+            {
+                "term": "Therian",
+                "definition": "Persona que se identifica de forma intrínseca con un animal no humano. Esta identidad no es elegida, sino descubierta.",
+                "category": "identity"
+            },
+            {
+                "term": "Theriotype",
+                "definition": "El animal específico con el que un therian se identifica. Puede ser un animal existente o extinto. Algunos therians tienen más de un theriotype (polytherian).",
+                "category": "identity"
+            },
+            {
+                "term": "Otherkin",
+                "definition": "Término amplio para personas que se identifican como seres no humanos. Incluye therians pero también identificaciones con seres míticos, elementales, etc.",
+                "category": "identity"
+            },
+            {
+                "term": "Polytherian",
+                "definition": "Un therian que se identifica con más de un animal. Cada theriotype puede manifestarse de forma diferente.",
+                "category": "identity"
+            },
+            {
+                "term": "Cladotherian",
+                "definition": "Un therian cuyo theriotype no es una especie específica sino un grupo taxonómico más amplio (ej: caninos en general en vez de lobo gris).",
+                "category": "identity"
+            },
+            {
+                "term": "Awakening",
+                "definition": "El momento o proceso mediante el cual una persona reconoce y acepta su identidad therian. Puede ser gradual o repentino.",
+                "category": "experience"
+            },
+            {
+                "term": "Mental Shift (M-Shift)",
+                "definition": "Experiencia donde la mentalidad de una persona se alinea temporalmente más con la de su theriotype. Pueden sentirse más instintivos o animales.",
+                "category": "experience"
+            },
+            {
+                "term": "Phantom Shift (Ph-Shift)",
+                "definition": "Sensación física de tener partes del cuerpo del theriotype (cola, orejas, alas, etc.), similar al concepto médico de \"miembro fantasma\".",
+                "category": "experience"
+            },
+            {
+                "term": "Dream Shift",
+                "definition": "Sueños en los que se experimenta ser el theriotype. Muchos therians descubren o confirman su identidad a través de sueños recurrentes.",
+                "category": "experience"
+            },
+            {
+                "term": "Cameo Shift",
+                "definition": "Un shift temporal que involucra un animal diferente al theriotype propio. No indica un nuevo theriotype permanente.",
+                "category": "experience"
+            },
+            {
+                "term": "Gear",
+                "definition": "Accesorios físicos como máscaras, colas, orejas o collares que algunos therians usan para expresar su identidad. Su uso es completamente opcional.",
+                "category": "practice"
+            },
+            {
+                "term": "Quadrobics",
+                "definition": "Práctica de moverse en cuatro patas, imitando el movimiento de animales. Combina expresión de identidad con ejercicio físico.",
+                "category": "practice"
+            },
+            {
+                "term": "Furry",
+                "definition": "Fan o miembro del fandom furry, centrado en personajes animales antropomórficos. Es un hobby/comunidad, no una identidad. Alguien puede ser furry y therian, o solo uno de los dos.",
+                "category": "community"
+            },
+            {
+                "term": "Fursona",
+                "definition": "Personaje animal antropomórfico creado por un miembro del fandom furry. Un fursona es un personaje de ficción; un theriotype es una identidad.",
+                "category": "community"
+            },
+            {
+                "term": "Pack / Manada",
+                "definition": "Grupo de therians que se reúnen (online u offline) para compartir experiencias y apoyarse mutuamente.",
+                "category": "community"
+            },
+            {
+                "term": "Alterhumano",
+                "definition": "Término paraguas para cualquier persona cuya identidad difiere de la experiencia humana \"estándar\". Incluye therians, otherkin, y otras identidades.",
+                "category": "identity"
+            },
+            {
+                "term": "Species Dysphoria",
+                "definition": "Malestar que algunos therians sienten por no tener el cuerpo de su theriotype. No todos los therians lo experimentan y su intensidad varía.",
+                "category": "experience"
+            },
+            {
+                "term": "Contherian",
+                "definition": "Un therian que experimenta su identidad animal de forma constante y no en shifts discretos. Su mentalidad humana y animal están siempre integradas.",
+                "category": "identity"
+            }
+        ]
+    },
+    "mitos": {
+        "title": "Mitos y Realidades",
+        "subtitle": "Desmitificamos las creencias más comunes sobre la comunidad therian con información precisa y respetuosa.",
+        "mythLabel": "MITO",
+        "realityLabel": "REALIDAD",
+        "myths": [
+            {
+                "myth": "\"Los therians creen que son literalmente animales\"",
+                "reality": "Los therians saben que son humanos. La theriantropía es una identidad interna, no una creencia de que su cuerpo sea no-humano. Es una conexión psicológica y/o espiritual profunda con un animal."
+            },
+            {
+                "myth": "\"Es solo una fase de la adolescencia\"",
+                "reality": "Muchos therians adultos se identificaron como tales desde la infancia y mantienen esta identidad toda su vida. La comunidad tiene miembros de todas las edades. No es algo que se \"supera\"."
+            },
+            {
+                "myth": "\"Es lo mismo que ser furry\"",
+                "reality": "El fandom furry es un hobby centrado en personajes antropomórficos. Ser therian es una identidad. Alguien puede ser ambos, uno de los dos, o ninguno. Son cosas diferentes que a veces se superponen."
+            },
+            {
+                "myth": "\"Lo inventó internet / TikTok\"",
+                "reality": "La comunidad therian existe desde los años 90 en foros de Usenet, antes de las redes sociales. Las redes solo hicieron que fuera más visible y accesible, no la crearon."
+            },
+            {
+                "myth": "\"Es un trastorno mental\"",
+                "reality": "La theriantropía en sí misma no es un trastorno. No causa disfunción inherente. Como cualquier persona, los therians pueden necesitar apoyo de salud mental, pero su identidad no es una patología."
+            },
+            {
+                "myth": "\"Los therians son peligrosos\"",
+                "reality": "Los therians son personas comunes que van a la escuela, trabajan y tienen vida social. Sentir conexión con un animal no implica comportamiento peligroso. La comunidad promueve el respeto y la seguridad."
+            },
+            {
+                "myth": "\"Todos usan colas y orejas\"",
+                "reality": "El uso de gear (máscaras, colas, orejas) es completamente opcional y personal. Muchos therians no usan ningún accesorio. No hay reglas sobre cómo expresar tu identidad."
+            },
+            {
+                "myth": "\"Quieren que los traten como animales\"",
+                "reality": "Los therians quieren ser tratados con respeto como cualquier persona. Su identidad es interna; no piden ser tratados literalmente como animales. Quieren comprensión, no tratos especiales."
+            }
+        ],
+        "whyTitle": "¿Por qué importa desmitificar?",
+        "whyText": "Los mitos y malentendidos pueden causar daño real a las personas. Cuando la gente no entiende qué es la theriantropía, puede llevar a burlas, exclusión o estigmatización. Educar con información precisa y respetuosa ayuda a crear un mundo más comprensivo para todos.",
+        "navBack": "← ¿Qué es ser Therian?",
+        "navGlossary": "Glosario",
+        "navRules": "Normas de Convivencia →"
+    },
+    "normas": {
+        "title": "Normas de Convivencia",
+        "subtitle": "Para que este espacio sea seguro y acogedor para todos, pedimos que se respeten estas normas.",
+        "valuesTitle": "Nuestros Valores",
+        "values": [
+            {
+                "title": "Respeto",
+                "description": "Cada persona merece ser tratada con dignidad, sin importar su identidad."
+            },
+            {
+                "title": "Seguridad",
+                "description": "Este es un espacio libre de acoso, bullying y cualquier forma de violencia."
+            },
+            {
+                "title": "Inclusión",
+                "description": "Todas las identidades, edades y experiencias son bienvenidas aquí."
+            }
+        ],
+        "rulesTitle": "Reglas de la Comunidad",
+        "doTitle": "Lo que SÍ se espera",
+        "doList": [
+            "Tratá a todos con respeto y empatía, aunque no entiendas su experiencia.",
+            "Usá los pronombres y nombres que cada persona prefiera.",
+            "Reportá contenido inapropiado en vez de confrontar directamente.",
+            "Compartí tus experiencias de forma honesta y respetuosa.",
+            "Mantené un lenguaje apropiado para todas las edades.",
+            "Respetá la privacidad de otros miembros. No compartas su información sin permiso.",
+            "Preguntá con curiosidad genuina si no entendés algo.",
+            "Apoyá a miembros nuevos de la comunidad."
+        ],
+        "dontTitle": "Lo que NO se permite",
+        "dontList": [
+            "Acoso, bullying, amenazas o intimidación de cualquier tipo.",
+            "Contenido sexual, violento o inapropiado para menores.",
+            "Discriminación por identidad, género, raza, religión, orientación u origen.",
+            "Invalidar la identidad de otros (\"no sos realmente therian\").",
+            "Spam, publicidad no autorizada o estafas.",
+            "Compartir información personal de otros sin su consentimiento (doxxing).",
+            "Incitar al autolesión o conductas peligrosas.",
+            "Crear cuentas múltiples para evadir bloqueos o sanciones."
+        ],
+        "modTitle": "Proceso de Moderación",
+        "modDesc": "Nuestro equipo de moderación trabaja para mantener un espacio seguro. Así funciona el proceso:",
+        "modSteps": [
+            {
+                "title": "Reporte",
+                "description": "Un miembro reporta contenido usando el botón de reporte."
+            },
+            {
+                "title": "Revisión",
+                "description": "Un moderador revisa el reporte y evalúa la situación."
+            },
+            {
+                "title": "Acción",
+                "description": "Se toma la medida apropiada (advertencia, mute, suspensión o ban permanente)."
+            },
+            {
+                "title": "Seguimiento",
+                "description": "Se notifica al usuario y se documenta la decisión."
+            }
+        ],
+        "consequencesTitle": "Consecuencias",
+        "consequences": [
+            {
+                "level": "Advertencia",
+                "description": "Primera ofensa menor. Se explica la norma violada y se pide que no se repita."
+            },
+            {
+                "level": "Silencio temporal",
+                "description": "No se puede publicar por un período determinado (24h - 7 días)."
+            },
+            {
+                "level": "Suspensión",
+                "description": "Cuenta suspendida temporalmente por violaciones graves o repetidas."
+            },
+            {
+                "level": "Expulsión permanente",
+                "description": "En casos extremos o reincidencia grave, la cuenta se elimina permanentemente."
+            }
+        ],
+        "contactTitle": "¿Necesitás reportar algo?",
+        "contactText": "Si ves contenido que viola estas normas, usá el botón <strong>\"Reportar\"</strong> disponible en publicaciones y perfiles. Tu reporte es confidencial y será revisado por nuestro equipo.",
+        "navMyths": "← Mitos y Realidades",
+        "navGlossary": "Glosario",
+        "navJoin": "Unirse a la Comunidad"
+    },
+    "admin": {
+        "title": "Panel de Moderación",
+        "pendingReports": "Reportes Pendientes",
+        "blockedUsers": "Usuarios Bloqueados",
+        "loadingReports": "Cargando reportes...",
+        "noReports": "No hay reportes pendientes. ¡Buen trabajo!",
+        "reason": "Razón",
+        "contentId": "ID Contenido",
+        "reportedOn": "Reportado el",
+        "dismiss": "Descartar",
+        "takeAction": "Tomar Acción",
+        "loadingUsers": "Cargando usuarios...",
+        "noBlocked": "No hay usuarios bloqueados actualmente.",
+        "userId": "Usuario ID",
+        "blockedBy": "Bloqueado por",
+        "unblock": "Desbloquear"
+    }
+}

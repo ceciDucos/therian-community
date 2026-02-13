@@ -1,16 +1,17 @@
 
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Post } from '../../../models/post.model';
 import { CardComponent } from '../../components/card/card.component';
 import { ButtonComponent } from '../../components/button/button.component';
+import { CommentSectionComponent } from '../../components/comment-section/comment-section.component';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-post-card',
   standalone: true,
-  imports: [CommonModule, RouterLink, CardComponent],
+  imports: [CommonModule, RouterLink, CardComponent, CommentSectionComponent],
   template: `
     <app-card class="mb-4">
       <div class="flex items-start justify-between mb-4">
@@ -24,11 +25,10 @@ import { AuthService } from '../../../core/services/auth.service';
               {{ post.author?.display_name || post.author?.username }}
             </div>
             <div class="text-xs text-muted-foreground">
-              @{{ post.author?.username }} • {{ post.created_at | date:'short' }}
+              {{'@'}}{{ post.author?.username }} • {{ post.created_at | date:'short' }}
             </div>
           </div>
         </div>
-        <!-- Options Menu (Placeholder) -->
       </div>
 
       <div class="space-y-4">
@@ -49,11 +49,22 @@ import { AuthService } from '../../../core/services/auth.service';
           {{ post.likes_count }}
         </button>
         
-        <button class="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+        <button
+          (click)="toggleComments()"
+          class="flex items-center gap-1.5 text-sm transition-colors"
+          [class.text-primary]="showComments()"
+          [class.text-muted-foreground]="!showComments()"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
           {{ post.comments_count }}
         </button>
       </div>
+
+      <!-- Comment Section -->
+      <app-comment-section
+        *ngIf="showComments()"
+        [postId]="post.id"
+      />
     </app-card>
   `,
   styles: []
@@ -62,11 +73,15 @@ export class PostCardComponent {
   @Input({ required: true }) post!: Post;
   @Output() like = new EventEmitter<string>();
 
-  isLiked = false; // TODO: Check if current user liked this post (requires joining likes table on user_id)
+  showComments = signal(false);
+  isLiked = false;
+
+  toggleComments() {
+    this.showComments.update(v => !v);
+  }
 
   onLike() {
     this.like.emit(this.post.id);
-    // Optimistic update
     if (this.isLiked) {
       this.isLiked = false;
       this.post.likes_count--;
@@ -76,3 +91,5 @@ export class PostCardComponent {
     }
   }
 }
+
+

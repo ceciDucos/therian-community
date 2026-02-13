@@ -19,6 +19,16 @@ export class ProfileService {
         return { data, error };
     }
 
+    async getProfileByUsername(username: string): Promise<{ data: Profile | null; error: any }> {
+        const { data, error } = await this.supabase.client
+            .from('profiles')
+            .select('*')
+            .eq('username', username)
+            .single();
+
+        return { data, error };
+    }
+
     async updateProfile(userId: string, updates: Partial<Profile>): Promise<{ error: any }> {
         const { error } = await this.supabase.client
             .from('profiles')

@@ -109,4 +109,48 @@ export class PostService {
 
         return { url: data.publicUrl, error: null };
     }
+
+    // ─── Comments ──────────────────────────────────────────
+
+    async getComments(postId: string): Promise<{ data: any[] | null; error: any }> {
+        const { data, error } = await this.supabase.client
+            .from('comments')
+            .select(`
+                *,
+                author:author_id (
+                    id,
+                    username,
+                    display_name
+                )
+            `)
+            .eq('post_id', postId)
+            .eq('is_deleted', false)
+            .order('created_at', { ascending: true });
+
+        return { data, error };
+    }
+
+    async createComment(postId: string, content: string): Promise<{ error: any }> {
+        const user = (await this.supabase.client.auth.getUser()).data.user;
+        if (!user) return { error: 'Not authenticated' };
+
+        const { error } = await this.supabase.client
+            .from('comments')
+            .insert({
+                post_id: postId,
+                author_id: user.id,
+                content
+            });
+
+        return { error };
+    }
+
+    async deleteComment(commentId: string): Promise<{ error: any }> {
+        const { error } = await this.supabase.client
+            .from('comments')
+            .update({ is_deleted: true })
+            .eq('id', commentId);
+
+        return { error };
+    }
 }

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './core/layout/main-layout.component';
 import { HomeComponent } from './features/home/home.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -13,12 +14,11 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent),
-                canActivate: [(route, state) => import('./core/guards/auth.guard').then(m => m.authGuard(route, state))]
+                canActivate: [authGuard]
             },
             {
                 path: 'feed',
-                loadComponent: () => import('./features/community/feed/feed.component').then(m => m.FeedComponent),
-                canActivate: [(route, state) => import('./core/guards/auth.guard').then(m => m.authGuard(route, state))]
+                loadComponent: () => import('./features/community/feed/feed.component').then(m => m.FeedComponent)
             },
             {
                 path: 'store',
@@ -35,10 +35,16 @@ export const routes: Routes = [
             {
                 path: 'admin',
                 loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
-                canActivate: [(route, state) => import('./core/guards/auth.guard').then(m => m.authGuard(route, state))]
+                canActivate: [authGuard]
                 // TODO: Add adminGuard specific check if needed, relying on functional guard/service/profile check within component or robust guard
             },
-            // Future routes will go here
+            // Educational / Public pages
+            { path: 'que-es-therian', loadComponent: () => import('./features/public/que-es-therian/que-es-therian.component').then(m => m.QueEsTherianComponent) },
+            { path: 'glosario', loadComponent: () => import('./features/public/glosario/glosario.component').then(m => m.GlosarioComponent) },
+            { path: 'mitos', loadComponent: () => import('./features/public/mitos/mitos.component').then(m => m.MitosComponent) },
+            { path: 'normas', loadComponent: () => import('./features/public/normas/normas.component').then(m => m.NormasComponent) },
+            // Public profile
+            { path: 'u/:username', loadComponent: () => import('./features/profile/public-profile/public-profile.component').then(m => m.PublicProfileComponent) },
         ]
     },
     { path: '**', redirectTo: '' }

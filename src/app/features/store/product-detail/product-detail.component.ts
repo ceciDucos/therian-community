@@ -3,22 +3,24 @@ import { Component, inject, OnInit, signal, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
+import { I18nService } from '../../../core/services/i18n.service';
 import { Product } from '../../../models/misc.model';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CardComponent } from '../../../shared/components/card/card.component';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent],
+  imports: [CommonModule, RouterLink, ButtonComponent, TranslatePipe],
   template: `
     <div class="container mx-auto py-8 px-4">
       <app-button variant="ghost" size="sm" routerLink="/store" class="mb-6">
-        ← Volver a la Tienda
+        {{ 'store.backToStore' | translate }}
       </app-button>
 
       <div *ngIf="loading()" class="text-center py-12 text-muted-foreground">
-        Cargando producto...
+        {{ 'store.loadingProduct' | translate }}
       </div>
 
       <div *ngIf="!loading() && product()" class="grid md:grid-cols-2 gap-8">
@@ -31,7 +33,7 @@ import { CardComponent } from '../../../shared/components/card/card.component';
             class="w-full h-full object-cover"
            >
            <div *ngIf="!product()?.image_url" class="w-full h-full flex items-center justify-center text-muted-foreground">
-             No Image
+             {{ 'store.noImage' | translate }}
            </div>
         </div>
 
@@ -53,16 +55,16 @@ import { CardComponent } from '../../../shared/components/card/card.component';
 
           <div class="space-y-4 pt-6 border-t">
             <app-button variant="primary" size="lg" [fullWidth]="true">
-              Añadir al Carrito (Demo)
+              {{ 'store.addToCart' | translate }}
             </app-button>
             <p class="text-xs text-center text-muted-foreground">
-              * Nota: Esta tienda es una demostración. No se procesarán pagos reales.
+              {{ 'store.demoNote' | translate }}
             </p>
           </div>
 
           <div *ngIf="product()?.external_link" class="pt-4">
              <a [href]="product()?.external_link" target="_blank" class="text-primary hover:underline flex items-center gap-1">
-               Ver en sitio externo 
+               {{ 'store.viewExternal' | translate }}
                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
              </a>
           </div>
@@ -70,8 +72,8 @@ import { CardComponent } from '../../../shared/components/card/card.component';
       </div>
 
       <div *ngIf="!loading() && !product()" class="text-center py-12">
-        <h2 class="text-xl font-semibold">Producto no encontrado</h2>
-        <app-button variant="outline" class="mt-4" routerLink="/store">Ver Catálogo</app-button>
+        <h2 class="text-xl font-semibold">{{ 'store.notFound' | translate }}</h2>
+        <app-button variant="outline" class="mt-4" routerLink="/store">{{ 'store.viewCatalog' | translate }}</app-button>
       </div>
     </div>
   `,
@@ -80,16 +82,14 @@ import { CardComponent } from '../../../shared/components/card/card.component';
 export class ProductDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
+  i18n = inject(I18nService);
 
   product = signal<Product | null>(null);
   loading = signal(true);
 
-  @Input() id?: string; // Route param binding (Angular 16+)
+  @Input() id?: string;
 
   async ngOnInit() {
-    // If using component input binding, 'id' might be populated. 
-    // Otherwise populate from route snapshot/params.
-    // For standard param subscription:
     this.route.paramMap.subscribe(async params => {
       const id = params.get('id');
       if (id) {

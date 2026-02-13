@@ -1,51 +1,53 @@
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { CardComponent } from '../../shared/components/card/card.component';
+import { I18nService } from '../../core/services/i18n.service';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, CardComponent],
+  imports: [CommonModule, RouterLink, ButtonComponent, CardComponent, TranslatePipe],
   template: `
     <div class="space-y-12">
       <!-- Hero Section -->
       <section class="flex flex-col items-center justify-center space-y-4 text-center py-20">
         <h1 class="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-          Therian Community
+          {{ 'home.heroTitle' | translate }}
         </h1>
         <p class="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
-          Un espacio seguro para explorar tu identidad, conectar con tu manada y expresar tu verdadero ser.
+          {{ 'home.heroSubtitle' | translate }}
         </p>
         <div class="flex gap-4">
-          <app-button variant="primary" size="lg" routerLink="/register">Únete a la Manada</app-button>
-          <app-button variant="outline" size="lg" routerLink="/learn">Descubre Más</app-button>
+          <app-button variant="primary" size="lg" routerLink="/register">{{ 'home.joinCta' | translate }}</app-button>
+          <app-button variant="outline" size="lg" routerLink="/que-es-therian">{{ 'home.discoverCta' | translate }}</app-button>
         </div>
       </section>
 
       <!-- Features Section -->
       <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <app-card title="Comunidad" description="Conecta con otros therians" [header]="true">
+        <app-card [title]="i18n.t('home.communityTitle')" [description]="i18n.t('home.communityDesc')" [header]="true">
           <p class="text-sm text-muted-foreground mb-4">
-            Comparte tus experiencias, shifts y arte en un entorno moderado y seguro.
+            {{ 'home.communityText' | translate }}
           </p>
-          <app-button variant="ghost" size="sm" class="w-full" routerLink="/feed">Ir al Feed</app-button>
+          <app-button variant="ghost" size="sm" class="w-full" routerLink="/feed">{{ 'home.communityBtn' | translate }}</app-button>
         </app-card>
         
-        <app-card title="Tienda" description="Gear y accesorios" [header]="true">
+        <app-card [title]="i18n.t('home.storeTitle')" [description]="i18n.t('home.storeDesc')" [header]="true">
           <p class="text-sm text-muted-foreground mb-4">
-            Encuentra máscaras, colas y accesorios hechos a mano por la comunidad.
+            {{ 'home.storeText' | translate }}
           </p>
-          <app-button variant="ghost" size="sm" class="w-full" routerLink="/store">Visitar Tienda</app-button>
+          <app-button variant="ghost" size="sm" class="w-full" routerLink="/store">{{ 'home.storeBtn' | translate }}</app-button>
         </app-card>
 
-        <app-card title="Recursos" description="Aprende y crece" [header]="true">
+        <app-card [title]="i18n.t('home.resourcesTitle')" [description]="i18n.t('home.resourcesDesc')" [header]="true">
           <p class="text-sm text-muted-foreground mb-4">
-            Artículos educativos, guías de meditación y consejos para nuevos therians.
+            {{ 'home.resourcesText' | translate }}
           </p>
-          <app-button variant="ghost" size="sm" class="w-full" routerLink="/learn">Biblioteca</app-button>
+          <app-button variant="ghost" size="sm" class="w-full" routerLink="/que-es-therian">{{ 'home.resourcesBtn' | translate }}</app-button>
         </app-card>
       </section>
     </div>
@@ -53,4 +55,5 @@ import { CardComponent } from '../../shared/components/card/card.component';
   styles: []
 })
 export class HomeComponent {
+  i18n = inject(I18nService);
 }
