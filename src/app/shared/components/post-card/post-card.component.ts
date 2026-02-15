@@ -18,7 +18,7 @@ import { AuthService } from '../../../core/services/auth.service';
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-secondary overflow-hidden flex items-center justify-center">
              <img *ngIf="post.author?.avatar_url" [src]="post.author?.avatar_url" class="w-full h-full object-cover">
-             <span *ngIf="!post.author?.avatar_url" class="font-bold text-secondary-foreground">{{ (post.author?.username?.charAt(0) || '?') | uppercase }}</span>
+             <span *ngIf="!post.author?.avatar_url" class="text-sm font-bold text-secondary-foreground">{{ (post.author?.username?.charAt(0) || '?') | uppercase }}</span>
           </div>
           <div>
             <div class="font-semibold hover:underline cursor-pointer" [routerLink]="['/u', post.author?.username]">

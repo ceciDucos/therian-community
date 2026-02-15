@@ -25,17 +25,21 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
               <a routerLink="/feed" class="transition-colors hover:text-foreground/80 text-foreground/60">{{ 'nav.community' | translate }}</a>
               <a routerLink="/media" class="transition-colors hover:text-foreground/80 text-foreground/60">{{ 'nav.multimedia' | translate }}</a>
               <a routerLink="/store" class="transition-colors hover:text-foreground/80 text-foreground/60">{{ 'nav.store' | translate }}</a>
+              <a routerLink="/forest" class="transition-colors hover:text-emerald-500 text-emerald-600 font-semibold flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trees"><path d="M10 10v.2A3 3 0 0 1 8.9 16v0H5v0h0a3 3 0 0 1-1-5.8V10a3 3 0 0 1 5.3-1.8 1.54 1.54 0 0 1 1.7 1.7"/><path d="M14 19s-1.6-3-3.5-3c2-2 3-5 5.5-5 2.5 0 3.5 3 5.5 5-2 0-3.5 3-3.5 3"/><path d="M12 19V10"/><path d="M19 19V11"/></svg>
+                Bosque
+              </a>
 
               <!-- Aprender Dropdown -->
-              <div class="relative" (mouseenter)="learnDropdownOpen.set(true)" (mouseleave)="learnDropdownOpen.set(false)">
-                <button class="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1">
+              <div class="relative group">
+                <button class="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 py-4">
                   {{ 'nav.learn' | translate }}
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="transition-transform" [class.rotate-180]="learnDropdownOpen()">
+                    class="transition-transform group-hover:rotate-180">
                     <path d="m6 9 6 6 6-6"/>
                   </svg>
                 </button>
-                <div *ngIf="learnDropdownOpen()" class="absolute top-full left-0 mt-1 w-56 bg-card border rounded-lg shadow-lg py-1 z-50">
+                <div class="absolute top-full left-0 w-56 bg-card border rounded-lg shadow-lg py-1 z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-2 group-hover:translate-y-0">
                   <a routerLink="/que-es-therian" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnWhat' | translate }}</a>
                   <a routerLink="/glosario" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnGlossary' | translate }}</a>
                   <a routerLink="/mitos" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnMyths' | translate }}</a>
@@ -136,7 +140,6 @@ export class MainLayoutComponent {
 
   themeService = inject(ThemeService);
   i18n = inject(I18nService);
-  learnDropdownOpen = signal(false);
   mobileMenuOpen = signal(false);
 
   toggleMobileMenu() {

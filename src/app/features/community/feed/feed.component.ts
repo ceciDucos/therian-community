@@ -12,6 +12,8 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+import { ProfileService } from '../../../core/services/profile.service';
+import { Profile } from '../../../models/profile.model';
 
 @Component({
   selector: 'app-feed',
@@ -23,8 +25,9 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
       <app-card *ngIf="authService.isAuthenticated()" class="mb-8 p-4">
         <form [formGroup]="postForm" (ngSubmit)="createPost()">
           <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center font-bold text-secondary-foreground">
-              {{ (authService.user()?.user_metadata?.['username']?.charAt(0) || 'U') | uppercase }}
+            <div class="w-10 h-10 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center text-sm font-bold text-secondary-foreground overflow-hidden">
+              <img *ngIf="currentUserProfile()?.avatar_url" [src]="currentUserProfile()?.avatar_url" class="w-full h-full object-cover">
+              <span *ngIf="!currentUserProfile()?.avatar_url">{{ (authService.user()?.user_metadata?.['username']?.charAt(0) || 'U') | uppercase }}</span>
             </div>
             <div class="flex-1 space-y-3">
               <textarea 
@@ -83,12 +86,14 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
   styles: []
 })
 export class FeedComponent implements OnInit {
-  private postService = inject(PostService);
   authService = inject(AuthService);
+  private postService = inject(PostService);
+  private profileService = inject(ProfileService);
   i18n = inject(I18nService);
   private fb = inject(FormBuilder);
 
   posts = signal<Post[]>([]);
+  currentUserProfile = signal<Profile | null>(null);
   loading = signal(true);
   isPosting = signal(false);
 
@@ -97,7 +102,14 @@ export class FeedComponent implements OnInit {
   });
 
   async ngOnInit() {
-    await this.loadPosts();
+    this.loadPosts();
+    const user = this.authService.user();
+    if (user) {
+      const { data } = await this.profileService.getProfile(user.id);
+      if (data) {
+        this.currentUserProfile.set(data);
+      }
+    }
   }
 
   async loadPosts() {

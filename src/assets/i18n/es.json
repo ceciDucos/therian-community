@@ -82,8 +82,7 @@
         "loading": "Cargando comentarios...",
         "delete": "Eliminar",
         "empty": "Aún no hay comentarios. ¡Sé el primero!",
-        "placeholder": "Compartí algo con la manada...",
-        "loginPrompt": "Iniciá sesión para publicar y participar en la comunidad.",
+        "placeholder": "Escribe un comentario...",
         "send": "Enviar",
         "loginToComment": "para comentar.",
         "loginLink": "Inicia sesión"

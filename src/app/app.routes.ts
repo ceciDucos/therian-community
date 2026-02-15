@@ -45,6 +45,8 @@ export const routes: Routes = [
             { path: 'normas', loadComponent: () => import('./features/public/normas/normas.component').then(m => m.NormasComponent) },
             // Public profile
             { path: 'u/:username', loadComponent: () => import('./features/profile/public-profile/public-profile.component').then(m => m.PublicProfileComponent) },
+            // MMO
+            { path: 'forest', loadComponent: () => import('./features/forest/forest.component').then(m => m.ForestComponent) },
         ]
     },
     { path: '**', redirectTo: '' }

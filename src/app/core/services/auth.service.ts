@@ -8,9 +8,11 @@ import { User, AuthError } from '@supabase/supabase-js';
 })
 export class AuthService {
     private currentUser = signal<User | null>(null);
+    private currentSession = signal<any>(null); // Expose session for token access
 
     // Public readonly signals
     user = this.currentUser.asReadonly();
+    session = this.currentSession.asReadonly();
     isAuthenticated = computed(() => this.currentUser() !== null);
     isAdmin = computed(() => {
         const user = this.currentUser();
@@ -33,10 +35,12 @@ export class AuthService {
         // Get initial session
         const { data: { session } } = await this.supabase.auth.getSession();
         this.currentUser.set(session?.user ?? null);
+        this.currentSession.set(session);
 
         // Listen for auth changes
         this.supabase.auth.onAuthStateChange((_event, session) => {
             this.currentUser.set(session?.user ?? null);
+            this.currentSession.set(session);
         });
     }
 

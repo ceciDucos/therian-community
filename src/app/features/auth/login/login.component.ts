@@ -7,58 +7,79 @@ import { AuthService } from '../../../core/services/auth.service';
 import { I18nService } from '../../../core/services/i18n.service';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { CardComponent } from '../../../shared/components/card/card.component';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonComponent, InputComponent, CardComponent, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonComponent, InputComponent, TranslatePipe],
   template: `
     <div class="flex min-h-[80vh] items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <app-card class="w-full max-w-md space-y-8" [header]="true">
-        <div class="flex flex-col space-y-2 text-center">
-          <h1 class="text-2xl font-semibold tracking-tight">{{ 'auth.welcomeBack' | translate }}</h1>
-          <p class="text-sm text-muted-foreground">{{ 'auth.loginSubtitle' | translate }}</p>
+      <div class="w-full max-w-md">
+        <!-- Login Card -->
+        <div class="bg-card border rounded-2xl shadow-lg overflow-hidden">
+          <!-- Accent bar -->
+          <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"></div>
+          
+          <div class="p-8 space-y-6">
+            <!-- Header -->
+            <div class="text-center space-y-3">
+              <!-- Wolf icon -->
+              <div class="mx-auto w-28 h-28 flex items-center justify-center mb-2">
+                <img src="assets/masks/login-wolf.png" alt="Wolf Mask" class="w-full h-full object-contain drop-shadow-lg">
+              </div>
+              <div>
+                <h1 class="text-2xl font-bold tracking-tight">{{ 'auth.welcomeBack' | translate }}</h1>
+                <p class="text-sm text-muted-foreground mt-1">{{ 'auth.loginSubtitle' | translate }}</p>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+              <app-input
+                formControlName="email"
+                [label]="i18n.t('auth.email')"
+                type="email"
+                [placeholder]="i18n.t('auth.emailPlaceholder')"
+                [error]="emailError"
+              ></app-input>
+
+              <app-input
+                formControlName="password"
+                [label]="i18n.t('auth.password')"
+                type="password"
+                [placeholder]="i18n.t('auth.passwordPlaceholder')"
+                [error]="passwordError"
+              ></app-input>
+
+              <div *ngIf="errorMessage" class="p-3 text-sm text-destructive bg-destructive/10 rounded-lg border border-destructive/20">
+                {{ errorMessage }}
+              </div>
+
+              <app-button
+                type="submit"
+                description="Login"
+                [disabled]="loginForm.invalid || isLoading"
+                [fullWidth]="true"
+                variant="primary"
+              >
+                {{ isLoading ? i18n.t('auth.loggingIn') : i18n.t('auth.loginBtn') }}
+              </app-button>
+            </form>
+
+            <!-- Divider -->
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center"><span class="w-full border-t"></span></div>
+            </div>
+
+            <!-- Sign up link -->
+            <p class="text-center text-sm text-muted-foreground">
+              {{ 'auth.noAccount' | translate }}
+              <a routerLink="/register" class="font-semibold text-primary hover:underline underline-offset-4 transition-colors">{{ 'auth.signUp' | translate }}</a>
+            </p>
+          </div>
         </div>
-
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6 mt-6">
-          <app-input
-            formControlName="email"
-            [label]="i18n.t('auth.email')"
-            type="email"
-            [placeholder]="i18n.t('auth.emailPlaceholder')"
-            [error]="emailError"
-          ></app-input>
-
-          <app-input
-            formControlName="password"
-            [label]="i18n.t('auth.password')"
-            type="password"
-            [placeholder]="i18n.t('auth.passwordPlaceholder')"
-            [error]="passwordError"
-          ></app-input>
-
-          <div *ngIf="errorMessage" class="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
-            {{ errorMessage }}
-          </div>
-
-          <app-button
-            type="submit"
-            description="Login"
-            [disabled]="loginForm.invalid || isLoading"
-            [fullWidth]="true"
-            variant="primary"
-          >
-            {{ isLoading ? i18n.t('auth.loggingIn') : i18n.t('auth.loginBtn') }}
-          </app-button>
-
-          <div class="text-center text-sm">
-            <span class="text-muted-foreground">{{ 'auth.noAccount' | translate }} </span>
-            <a routerLink="/register" class="font-medium hover:underline text-primary">{{ 'auth.signUp' | translate }}</a>
-          </div>
-        </form>
-      </app-card>
+      </div>
     </div>
   `,
   styles: []

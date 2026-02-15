@@ -14,7 +14,7 @@ export class ProfileService {
             .from('profiles')
             .select('*')
             .eq('id', userId)
-            .single();
+            .maybeSingle();
 
         return { data, error };
     }
@@ -24,7 +24,7 @@ export class ProfileService {
             .from('profiles')
             .select('*')
             .eq('username', username)
-            .single();
+            .maybeSingle();
 
         return { data, error };
     }
@@ -32,8 +32,7 @@ export class ProfileService {
     async updateProfile(userId: string, updates: Partial<Profile>): Promise<{ error: any }> {
         const { error } = await this.supabase.client
             .from('profiles')
-            .update(updates)
-            .eq('id', userId);
+            .upsert({ id: userId, ...updates, updated_at: new Date() });
 
         return { error };
     }

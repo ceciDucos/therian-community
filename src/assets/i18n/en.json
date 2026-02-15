@@ -75,7 +75,8 @@
         "posting": "Posting...",
         "postBtn": "Howl",
         "loading": "Loading howls...",
-        "empty": "No posts yet. Be the first to howl!"
+        "empty": "No posts yet. Be the first to howl!",
+        "loginPrompt": "Log in to post and participate in the community."
     },
     "comments": {
         "loading": "Loading comments...",
