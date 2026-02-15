@@ -3,19 +3,23 @@
         {{ 'store.backToStore' | translate }}
     </app-button>
 
-    <div *ngIf="loading()" class="text-center py-12 text-muted-foreground">
+    @if (loading()) {
+    <div class="text-center py-12 text-muted-foreground">
         {{ 'store.loadingProduct' | translate }}
     </div>
+    }
 
-    <div *ngIf="!loading() && product()" class="grid md:grid-cols-2 gap-8">
+    @if (!loading() && product()) {
+    <div class="grid md:grid-cols-2 gap-8">
         <!-- Image -->
         <div class="rounded-lg overflow-hidden border bg-muted aspect-square">
-            <img *ngIf="product()?.image_url" [src]="product()?.image_url" [alt]="product()?.name"
-                class="w-full h-full object-cover">
-            <div *ngIf="!product()?.image_url"
-                class="w-full h-full flex items-center justify-center text-muted-foreground">
+            @if (product()?.image_url) {
+            <img [src]="product()?.image_url" [alt]="product()?.name" class="w-full h-full object-cover">
+            } @else {
+            <div class="w-full h-full flex items-center justify-center text-muted-foreground">
                 {{ 'store.noImage' | translate }}
             </div>
+            }
         </div>
 
         <!-- Details -->
@@ -25,9 +29,11 @@
                     {{ product()?.category?.replace('_', ' ') }}
                 </div>
                 <h1 class="text-3xl font-bold tracking-tight mb-2">{{ product()?.name }}</h1>
-                <div class="text-2xl font-bold text-primary" *ngIf="product()?.price">
+                @if (product()?.price) {
+                <div class="text-2xl font-bold text-primary">
                     {{ product()?.price | currency }}
                 </div>
+                }
             </div>
 
             <div class="prose prose-sm text-muted-foreground">
@@ -43,7 +49,8 @@
                 </p>
             </div>
 
-            <div *ngIf="product()?.external_link" class="pt-4">
+            @if (product()?.external_link) {
+            <div class="pt-4">
                 <a [href]="product()?.external_link" target="_blank"
                     class="text-primary hover:underline flex items-center gap-1">
                     {{ 'store.viewExternal' | translate }}
@@ -56,12 +63,16 @@
                     </svg>
                 </a>
             </div>
+            }
         </div>
     </div>
+    }
 
-    <div *ngIf="!loading() && !product()" class="text-center py-12">
+    @if (!loading() && !product()) {
+    <div class="text-center py-12">
         <h2 class="text-xl font-semibold">{{ 'store.notFound' | translate }}</h2>
         <app-button variant="outline" class="mt-4" routerLink="/store">{{ 'store.viewCatalog' | translate
             }}</app-button>
     </div>
+    }
 </div>

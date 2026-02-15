@@ -2,9 +2,12 @@
     <div class="flex items-start justify-between mb-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-secondary overflow-hidden flex items-center justify-center">
-                <img *ngIf="post.author?.avatar_url" [src]="post.author?.avatar_url" class="w-full h-full object-cover">
-                <span *ngIf="!post.author?.avatar_url" class="text-sm font-bold text-secondary-foreground">{{
+                @if (post.author?.avatar_url) {
+                <img [src]="post.author?.avatar_url" class="w-full h-full object-cover">
+                } @else {
+                <span class="text-sm font-bold text-secondary-foreground">{{
                     (post.author?.username?.charAt(0) || '?') | uppercase }}</span>
+                }
             </div>
             <div>
                 <div class="font-semibold hover:underline cursor-pointer" [routerLink]="['/u', post.author?.username]">
@@ -20,9 +23,11 @@
     <div class="space-y-4">
         <p class="whitespace-pre-wrap">{{ post.content }}</p>
 
-        <div *ngIf="post.image_url" class="rounded-lg overflow-hidden border">
+        @if (post.image_url) {
+        <div class="rounded-lg overflow-hidden border">
             <img [src]="post.image_url" class="w-full h-auto max-h-[500px] object-cover" loading="lazy">
         </div>
+        }
     </div>
 
     <div class="flex items-center gap-4 mt-6 pt-4 border-t">
@@ -50,5 +55,7 @@
     </div>
 
     <!-- Comment Section -->
-    <app-comment-section *ngIf="showComments()" [postId]="post.id" />
+    @if (showComments()) {
+    <app-comment-section [postId]="post.id" />
+    }
 </app-card>

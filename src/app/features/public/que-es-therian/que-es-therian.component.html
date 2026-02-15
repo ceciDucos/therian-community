@@ -45,13 +45,14 @@
             {{ 'queEs.expTitle' | translate }}
         </h2>
         <div class="grid gap-4 md:grid-cols-2">
-            <div *ngFor="let exp of experiences"
-                class="bg-card rounded-xl border p-5 space-y-2 hover:shadow-md transition-shadow">
+            @for (exp of experiences; track exp.title) {
+            <div class="bg-card rounded-xl border p-5 space-y-2 hover:shadow-md transition-shadow">
                 <div class="flex items-center gap-3">
                     <h3 class="font-semibold">{{ exp.title }}</h3>
                 </div>
                 <p class="text-sm text-muted-foreground leading-relaxed">{{ exp.description }}</p>
             </div>
+            }
         </div>
     </section>
 
@@ -69,10 +70,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let diff of differences; let last = last" [class.border-b]="!last">
+                    @for (diff of differences; track diff.term; let last = $last) {
+                    <tr [class.border-b]="!last">
                         <td class="p-4 font-medium">{{ diff.term }}</td>
                         <td class="p-4 text-sm text-muted-foreground">{{ diff.description }}</td>
                     </tr>
+                    }
                 </tbody>
             </table>
         </div>

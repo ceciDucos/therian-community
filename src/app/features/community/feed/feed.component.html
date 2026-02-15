@@ -1,14 +1,17 @@
 <div class="container max-w-2xl py-6 mx-auto">
     <!-- Create Post (only for logged-in users) -->
-    <app-card *ngIf="authService.isAuthenticated()" class="mb-8 p-4">
+    @if (authService.isAuthenticated()) {
+    <app-card class="mb-8 p-4">
         <form [formGroup]="postForm" (ngSubmit)="createPost()">
             <div class="flex gap-4">
                 <div
                     class="w-10 h-10 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center text-sm font-bold text-secondary-foreground overflow-hidden">
-                    <img *ngIf="currentUserProfile()?.avatar_url" [src]="currentUserProfile()?.avatar_url"
-                        class="w-full h-full object-cover">
-                    <span *ngIf="!currentUserProfile()?.avatar_url">{{
+                    @if (currentUserProfile()?.avatar_url) {
+                    <img [src]="currentUserProfile()?.avatar_url" class="w-full h-full object-cover">
+                    } @else {
+                    <span>{{
                         (authService.user()?.user_metadata?.['username']?.charAt(0) || 'U') | uppercase }}</span>
+                    }
                 </div>
                 <div class="flex-1 space-y-3">
                     <textarea formControlName="content" [placeholder]="i18n.t('feed.placeholder')"
@@ -37,26 +40,35 @@
             </div>
         </form>
     </app-card>
+    }
 
     <!-- Login prompt for non-authenticated users -->
-    <div *ngIf="!authService.isAuthenticated()" class="mb-8 bg-card border rounded-xl p-6 text-center">
+    @if (!authService.isAuthenticated()) {
+    <div class="mb-8 bg-card border rounded-xl p-6 text-center">
         <p class="text-muted-foreground mb-3">{{ 'feed.loginPrompt' | translate }}</p>
         <a routerLink="/login"
             class="inline-block px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
             {{ 'nav.login' | translate }}
         </a>
     </div>
+    }
 
     <!-- Feed -->
     <div class="space-y-6">
-        <div *ngIf="loading()" class="text-center py-12 text-muted-foreground">
+        @if (loading()) {
+        <div class="text-center py-12 text-muted-foreground">
             {{ 'feed.loading' | translate }}
         </div>
+        }
 
-        <app-post-card *ngFor="let post of posts()" [post]="post" (like)="onLike($event)"></app-post-card>
+        @for (post of posts(); track post.id) {
+        <app-post-card [post]="post" (like)="onLike($event)"></app-post-card>
+        }
 
-        <div *ngIf="!loading() && posts().length === 0" class="text-center py-12 text-muted-foreground">
+        @if (!loading() && posts().length === 0) {
+        <div class="text-center py-12 text-muted-foreground">
             {{ 'feed.empty' | translate }}
         </div>
+        }
     </div>
 </div>

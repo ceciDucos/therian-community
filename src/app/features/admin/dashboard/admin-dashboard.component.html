@@ -11,15 +11,20 @@
     </div>
 
     <!-- Reports Tab -->
-    <div *ngIf="activeTab() === 'reports'" class="space-y-4">
-        <div *ngIf="loading()" class="text-center py-8">{{ 'admin.loadingReports' | translate }}</div>
+    @if (activeTab() === 'reports') {
+    <div class="space-y-4">
+        @if (loading()) {
+        <div class="text-center py-8">{{ 'admin.loadingReports' | translate }}</div>
+        }
 
-        <div *ngIf="!loading() && reports().length === 0"
-            class="text-center py-8 text-muted-foreground bg-muted rounded-lg">
+        @if (!loading() && reports().length === 0) {
+        <div class="text-center py-8 text-muted-foreground bg-muted rounded-lg">
             {{ 'admin.noReports' | translate }}
         </div>
+        }
 
-        <app-card *ngFor="let report of reports()" class="mb-4">
+        @for (report of reports(); track report.id) {
+        <app-card class="mb-4">
             <div class="flex justify-between items-start">
                 <div>
                     <span
@@ -40,18 +45,25 @@
                 </div>
             </div>
         </app-card>
+        }
     </div>
+    }
 
     <!-- Blocked Users Tab -->
-    <div *ngIf="activeTab() === 'users'" class="space-y-4">
-        <div *ngIf="loading()" class="text-center py-8">{{ 'admin.loadingUsers' | translate }}</div>
+    @if (activeTab() === 'users') {
+    <div class="space-y-4">
+        @if (loading()) {
+        <div class="text-center py-8">{{ 'admin.loadingUsers' | translate }}</div>
+        }
 
-        <div *ngIf="!loading() && blockedUsers().length === 0"
-            class="text-center py-8 text-muted-foreground bg-muted rounded-lg">
+        @if (!loading() && blockedUsers().length === 0) {
+        <div class="text-center py-8 text-muted-foreground bg-muted rounded-lg">
             {{ 'admin.noBlocked' | translate }}
         </div>
+        }
 
-        <app-card *ngFor="let block of blockedUsers()" class="mb-4">
+        @for (block of blockedUsers(); track block.id) {
+        <app-card class="mb-4">
             <div class="flex justify-between items-center">
                 <div>
                     <h3 class="font-bold">{{ 'admin.userId' | translate }}: {{ block.blocked_user_id }}</h3>
@@ -63,5 +75,7 @@
                     }}</app-button>
             </div>
         </app-card>
+        }
     </div>
+    }
 </div>

@@ -21,11 +21,12 @@
     <section class="space-y-4">
         <h2 class="text-2xl font-bold text-center">{{ 'normas.valuesTitle' | translate }}</h2>
         <div class="grid gap-4 sm:grid-cols-3">
-            <div *ngFor="let value of coreValues"
-                class="bg-card rounded-xl border p-5 text-center space-y-2 hover:shadow-md transition-shadow">
+            @for (value of coreValues; track value.title) {
+            <div class="bg-card rounded-xl border p-5 text-center space-y-2 hover:shadow-md transition-shadow">
                 <h3 class="font-semibold">{{ value.title }}</h3>
                 <p class="text-sm text-muted-foreground">{{ value.description }}</p>
             </div>
+            }
         </div>
     </section>
 
@@ -44,10 +45,12 @@
                 {{ 'normas.doTitle' | translate }}
             </h3>
             <ul class="space-y-3">
-                <li *ngFor="let rule of positiveRules" class="flex items-start gap-3">
+                @for (rule of positiveRules; track rule) {
+                <li class="flex items-start gap-3">
                     <span class="text-emerald-500 mt-0.5 flex-shrink-0">✓</span>
                     <span class="text-sm leading-relaxed">{{ rule }}</span>
                 </li>
+                }
             </ul>
         </div>
 
@@ -62,10 +65,12 @@
                 {{ 'normas.dontTitle' | translate }}
             </h3>
             <ul class="space-y-3">
-                <li *ngFor="let rule of negativeRules" class="flex items-start gap-3">
+                @for (rule of negativeRules; track rule) {
+                <li class="flex items-start gap-3">
                     <span class="text-red-500 mt-0.5 flex-shrink-0">✗</span>
                     <span class="text-sm leading-relaxed">{{ rule }}</span>
                 </li>
+                }
             </ul>
         </div>
     </section>
@@ -79,7 +84,8 @@
             </p>
 
             <div class="space-y-4">
-                <div *ngFor="let step of moderationSteps; let i = index" class="flex items-start gap-4">
+                @for (step of moderationSteps; track step.title; let i = $index) {
+                <div class="flex items-start gap-4">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
                         [ngClass]="stepColors[i]">
                         {{ i + 1 }}
@@ -89,6 +95,7 @@
                         <p class="text-xs text-muted-foreground mt-0.5">{{ step.description }}</p>
                     </div>
                 </div>
+                }
             </div>
         </div>
     </section>
@@ -97,13 +104,14 @@
     <section class="space-y-4">
         <h2 class="text-2xl font-bold text-center">{{ 'normas.consequencesTitle' | translate }}</h2>
         <div class="bg-card rounded-xl border overflow-hidden">
-            <div *ngFor="let consequence of consequences; let last = last" class="p-4 flex items-center gap-4"
-                [class.border-b]="!last">
+            @for (consequence of consequences; track consequence.level; let last = $last) {
+            <div class="p-4 flex items-center gap-4" [class.border-b]="!last">
                 <div>
                     <h4 class="font-medium text-sm">{{ consequence.level }}</h4>
                     <p class="text-xs text-muted-foreground">{{ consequence.description }}</p>
                 </div>
             </div>
+            }
         </div>
     </section>
 
