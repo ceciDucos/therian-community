@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { I18nService } from '../../../core/services/i18n.service';
-import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 interface MythFact {
   myth: string;
@@ -15,16 +14,17 @@ interface MythFact {
 @Component({
   selector: 'app-mitos',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, ButtonComponent, TranslateModule],
   templateUrl: './mitos.component.html',
   styles: []
 })
 export class MitosComponent {
-  i18n = inject(I18nService);
+  private translate = inject(TranslateService);
 
   get myths(): MythFact[] {
-    const rawMyths = this.i18n.tArray('mitos.myths');
-    return rawMyths.map((m: any) => ({
+    const rawMyths = this.translate.instant('mitos.myths');
+    const mythsArray = Array.isArray(rawMyths) ? rawMyths : [];
+    return mythsArray.map((m: any) => ({
       ...m,
       expanded: this._expandedState[m.myth] || false
     }));

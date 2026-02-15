@@ -3,22 +3,21 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { PostService } from '../../../core/services/post.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { I18nService } from '../../../core/services/i18n.service';
 import { Post } from '../../../models/post.model';
 import { PostCardComponent } from '../../../shared/components/post-card/post-card.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CardComponent } from '../../../shared/components/card/card.component';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
+
 import { ProfileService } from '../../../core/services/profile.service';
 import { Profile } from '../../../models/profile.model';
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, PostCardComponent, ButtonComponent, CardComponent, TranslatePipe],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, PostCardComponent, ButtonComponent, CardComponent, TranslateModule],
   templateUrl: './feed.component.html',
   styles: []
 })
@@ -26,7 +25,6 @@ export class FeedComponent implements OnInit {
   authService = inject(AuthService);
   private postService = inject(PostService);
   private profileService = inject(ProfileService);
-  i18n = inject(I18nService);
   private fb = inject(FormBuilder);
 
   posts = signal<Post[]>([]);

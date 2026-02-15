@@ -1,6 +1,6 @@
 {
     "nav": {
-        "community": "Comunidad",
+        "community": "Feed",
         "multimedia": "Multimedia",
         "store": "Tienda",
         "learn": "Aprender",
@@ -150,7 +150,7 @@
         "linksLabel": "Links",
         "memberSince": "Miembro desde"
     },
-    "queEs": {
+    "therianGuide": {
         "title": "¿Qué es ser Therian?",
         "subtitle": "Una guía introductoria para entender la theriantropía con respeto, curiosidad y mente abierta.",
         "defTitle": "¿Qué es la Theriantropía?",

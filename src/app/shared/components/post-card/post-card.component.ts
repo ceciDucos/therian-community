@@ -1,5 +1,5 @@
 
-import { Component, Input, Output, EventEmitter, inject, signal } from '@angular/core';
+import { Component, Output, EventEmitter, inject, signal, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Post } from '../../../models/post.model';
@@ -13,10 +13,10 @@ import { AuthService } from '../../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, RouterLink, CardComponent, CommentSectionComponent],
   templateUrl: './post-card.component.html',
-  styles: []
+  styleUrl: './post-card.component.scss'
 })
 export class PostCardComponent {
-  @Input({ required: true }) post!: Post;
+  post = input.required<Post>();
   @Output() like = new EventEmitter<string>();
 
   showComments = signal(false);
@@ -27,13 +27,13 @@ export class PostCardComponent {
   }
 
   onLike() {
-    this.like.emit(this.post.id);
+    this.like.emit(this.post().id);
     if (this.isLiked) {
       this.isLiked = false;
-      this.post.likes_count--;
+      this.post().likes_count--;
     } else {
       this.isLiked = true;
-      this.post.likes_count++;
+      this.post().likes_count++;
     }
   }
 }

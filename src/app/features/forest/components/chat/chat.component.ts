@@ -2,13 +2,13 @@ import { Component, inject, OnInit, ViewChild, ElementRef, signal } from '@angul
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })

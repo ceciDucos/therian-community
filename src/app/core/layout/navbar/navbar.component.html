@@ -1,0 +1,138 @@
+<nav class="navbar">
+    <div class="navbar-container">
+        <!-- Logo / Brand -->
+        <div class="navbar-brand">
+            <a routerLink="/" class="flex items-center gap-2">
+                <span>Therian Community</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="navbar-links">
+                <a routerLink="/feed" routerLinkActive="active">{{ 'nav.community' | translate }}</a>
+                <a routerLink="/media" routerLinkActive="active">{{ 'nav.multimedia' | translate }}</a>
+                <a routerLink="/store" routerLinkActive="active">{{ 'nav.store' | translate }}</a>
+                <a routerLink="/forest" class="forest-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M10 10v.2A3 3 0 0 1 8.9 16v0H5v0h0a3 3 0 0 1-1-5.8V10a3 3 0 0 1 5.3-1.8 1.54 1.54 0 0 1 1.7 1.7" />
+                        <path d="M14 19s-1.6-3-3.5-3c2-2 3-5 5.5-5 2.5 0 3.5 3 5.5 5-2 0-3.5 3-3.5 3" />
+                        <path d="M12 19V10" />
+                        <path d="M19 19V11" />
+                    </svg>
+                    Bosque
+                </a>
+
+                <!-- Aprender Dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown__trigger">
+                        {{ 'nav.learn' | translate }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="dropdown__content">
+                        <a routerLink="/info" class="dropdown-item">{{ 'nav.learnWhat' | translate }}</a>
+                        <a routerLink="/glossary" class="dropdown-item">{{ 'nav.learnGlossary' | translate }}</a>
+                        <a routerLink="/myths" class="dropdown-item">{{ 'nav.learnMyths' | translate }}</a>
+                        <a routerLink="/guidelines" class="dropdown-item">{{ 'nav.learnRules' | translate }}</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+            <span class="sr-only">{{ 'nav.toggleMenu' | translate }}</span>
+            @if (!mobileMenuOpen()) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" x2="20" y1="12" y2="12" />
+                <line x1="4" x2="20" y1="6" y2="6" />
+                <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+            } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </svg>
+            }
+        </button>
+
+        <!-- Right Actions -->
+        <div class="navbar-actions">
+            <div class="spacer"></div>
+            <nav class="navbar-controls">
+                <!-- Language Toggle -->
+                <button (click)="i18n.toggleLang()" class="icon-btn lang-toggle" title="Switch language">
+                    {{ i18n.currentLang() === 'es' ? 'EN' : 'ES' }}
+                </button>
+
+                <!-- Theme Toggle -->
+                <button (click)="themeService.toggle()" class="icon-btn"
+                    [title]="themeService.theme() === 'dark' ? ('nav.toggleLight' | translate) : ('nav.toggleDark' | translate)">
+                    @if (themeService.theme() === 'light') {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                    } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M12 2v2" />
+                        <path d="M12 20v2" />
+                        <path d="m4.93 4.93 1.41 1.41" />
+                        <path d="m17.66 17.66 1.41 1.41" />
+                        <path d="M2 12h2" />
+                        <path d="M20 12h2" />
+                        <path d="m6.34 17.66-1.41 1.41" />
+                        <path d="m19.07 4.93-1.41 1.41" />
+                    </svg>
+                    }
+                </button>
+
+                @if (authService.isAuthenticated()) {
+                <a routerLink="/profile" class="user-link">
+                    {{ authService.user()?.user_metadata?.['username'] || 'User' }}
+                </a>
+                <app-button variant="outline" size="sm" (click)="logout()">
+                    {{ 'nav.logout' | translate }}
+                </app-button>
+                } @else {
+                <app-button variant="ghost" size="sm" routerLink="/login">{{ 'nav.login' | translate }}</app-button>
+                <app-button variant="primary" size="sm" routerLink="/register">{{ 'nav.register' | translate
+                    }}</app-button>
+                }
+            </nav>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    @if (mobileMenuOpen()) {
+    <div class="mobile-menu">
+        <div class="mobile-menu__container">
+            <a routerLink="/feed" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.community' |
+                translate }}</a>
+            <a routerLink="/media" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.multimedia' |
+                translate }}</a>
+            <a routerLink="/store" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.store' |
+                translate }}</a>
+
+            <div class="mobile-menu__divider">
+                <p class="mobile-menu__title">{{ 'nav.learn' | translate }}</p>
+                <a routerLink="/info" class="mobile-menu__sublink" (click)="mobileMenuOpen.set(false)">{{
+                    'nav.learnWhat' | translate }}</a>
+                <a routerLink="/glossary" class="mobile-menu__sublink" (click)="mobileMenuOpen.set(false)">{{
+                    'nav.learnGlossary' | translate }}</a>
+                <a routerLink="/myths" class="mobile-menu__sublink" (click)="mobileMenuOpen.set(false)">{{
+                    'nav.learnMyths' | translate }}</a>
+                <a routerLink="/guidelines" class="mobile-menu__sublink" (click)="mobileMenuOpen.set(false)">{{
+                    'nav.learnRules' | translate }}</a>
+            </div>
+        </div>
+    </div>
+    }
+</nav>

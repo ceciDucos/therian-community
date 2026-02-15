@@ -15,7 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/f
         }
     ],
     templateUrl: './input.component.html',
-    styles: []
+    styleUrl: './input.component.scss'
 })
 export class InputComponent implements ControlValueAccessor {
     @Input() label: string = '';
@@ -27,7 +27,7 @@ export class InputComponent implements ControlValueAccessor {
     @Input() inputClasses: string = '';
 
     value = signal<string>('');
-    disabled = false;
+    disabled = signal(false);
 
     onChange = (value: string) => { };
     onTouched = () => { };
@@ -45,7 +45,7 @@ export class InputComponent implements ControlValueAccessor {
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.disabled = isDisabled;
+        this.disabled.set(isDisabled);
     }
 
     onInput(event: Event): void {

@@ -1,0 +1,59 @@
+@use 'sass:map';
+@use './variables' as *;
+
+@mixin tablet {
+    @media (min-width: $screen-md) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $screen-lg) {
+        @content;
+    }
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin glass {
+    background-color: color(card, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid color(border, 0.2);
+}
+
+@mixin container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    @media (min-width: $screen-sm) {
+        max-width: $screen-sm;
+    }
+
+    @media (min-width: $screen-md) {
+        max-width: $screen-md;
+    }
+
+    @media (min-width: $screen-lg) {
+        max-width: $screen-lg;
+    }
+
+    @media (min-width: $screen-xl) {
+        max-width: $screen-xl;
+    }
+
+    @media (min-width: $screen-2xl) {
+        max-width: $screen-2xl;
+    }
+}

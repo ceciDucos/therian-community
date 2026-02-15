@@ -1,0 +1,97 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: 1px solid transparent; // for outline variant
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px color(ring), 0 0 0 4px color(background);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    // Variants
+    &--primary {
+        background-color: color(primary);
+        color: color(primary-foreground);
+
+        &:hover {
+            background-color: color(primary, 0.9);
+        }
+    }
+
+    &--secondary {
+        background-color: color(secondary);
+        color: color(secondary-foreground);
+
+        &:hover {
+            background-color: color(secondary, 0.8);
+        }
+    }
+
+    &--outline {
+        border-color: color(input);
+        background-color: transparent;
+        color: color(foreground); // defaulting to foreground if specific color not set?
+
+        // Tailwind was: hover:bg-accent hover:text-accent-foreground
+        &:hover {
+            background-color: color(accent);
+            color: color(accent-foreground);
+        }
+    }
+
+    &--ghost {
+        background-color: transparent;
+        color: color(foreground);
+
+        &:hover {
+            background-color: color(accent);
+            color: color(accent-foreground);
+        }
+    }
+
+    &--danger {
+        background-color: color(destructive);
+        color: color(destructive-foreground);
+
+        &:hover {
+            background-color: color(destructive, 0.9);
+        }
+    }
+
+    // Sizes
+    &--sm {
+        height: 2.25rem; // h-9
+        padding: 0 $spacing-3;
+        font-size: $text-xs;
+    }
+
+    &--md {
+        height: 2.5rem; // h-10
+        padding: $spacing-2 $spacing-4;
+        font-size: $text-sm;
+    }
+
+    &--lg {
+        height: 2.75rem; // h-11
+        padding: 0 $spacing-8;
+        font-size: $text-base;
+    }
+
+    // Modifiers
+    &--full {
+        width: 100%;
+    }
+}

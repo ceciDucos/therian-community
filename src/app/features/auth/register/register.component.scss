@@ -1,81 +1,191 @@
-.register {
-    @apply flex min-h-[90vh] items-center justify-center py-20 px-4 sm:px-6 lg:px-8;
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
 
-    &__container {
-        @apply w-full max-w-lg;
+.register {
+    display: flex;
+    min-height: 90vh;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5rem; // py-20
+    padding-bottom: 5rem;
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+
+    @include tablet {
+        padding-left: $spacing-6;
+        padding-right: $spacing-6;
     }
 
+    @include desktop {
+        padding-left: $spacing-8;
+        padding-right: $spacing-8;
+    }
 
+    &__container {
+        width: 100%;
+        max-width: 32rem; // max-w-lg
+    }
+
+    &__card {
+        background-color: color(card, 0.95);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: $radius-3xl;
+        box-shadow: $shadow-2xl;
+        overflow: hidden;
+        // ring-1 ring-white/5 equivalent
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), $shadow-2xl;
+    }
 
     &__accent-bar {
-        @apply h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500;
+        height: 0.5rem; // h-2
+        background: linear-gradient(to right, #10b981, #14b8a6, #06b6d4); // emerald-500, teal-500, cyan-500
     }
 
     &__content {
-        @apply p-10 space-y-8;
+        padding: $spacing-10;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-8; // space-y-8
     }
 
     &__header {
-        @apply text-center space-y-4;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-4;
     }
 
     &__icon {
-        @apply mx-auto w-32 h-32 flex items-center justify-center mb-4 transition-transform hover:scale-105 duration-500;
+        margin-left: auto;
+        margin-right: auto;
+        width: 8rem; // w-32
+        height: 8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $spacing-4;
+        transition: transform 0.5s;
+
+        &:hover {
+            transform: scale(1.05);
+        }
 
         img {
-            @apply w-full h-full object-contain drop-shadow-2xl;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
         }
     }
 
     &__title {
-        @apply text-3xl font-bold tracking-tight text-foreground;
+        font-size: $text-3xl;
+        font-weight: 700;
+        letter-spacing: -0.025em; // tracking-tight
+        color: color(foreground);
+        margin: 0;
     }
 
     &__subtitle {
-        @apply text-base text-muted-foreground mt-2;
+        font-size: $text-base;
+        color: color(muted-foreground);
+        margin-top: $spacing-2;
     }
 
     &__form {
-        @apply space-y-6;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-6;
     }
 
     &__fields {
-        @apply space-y-5;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem; // space-y-5
     }
 
     &__error {
-        @apply p-4 text-sm text-red-200 bg-red-900/20 rounded-xl border border-red-500/20 flex items-center gap-3;
+        padding: $spacing-4;
+        font-size: $text-sm;
+        color: #fecaca; // red-200
+        background-color: rgba(127, 29, 29, 0.2); // red-900/20
+        border-radius: 0.75rem; // rounded-xl
+        border: 1px solid rgba(239, 68, 68, 0.2); // red-500/20
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
     }
 
     &__success {
-        @apply p-4 text-sm text-green-200 bg-green-900/20 rounded-xl border border-green-500/20 flex items-center gap-3;
+        padding: $spacing-4;
+        font-size: $text-sm;
+        color: #bbf7d0; // green-200
+        background-color: rgba(20, 83, 45, 0.2); // green-900/20
+        border-radius: 0.75rem; // rounded-xl
+        border: 1px solid rgba(34, 197, 94, 0.2); // green-500/20
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
     }
 
     &__divider {
-        @apply relative py-2;
+        position: relative;
+        padding-top: $spacing-2;
+        padding-bottom: $spacing-2;
 
         &-line {
-            @apply absolute inset-0 flex items-center;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
 
             span {
-                @apply w-full border-t border-white/10;
+                width: 100%;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
         }
     }
 
     &__signin {
-        @apply text-center text-base text-muted-foreground;
+        text-align: center;
+        font-size: $text-base;
+        color: color(muted-foreground);
 
         a {
-            @apply font-bold text-primary hover:text-primary/80 hover:underline underline-offset-4 transition-all cursor-pointer;
+            font-weight: 700;
+            color: color(primary);
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration-thickness: from-font;
+            text-underline-offset: 4px;
+
+            &:hover {
+                color: color(primary, 0.8);
+                text-decoration: underline;
+            }
         }
     }
 
     &__loading {
-        @apply flex items-center gap-2;
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
 
         svg {
-            @apply animate-spin h-5 w-5;
+            animation: spin 1s linear infinite;
+            height: 1.25rem; // h-5
+            width: 1.25rem;
         }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

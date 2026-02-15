@@ -1,19 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { I18nService } from '../../../core/services/i18n.service';
-import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-normas',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, ButtonComponent, TranslateModule],
   templateUrl: './normas.component.html',
   styles: []
 })
 export class NormasComponent {
-  i18n = inject(I18nService);
+  private translate = inject(TranslateService);
 
   stepColors = [
     'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
@@ -23,22 +22,27 @@ export class NormasComponent {
   ];
 
   get coreValues(): any[] {
-    return this.i18n.tArray('normas.values');
+    const res = this.translate.instant('normas.values');
+    return Array.isArray(res) ? res : [];
   }
 
   get positiveRules(): string[] {
-    return this.i18n.tArray('normas.doList');
+    const res = this.translate.instant('normas.doList');
+    return Array.isArray(res) ? res : [];
   }
 
   get negativeRules(): string[] {
-    return this.i18n.tArray('normas.dontList');
+    const res = this.translate.instant('normas.dontList');
+    return Array.isArray(res) ? res : [];
   }
 
   get moderationSteps(): any[] {
-    return this.i18n.tArray('normas.modSteps');
+    const res = this.translate.instant('normas.modSteps');
+    return Array.isArray(res) ? res : [];
   }
 
   get consequences(): any[] {
-    return this.i18n.tArray('normas.consequences');
+    const res = this.translate.instant('normas.consequences');
+    return Array.isArray(res) ? res : [];
   }
 }

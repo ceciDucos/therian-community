@@ -1,16 +1,15 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProfileService } from '../../../core/services/profile.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { I18nService } from '../../../core/services/i18n.service';
 import { Profile } from '../../../models/profile.model';
-import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-public-profile',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, RouterLink, TranslateModule],
   templateUrl: './public-profile.component.html',
   styles: []
 })
@@ -18,7 +17,6 @@ export class PublicProfileComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private profileService = inject(ProfileService);
   private authService = inject(AuthService);
-  i18n = inject(I18nService);
 
   profile = signal<Profile | null>(null);
   loading = signal(true);

@@ -1,22 +1,21 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../core/services/product.service';
-import { I18nService } from '../../core/services/i18n.service';
 import { Product } from '../../models/misc.model';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
-import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-store',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent, ButtonComponent, TranslatePipe],
+  imports: [CommonModule, ProductCardComponent, ButtonComponent, TranslateModule],
   templateUrl: './store.component.html',
   styles: []
 })
 export class StoreComponent implements OnInit {
   private productService = inject(ProductService);
-  i18n = inject(I18nService);
+  private translate = inject(TranslateService);
 
   products = signal<Product[]>([]);
   loading = signal(true);
@@ -24,11 +23,11 @@ export class StoreComponent implements OnInit {
 
   get categories() {
     return [
-      { label: this.i18n.t('store.all'), value: undefined },
-      { label: this.i18n.t('store.masks'), value: 'mascaras' },
-      { label: this.i18n.t('store.tailsEars'), value: 'colas_orejas' },
-      { label: this.i18n.t('store.quadrobics'), value: 'rodilleras_quadrobics' },
-      { label: this.i18n.t('store.digital'), value: 'digitales' }
+      { label: this.translate.instant('store.all'), value: undefined },
+      { label: this.translate.instant('store.masks'), value: 'mascaras' },
+      { label: this.translate.instant('store.tailsEars'), value: 'colas_orejas' },
+      { label: this.translate.instant('store.quadrobics'), value: 'rodilleras_quadrobics' },
+      { label: this.translate.instant('store.digital'), value: 'digitales' }
     ];
   }
 

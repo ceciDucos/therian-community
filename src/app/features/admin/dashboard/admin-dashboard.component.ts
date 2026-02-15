@@ -1,24 +1,22 @@
 
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { ModerationService } from '../../../core/services/moderation.service';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { AuthService } from '../../../core/services/auth.service';
-import { I18nService } from '../../../core/services/i18n.service';
-import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, CardComponent, TranslatePipe],
+  imports: [CommonModule, ButtonComponent, CardComponent, TranslateModule],
   templateUrl: './admin-dashboard.component.html',
   styles: []
 })
 export class AdminDashboardComponent implements OnInit {
   private moderationService = inject(ModerationService);
   authService = inject(AuthService);
-  i18n = inject(I18nService);
 
   activeTab = signal<'reports' | 'users'>('reports');
   reports = signal<any[]>([]);

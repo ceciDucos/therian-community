@@ -14,7 +14,7 @@
                     }
                 </div>
                 <div class="flex-1 space-y-3">
-                    <textarea formControlName="content" [placeholder]="i18n.t('feed.placeholder')"
+                    <textarea formControlName="content" [placeholder]="'feed.placeholder' | translate"
                         class="w-full min-h-[80px] bg-transparent resize-none border-b focus:outline-none focus:border-primary transition-colors placeholder:text-muted-foreground"></textarea>
 
                     <div class="flex justify-between items-center">
@@ -33,7 +33,7 @@
                         </div>
                         <app-button type="submit" variant="primary" size="sm"
                             [disabled]="postForm.invalid || isPosting()">
-                            {{ isPosting() ? i18n.t('feed.posting') : i18n.t('feed.postBtn') }}
+                            {{ (isPosting() ? 'feed.posting' : 'feed.postBtn') | translate }}
                         </app-button>
                     </div>
                 </div>

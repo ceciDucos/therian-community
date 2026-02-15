@@ -1,6 +1,6 @@
 {
     "nav": {
-        "community": "Community",
+        "community": "Feed",
         "multimedia": "Multimedia",
         "store": "Store",
         "learn": "Learn",
@@ -150,7 +150,7 @@
         "linksLabel": "Links",
         "memberSince": "Member since"
     },
-    "queEs": {
+    "therianGuide": {
         "title": "What is Being Therian?",
         "subtitle": "An introductory guide to understanding therianthropy with respect, curiosity and an open mind.",
         "defTitle": "What is Therianthropy?",

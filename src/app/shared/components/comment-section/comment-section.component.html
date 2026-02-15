@@ -44,7 +44,8 @@
     <!-- New Comment -->
     @if (authService.isAuthenticated()) {
     <div class="flex gap-2">
-        <input [(ngModel)]="newComment" [placeholder]="i18n.t('comments.placeholder')" (keydown.enter)="submitComment()"
+        <input [(ngModel)]="newComment" [placeholder]="'comments.placeholder' | translate"
+            (keydown.enter)="submitComment()"
             class="flex-1 px-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-primary/50" />
         <app-button size="sm" variant="primary" (click)="submitComment()" [disabled]="!newComment.trim()">
             {{ 'comments.send' | translate }}

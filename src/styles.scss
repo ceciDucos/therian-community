@@ -1,6 +1,11 @@
 // SCSS @use must come first
 @use '@angular/material' as mat;
 
+@use 'assets/styles/global';
+
+// @tailwind base; // Contextual note: We are replacing this with our reset in global
+// @tailwind components;
+// @tailwind utilities;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

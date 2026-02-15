@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import io, { Socket } from 'socket.io-client';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SocketService {
     private socket: Socket | undefined;
-    private url = 'http://localhost:3000'; // MMO Server URL
+    private url = environment.mmoUrl;
 
     // Events
     public state$ = new Subject<any>();

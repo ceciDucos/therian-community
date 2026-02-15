@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './card.component.html',
-  styles: []
+  styleUrl: './card.component.scss'
 })
 export class CardComponent {
   title = input('');
@@ -16,5 +16,5 @@ export class CardComponent {
   header = input(false);
   className = input('');
 
-  classes = computed(() => `rounded-lg border bg-card text-card-foreground shadow-sm ${this.className()}`);
+  classes = computed(() => `card ${this.className()}`);
 }

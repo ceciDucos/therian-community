@@ -1,0 +1,67 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    width: 100%;
+}
+
+.input-label {
+    font-size: $text-sm;
+    font-weight: 500;
+    line-height: 1;
+    color: color(foreground);
+
+    // Peer disabled equivalent requires structure knowledge or just standard disabled
+    // We can select sibling input:disabled + this label if we change order, 
+    // but usually we just check if component is disabled
+}
+
+.input-field {
+    display: flex;
+    height: 2.5rem; // h-10
+    width: 100%;
+    border-radius: $radius-md;
+    border: 1px solid color(input);
+    background-color: color(background);
+    padding: $spacing-2 $spacing-3;
+    font-size: $text-sm;
+    color: color(foreground);
+    transition: all 0.2s;
+
+    &::placeholder {
+        color: color(muted-foreground);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px color(ring), 0 0 0 4px color(background);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &[type='file'] {
+        border: 0;
+        background-color: transparent;
+        font-size: $text-sm;
+        font-weight: 500;
+    }
+}
+
+.input-error {
+    font-size: $text-xs;
+    font-weight: 500;
+    color: color(destructive);
+    margin-top: $spacing-1;
+}
+
+.input-hint {
+    font-size: $text-xs;
+    color: color(muted-foreground);
+    margin-top: $spacing-1;
+}

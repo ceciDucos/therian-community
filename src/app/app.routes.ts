@@ -39,10 +39,10 @@ export const routes: Routes = [
                 // TODO: Add adminGuard specific check if needed, relying on functional guard/service/profile check within component or robust guard
             },
             // Educational / Public pages
-            { path: 'que-es-therian', loadComponent: () => import('./features/public/que-es-therian/que-es-therian.component').then(m => m.QueEsTherianComponent) },
-            { path: 'glosario', loadComponent: () => import('./features/public/glosario/glosario.component').then(m => m.GlosarioComponent) },
-            { path: 'mitos', loadComponent: () => import('./features/public/mitos/mitos.component').then(m => m.MitosComponent) },
-            { path: 'normas', loadComponent: () => import('./features/public/normas/normas.component').then(m => m.NormasComponent) },
+            { path: 'info', loadComponent: () => import('./features/public/therian-guide/therian-guide.component').then(m => m.TherianGuideComponent) },
+            { path: 'glossary', loadComponent: () => import('./features/public/glosario/glosario.component').then(m => m.GlosarioComponent) },
+            { path: 'myths', loadComponent: () => import('./features/public/mitos/mitos.component').then(m => m.MitosComponent) },
+            { path: 'guidelines', loadComponent: () => import('./features/public/normas/normas.component').then(m => m.NormasComponent) },
             // Public profile
             { path: 'u/:username', loadComponent: () => import('./features/profile/public-profile/public-profile.component').then(m => m.PublicProfileComponent) },
             // MMO

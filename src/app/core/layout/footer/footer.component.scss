@@ -1,0 +1,72 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+.footer {
+    padding-top: $spacing-6;
+    padding-bottom: $spacing-6;
+    border-top: 1px solid color(border);
+
+    @include tablet {
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: $spacing-8;
+        padding-right: $spacing-8;
+    }
+}
+
+.footer-container {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-4;
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
+
+    @include tablet {
+        height: 6rem; // h-24
+        flex-direction: row;
+    }
+}
+
+.footer-text {
+    text-align: center;
+    font-size: $text-sm;
+    line-height: 2; // leading-loose
+    color: color(muted-foreground);
+
+    @include tablet {
+        text-align: left;
+    }
+
+    a {
+        font-weight: 500;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        color: inherit;
+
+        &:hover {
+            color: color(foreground);
+        }
+    }
+}
+
+.footer-nav {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    font-size: $text-sm;
+    color: color(muted-foreground);
+
+    a {
+        transition: color 0.2s;
+
+        &:hover {
+            color: color(foreground);
+        }
+    }
+}

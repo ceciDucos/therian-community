@@ -1,0 +1,82 @@
+<div class="que-es-container">
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                <line x1="9" y1="9" x2="9.01" y2="9" />
+                <line x1="15" y1="9" x2="15.01" y2="9" />
+            </svg>
+        </div>
+        <h1>
+            {{ 'therianGuide.title' | translate }}
+        </h1>
+        <p class="subtitle">
+            {{ 'therianGuide.subtitle' | translate }}
+        </p>
+    </section>
+
+    <!-- Definición -->
+    <section>
+        <h2>
+            {{ 'therianGuide.defTitle' | translate }}
+        </h2>
+        <div class="definition-card">
+            <p class="leading-relaxed" [innerHTML]="'therianGuide.defP1' | translate"></p>
+            <p class="leading-relaxed" [innerHTML]="'therianGuide.defP2' | translate"></p>
+            <div class="important-box">
+                <p class="important-title">{{ 'therianGuide.importantTitle' | translate }}</p>
+                <p class="important-text">
+                    {{ 'therianGuide.importantText' | translate }}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiencias Comunes -->
+    <section>
+        <h2>
+            {{ 'therianGuide.expTitle' | translate }}
+        </h2>
+        <div class="grid-cards">
+            @for (exp of experiences; track exp.title) {
+            <div class="experience-card">
+                <div class="card-header">
+                    <h3>{{ exp.title }}</h3>
+                </div>
+                <p>{{ exp.description }}</p>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="disclaimer-section">
+        <div class="disclaimer-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-blue-500">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+            </svg>
+            <h3>{{ 'therianGuide.wellbeingTitle' | translate }}</h3>
+        </div>
+        <p [innerHTML]="'therianGuide.wellbeingText' | translate">
+        </p>
+    </section>
+
+    <!-- CTA -->
+    <section class="hero-section">
+        <h2>{{ 'therianGuide.moreTitle' | translate }}</h2>
+        <div class="cta-buttons">
+            <app-button variant="primary" routerLink="/glossary">{{ 'therianGuide.moreGlossary' | translate
+                }}</app-button>
+            <app-button variant="outline" routerLink="/myths">{{ 'therianGuide.moreMyths' | translate }}</app-button>
+            <app-button variant="outline" routerLink="/guidelines">{{ 'therianGuide.moreRules' | translate
+                }}</app-button>
+        </div>
+    </section>
+</div>

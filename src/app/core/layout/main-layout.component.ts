@@ -1,34 +1,15 @@
 
-import { Component, inject, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { ButtonComponent } from '../../shared/components/button/button.component';
-import { AuthService } from '../../core/services/auth.service';
-import { ThemeService } from '../../core/services/theme.service';
-import { I18nService } from '../../core/services/i18n.service';
-import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, TranslatePipe],
+  imports: [CommonModule, RouterModule, NavbarComponent, FooterComponent],
   templateUrl: './main-layout.component.html',
-  styles: []
+  styleUrl: './main-layout.component.scss'
 })
-export class MainLayoutComponent {
-  authService = inject(AuthService);
-  private router = inject(Router);
-
-  themeService = inject(ThemeService);
-  i18n = inject(I18nService);
-  mobileMenuOpen = signal(false);
-
-  toggleMobileMenu() {
-    this.mobileMenuOpen.update(v => !v);
-  }
-
-  async logout() {
-    await this.authService.signOut();
-    this.router.navigate(['/']);
-  }
-}
+export class MainLayoutComponent { }

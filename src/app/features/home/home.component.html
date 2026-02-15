@@ -10,14 +10,15 @@
         </p>
         <div class="flex gap-4">
             <app-button variant="primary" size="lg" routerLink="/register">{{ 'home.joinCta' | translate }}</app-button>
-            <app-button variant="outline" size="lg" routerLink="/que-es-therian">{{ 'home.discoverCta' | translate
+            <app-button variant="outline" size="lg" routerLink="/info">{{ 'home.discoverCta' | translate
                 }}</app-button>
         </div>
     </section>
 
     <!-- Features Section -->
     <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <app-card [title]="i18n.t('home.communityTitle')" [description]="i18n.t('home.communityDesc')" [header]="true">
+        <app-card [title]="'home.communityTitle' | translate" [description]="'home.communityDesc' | translate"
+            [header]="true">
             <p class="text-sm text-muted-foreground mb-4">
                 {{ 'home.communityText' | translate }}
             </p>
@@ -25,7 +26,7 @@
                 }}</app-button>
         </app-card>
 
-        <app-card [title]="i18n.t('home.storeTitle')" [description]="i18n.t('home.storeDesc')" [header]="true">
+        <app-card [title]="'home.storeTitle' | translate" [description]="'home.storeDesc' | translate" [header]="true">
             <p class="text-sm text-muted-foreground mb-4">
                 {{ 'home.storeText' | translate }}
             </p>
@@ -33,11 +34,12 @@
                 }}</app-button>
         </app-card>
 
-        <app-card [title]="i18n.t('home.resourcesTitle')" [description]="i18n.t('home.resourcesDesc')" [header]="true">
+        <app-card [title]="'home.resourcesTitle' | translate" [description]="'home.resourcesDesc' | translate"
+            [header]="true">
             <p class="text-sm text-muted-foreground mb-4">
                 {{ 'home.resourcesText' | translate }}
             </p>
-            <app-button variant="ghost" size="sm" class="w-full" routerLink="/que-es-therian">{{ 'home.resourcesBtn' |
+            <app-button variant="ghost" size="sm" class="w-full" routerLink="/info">{{ 'home.resourcesBtn' |
                 translate }}</app-button>
         </app-card>
     </section>

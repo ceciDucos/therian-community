@@ -1,0 +1,31 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: color(background);
+    color: color(foreground);
+    font-family: var(--font-sans);
+}
+
+.layout-main {
+    flex: 1;
+}
+
+.layout-container {
+    @include container;
+    padding-top: $spacing-6;
+    padding-bottom: $spacing-6;
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
+
+    @include tablet {
+        padding-left: $spacing-8;
+        padding-right: $spacing-8;
+    }
+}

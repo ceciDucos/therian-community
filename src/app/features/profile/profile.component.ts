@@ -1,26 +1,25 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ProfileService } from '../../core/services/profile.service';
-import { I18nService } from '../../core/services/i18n.service';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { Profile } from '../../models/profile.model';
-import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, InputComponent, CardComponent, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, InputComponent, CardComponent, TranslateModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {
   authService = inject(AuthService);
   private profileService = inject(ProfileService);
-  i18n = inject(I18nService);
+  private translate = inject(TranslateService);
   private fb = inject(FormBuilder);
 
   profile = signal<Profile | null>(null);
@@ -105,10 +104,10 @@ export class ProfileComponent implements OnInit {
     const { error } = await this.profileService.updateProfile(user.id, updates);
 
     if (error) {
-      this.message.set(this.i18n.t('profile.updateError'));
+      this.message.set(this.translate.instant('profile.updateError'));
       this.messageType.set('error');
     } else {
-      this.message.set(this.i18n.t('profile.updateSuccess'));
+      this.message.set(this.translate.instant('profile.updateSuccess'));
       this.messageType.set('success');
       // Update local state - purely client side for immediate feedback
       this.profile.update(p => ({ ...p!, ...updates }));

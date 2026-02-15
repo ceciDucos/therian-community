@@ -58,8 +58,9 @@
                             'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300': profile()?.exploration_status === 'exploring',
                             'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400': profile()?.exploration_status === 'prefer_not_say'
                           }">
-                    {{ profile()?.exploration_status === 'defined' ? i18n.t('publicProfile.definedLabel') :
-                    profile()?.exploration_status === 'exploring' ? i18n.t('publicProfile.exploringLabel') : '—' }}
+                    {{ profile()?.exploration_status === 'defined' ? ('publicProfile.definedLabel' | translate) :
+                    profile()?.exploration_status === 'exploring' ? ('publicProfile.exploringLabel' | translate) : '—'
+                    }}
                 </span>
             </div>
             }
