@@ -17,7 +17,9 @@ export class ChatComponent implements OnInit {
 
   // Chat state
   messages = signal<{ id: string, username: string, text: string, color?: string }[]>([]);
-  isOpen = signal(false); // TODO: Add logic to toggle chat visibility if needed, or default to true
+  isOpen = signal(true);
+  isUserActive = signal(true);
+  private activityTimeout: any;
 
   @ViewChild('chatInput') chatInput!: ElementRef<HTMLTextAreaElement>;
 
@@ -44,10 +46,22 @@ export class ChatComponent implements OnInit {
     if (!text.trim()) return;
 
     this.socketService.sendMessage(text);
-    // Don't modify local messages directly, wait for server echo which usually happens in MMOs, 
-    // BUT checking SocketService, it seems it listens to 'chatMessage', so we assume server broadcasts it back.
-    // If server doesn't echo back to sender, we might need to add it manually here.
-    // For now assume standard socket.io broadcast including sender (or strict mvp)
+    this.resetActivityTimer();
+  }
+
+  sendEmote(emote: string) {
+    this.socketService.sendEmote(emote);
+    this.resetActivityTimer();
+  }
+
+  private resetActivityTimer() {
+    this.isUserActive.set(true);
+    if (this.activityTimeout) clearTimeout(this.activityTimeout);
+    this.activityTimeout = setTimeout(() => {
+      if (!this.chatInput?.nativeElement?.value) {
+        this.isUserActive.set(false);
+      }
+    }, 10000); // 10 seconds of inactivity
   }
 
   toggleChat() {

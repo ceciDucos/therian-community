@@ -6,7 +6,10 @@ export class MainScene extends Scene {
     // Store sprite, nametag AND bubble
     private players: Map<string, { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text, bubble?: Phaser.GameObjects.Container }> = new Map();
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+    private wasd!: { [key: string]: Phaser.Input.Keyboard.Key };
     private myPlayer: { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text, bubble?: Phaser.GameObjects.Container } | undefined;
+    private restArea!: Phaser.Geom.Circle;
+    private inRestArea = false;
 
     constructor() {
         super({ key: 'MainScene' });
@@ -22,7 +25,24 @@ export class MainScene extends Scene {
         // Setup input
         if (this.input.keyboard) {
             this.cursors = this.input.keyboard.createCursorKeys();
+            this.wasd = this.input.keyboard.addKeys('W,A,S,D') as any;
         }
+
+        // Create Rest Area (Interactive)
+        const restX = 650;
+        const restY = 450;
+        this.restArea = new Phaser.Geom.Circle(restX, restY, 60);
+
+        const restGfx = this.add.graphics();
+        restGfx.fillStyle(0x00ff00, 0.2);
+        restGfx.fillCircle(restX, restY, 60);
+        restGfx.lineStyle(2, 0x00ff00, 0.5);
+        restGfx.strokeCircle(restX, restY, 60);
+
+        this.add.text(restX, restY, '💤 Rest Area', {
+            fontSize: '12px',
+            color: '#aaffaa'
+        }).setOrigin(0.5);
 
         // Listen for state updates
         this.socketService.state$.subscribe((state: any) => {
@@ -33,6 +53,13 @@ export class MainScene extends Scene {
         this.socketService.messages$.subscribe(msg => {
             if (this.players.has(msg.id)) {
                 this.showSpeechBubble(msg.id, msg.message);
+            }
+        });
+
+        // Listen for emotes
+        this.socketService.emotes$.subscribe(data => {
+            if (this.players.has(data.id)) {
+                this.showEmote(data.id, data.emote);
             }
         });
 
@@ -129,6 +156,41 @@ export class MainScene extends Scene {
         });
     }
 
+    private showEmote(playerId: string, emote: string) {
+        const playerObj = this.players.get(playerId);
+        if (!playerObj) return;
+
+        const { sprite } = playerObj;
+
+        const emoteText = this.add.text(sprite.x, sprite.y - 80, emote, {
+            fontSize: '32px',
+            fontFamily: 'Arial'
+        }).setOrigin(0.5);
+
+        // Animation: Pop in and float up
+        emoteText.setScale(0);
+        this.tweens.add({
+            targets: emoteText,
+            scaleX: 1.2,
+            scaleY: 1.2,
+            y: sprite.y - 100,
+            duration: 400,
+            ease: 'Back.out',
+            onComplete: () => {
+                this.tweens.add({
+                    targets: emoteText,
+                    scaleX: 1,
+                    scaleY: 1,
+                    y: sprite.y - 120,
+                    alpha: 0,
+                    duration: 1000,
+                    delay: 500,
+                    onComplete: () => emoteText.destroy()
+                });
+            }
+        });
+    }
+
     override update() {
         if (!this.cursors || !this.myPlayer) return;
 
@@ -142,11 +204,25 @@ export class MainScene extends Scene {
 
         // Simple movement
         const speed = 4;
-        if (this.cursors.left.isDown) x -= speed;
-        else if (this.cursors.right.isDown) x += speed;
+        const left = this.cursors.left.isDown || this.wasd['A'].isDown;
+        const right = this.cursors.right.isDown || this.wasd['D'].isDown;
+        const up = this.cursors.up.isDown || this.wasd['W'].isDown;
+        const down = this.cursors.down.isDown || this.wasd['S'].isDown;
 
-        if (this.cursors.up.isDown) y -= speed;
-        else if (this.cursors.down.isDown) y += speed;
+        if (left) x -= speed;
+        else if (right) x += speed;
+
+        if (up) y -= speed;
+        else if (down) y += speed;
+
+        // Check Rest Area
+        const currentlyInRestArea = Phaser.Geom.Circle.Contains(this.restArea, x, y);
+        if (currentlyInRestArea && !this.inRestArea) {
+            this.inRestArea = true;
+            this.socketService.sendEmote('💤');
+        } else if (!currentlyInRestArea && this.inRestArea) {
+            this.inRestArea = false;
+        }
 
         // Update local visual immediately (prediction)
         player.setPosition(x, y);

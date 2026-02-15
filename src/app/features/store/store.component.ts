@@ -24,10 +24,10 @@ export class StoreComponent implements OnInit {
   get categories() {
     return [
       { label: this.translate.instant('store.all'), value: undefined },
-      { label: this.translate.instant('store.masks'), value: 'mascaras' },
-      { label: this.translate.instant('store.tailsEars'), value: 'colas_orejas' },
-      { label: this.translate.instant('store.quadrobics'), value: 'rodilleras_quadrobics' },
-      { label: this.translate.instant('store.digital'), value: 'digitales' }
+      { label: this.translate.instant('store.colors'), value: 'colors' },
+      { label: this.translate.instant('store.gear'), value: 'gear' },
+      { label: this.translate.instant('store.badges'), value: 'badges' },
+      { label: this.translate.instant('store.bundles'), value: 'bundles' }
     ];
   }
 

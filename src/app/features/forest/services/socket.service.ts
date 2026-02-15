@@ -14,6 +14,7 @@ export class SocketService {
     // Events
     public state$ = new Subject<any>();
     public messages$ = new Subject<{ id: string, username: string, message: string }>();
+    public emotes$ = new Subject<{ id: string, emote: string }>();
 
     get socketId() {
         return this.socket?.id;
@@ -46,6 +47,10 @@ export class SocketService {
             this.messages$.next(msg);
         });
 
+        this.socket.on('playerEmote', (data: any) => {
+            this.emotes$.next(data);
+        });
+
         this.socket.on('disconnect', () => {
             console.log('Disconnected from MMO Server');
         });
@@ -57,6 +62,10 @@ export class SocketService {
 
     sendMessage(message: string) {
         this.socket?.emit('chat', message);
+    }
+
+    sendEmote(emote: string) {
+        this.socket?.emit('emote', emote);
     }
 
     disconnect() {

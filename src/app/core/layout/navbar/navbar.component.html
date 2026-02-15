@@ -8,9 +8,9 @@
 
             <!-- Desktop Nav -->
             <nav class="navbar-links">
-                <a routerLink="/feed" routerLinkActive="active">{{ 'nav.community' | translate }}</a>
+                <!-- <a routerLink="/feed" routerLinkActive="active">{{ 'nav.community' | translate }}</a>
                 <a routerLink="/media" routerLinkActive="active">{{ 'nav.multimedia' | translate }}</a>
-                <a routerLink="/store" routerLinkActive="active">{{ 'nav.store' | translate }}</a>
+                <a routerLink="/store" routerLinkActive="active">{{ 'nav.store' | translate }}</a> -->
                 <a routerLink="/forest" class="forest-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -114,12 +114,12 @@
     @if (mobileMenuOpen()) {
     <div class="mobile-menu">
         <div class="mobile-menu__container">
-            <a routerLink="/feed" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.community' |
+            <!-- <a routerLink="/feed" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.community' |
                 translate }}</a>
             <a routerLink="/media" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.multimedia' |
                 translate }}</a>
             <a routerLink="/store" class="mobile-menu__link" (click)="mobileMenuOpen.set(false)">{{ 'nav.store' |
-                translate }}</a>
+                translate }}</a> -->
 
             <div class="mobile-menu__divider">
                 <p class="mobile-menu__title">{{ 'nav.learn' | translate }}</p>

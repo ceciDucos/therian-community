@@ -2,7 +2,7 @@ export interface Product {
     id: string;
     name: string;
     description?: string;
-    category: 'mascaras' | 'colas_orejas' | 'rodilleras_quadrobics' | 'digitales';
+    category: 'colors' | 'gear' | 'badges' | 'bundles';
     price?: number;
     image_url?: string;
     external_link?: string;

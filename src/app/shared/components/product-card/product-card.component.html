@@ -14,7 +14,7 @@
         <div class="product-header">
             <div class="product-info">
                 <h3 class="product-title">{{ product().name }}</h3>
-                <p class="product-category">{{ product().category.replace('_', ' ') }}</p>
+                <p class="product-category">{{ 'store.cat_' + product().category | translate }}</p>
             </div>
             @if (product().price) {
             <div class="product-price">

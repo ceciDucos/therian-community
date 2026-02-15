@@ -33,13 +33,20 @@ npm install
 
 ### 3. Configurar Variables de Entorno
 
-Editar `src/environments/environment.development.ts`:
+Copiar el archivo de ejemplo y renombrarlo:
+
+```bash
+cp src/environments/environment.example.ts src/environments/environment.development.ts
+```
+
+Editar `src/environments/environment.development.ts` con tus llaves reales:
 
 ```typescript
 export const environment = {
   production: false,
   supabaseUrl: 'TU_SUPABASE_URL_AQUI',
-  supabaseKey: 'TU_SUPABASE_ANON_KEY_AQUI'
+  supabaseKey: 'TU_SUPABASE_ANON_KEY_AQUI',
+  mmoUrl: 'http://localhost:3000'
 };
 ```
 

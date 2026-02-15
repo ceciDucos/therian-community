@@ -1,50 +1,57 @@
 <div class="login">
     <div class="login__container">
-        <!-- Login Card -->
         <div class="login__card">
-            <!-- Accent bar -->
-            <app-card [header]="true" [title]="'auth.loginTitle' | translate">
-                <div class="login__content">
-                    <div class="login__left">
-                        <div class="login__illustration">
-                            <img src="assets/images/animal-login.png" alt="Login Graphic" class="login__image">
-                        </div>
-                    </div>
-
-                    <div class="login__right">
-                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login__form">
-                            <div class="login__fields">
-                                <app-input formControlName="email" [label]="'auth.email' | translate" type="email"
-                                    [placeholder]="'auth.emailPlaceholder' | translate"
-                                    [error]="emailError()"></app-input>
-
-                                <app-input formControlName="password" [label]="'auth.password' | translate"
-                                    type="password" [placeholder]="'auth.passwordPlaceholder' | translate"
-                                    [error]="passwordError()"></app-input>
-                            </div>
-
-                            @if (errorMessage()) {
-                            <div class="login__error">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <line x1="12" y1="8" x2="12" y2="12" />
-                                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                                </svg>
-                                {{ errorMessage() }}
-                            </div>
-                            }
-                        </form>
-                        <div class="login__footer">
-                            <p>
-                                {{ 'auth.noAccount' | translate }}
-                                <a routerLink="/register">{{ 'auth.registerLink' | translate }}</a>
-                            </p>
-                        </div>
+            <div class="login__content">
+                <!-- Left side: Illustration -->
+                <div class="login__left">
+                    <div class="login__illustration">
+                        <img src="animal-login.png" alt="Login Graphic" class="login__image">
                     </div>
                 </div>
-            </app-card>
+
+                <!-- Right side: Form -->
+                <div class="login__right">
+                    <div class="login__header">
+                        <h1 class="login__title">{{ 'auth.loginTitle' | translate }}</h1>
+                        <p class="login__subtitle">{{ 'auth.loginSubtitle' | translate }}</p>
+                    </div>
+
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login__form">
+                        <div class="login__fields">
+                            <app-input formControlName="email" [label]="'auth.email' | translate" type="email"
+                                [placeholder]="'auth.emailPlaceholder' | translate" [error]="emailError()"></app-input>
+
+                            <app-input formControlName="password" [label]="'auth.password' | translate" type="password"
+                                [placeholder]="'auth.passwordPlaceholder' | translate"
+                                [error]="passwordError()"></app-input>
+                        </div>
+
+                        @if (errorMessage()) {
+                        <div class="login__error">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
+                            {{ errorMessage() }}
+                        </div>
+                        }
+
+                        <app-button type="submit" variant="primary" size="lg" class="w-full" [loading]="isLoading()">
+                            {{(isLoading() ? 'auth.loggingIn' : 'auth.loginBtn') | translate}}
+                        </app-button>
+                    </form>
+
+                    <div class="login__footer">
+                        <p>
+                            {{ 'auth.noAccount' | translate }}
+                            <a routerLink="/register">{{ 'auth.registerLink' | translate }}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="chat" [class.chat--closed]="!isOpen()">
+<div class="chat" [class.chat--closed]="!isOpen()" [class.chat--inactive]="!isUserActive()">
     <div class="chat__container">
         <div class="chat__header">
             <h3>{{ 'chat.title' | translate }}</h3>
@@ -28,7 +28,14 @@
                 (keydown.a.stopPropagation)="$event.stopPropagation()"
                 (keydown.s.stopPropagation)="$event.stopPropagation()"
                 (keydown.d.stopPropagation)="$event.stopPropagation()"></textarea>
-            <!-- Quick Actions / Emotes could go here -->
+            <!-- Quick Actions / Emotes -->
+            <div class="chat__emotes">
+                <button (click)="sendEmote('🐾')">🐾</button>
+                <button (click)="sendEmote('🐺')">🐺</button>
+                <button (click)="sendEmote('✨')">✨</button>
+                <button (click)="sendEmote('💤')">💤</button>
+                <button (click)="sendEmote('🦴')">🦴</button>
+            </div>
         </div>
     </div>
 </div>

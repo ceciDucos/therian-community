@@ -2,11 +2,17 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './core/layout/main-layout.component';
 import { HomeComponent } from './features/home/home.component';
 import { authGuard } from './core/guards/auth.guard';
+import { accessGuard } from './core/guards/access.guard';
 
 export const routes: Routes = [
     {
+        path: 'welcome',
+        loadComponent: () => import('./features/public/wip/wip.component').then(m => m.WipComponent)
+    },
+    {
         path: '',
         component: MainLayoutComponent,
+        canActivate: [accessGuard],
         children: [
             { path: '', component: HomeComponent },
             { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent) },
@@ -16,7 +22,7 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent),
                 canActivate: [authGuard]
             },
-            {
+            /* {
                 path: 'feed',
                 loadComponent: () => import('./features/community/feed/feed.component').then(m => m.FeedComponent)
             },
@@ -31,12 +37,11 @@ export const routes: Routes = [
             {
                 path: 'media',
                 loadComponent: () => import('./features/media/video-gallery/video-gallery.component').then(m => m.VideoGalleryComponent)
-            },
+            }, */
             {
                 path: 'admin',
                 loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
                 canActivate: [authGuard]
-                // TODO: Add adminGuard specific check if needed, relying on functional guard/service/profile check within component or robust guard
             },
             // Educational / Public pages
             { path: 'info', loadComponent: () => import('./features/public/therian-guide/therian-guide.component').then(m => m.TherianGuideComponent) },
@@ -49,5 +54,5 @@ export const routes: Routes = [
             { path: 'forest', loadComponent: () => import('./features/forest/forest.component').then(m => m.ForestComponent) },
         ]
     },
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: 'welcome' }
 ];

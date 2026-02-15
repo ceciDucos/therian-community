@@ -17,6 +17,7 @@ export class ButtonComponent {
     size = input<ButtonSize>('md');
     type = input<'button' | 'submit' | 'reset'>('button');
     disabled = input(false);
+    loading = input(false);
     fullWidth = input(false);
 
     classes = computed(() => {
@@ -37,8 +38,9 @@ export class ButtonComponent {
         };
 
         const widthClass = this.fullWidth() ? 'btn--full' : '';
+        const loadingClass = this.loading() ? 'btn--loading' : '';
 
-        return `${baseClasses} ${variantClasses[this.variant()]} ${sizeClasses[this.size()]} ${widthClass}`;
+        return `${baseClasses} ${variantClasses[this.variant()]} ${sizeClasses[this.size()]} ${widthClass} ${loadingClass}`;
     });
 
     onClick(event: Event) {

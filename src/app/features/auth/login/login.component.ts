@@ -4,14 +4,13 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
-import { CardComponent } from '../../../shared/components/card/card.component';
-
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, InputComponent, TranslateModule, CardComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, InputComponent, ButtonComponent, TranslateModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

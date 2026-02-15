@@ -1,0 +1,61 @@
+<div class="wip-wrapper">
+    <div class="wip-container">
+        <!-- Logo/Icon -->
+        <div class="wip-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="text-primary animate-pulse">
+                <path d="M12 2v8" />
+                <path d="m4.93 10.93 1.41 1.41" />
+                <path d="M2 18h2" />
+                <path d="M20 18h2" />
+                <path d="m19.07 10.93-1.41 1.41" />
+                <path d="M22 22H2" />
+                <path d="m8 22 4-10 4 10" />
+            </svg>
+        </div>
+
+        <h1 class="wip-title">Therian Community</h1>
+        <p class="wip-subtitle">
+            Our digital territory is expanding. <br>
+            Please check back soon for the official launch.
+        </p>
+
+        <div class="wip-card-wrapper">
+            <app-card class="p-6">
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <span class="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Private
+                            Access</span>
+                    </div>
+
+                    <div class="relative">
+                        <input type="password" [(ngModel)]="accessKey" (keyup.enter)="submitKey()"
+                            placeholder="Enter your Access Key"
+                            class="w-full bg-secondary/50 border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all text-center tracking-[0.5em] placeholder:tracking-normal placeholder:text-muted-foreground"
+                            [disabled]="loading()">
+
+                        @if (error()) {
+                        <p class="text-destructive text-xs mt-2 text-center animate-bounce">
+                            Invalid key. Please try again.
+                        </p>
+                        }
+                    </div>
+
+                    <app-button variant="primary" size="lg" [fullWidth]="true" [disabled]="!accessKey || loading()"
+                        (click)="submitKey()">
+                        {{ loading() ? 'Validating...' : 'Enter Territory' }}
+                    </app-button>
+                </div>
+            </app-card>
+        </div>
+
+        <div class="wip-footer">
+            <p>&copy; 2026 Therian Community Social Hub</p>
+        </div>
+    </div>
+
+    <!-- Decorative Gradients -->
+    <div class="bg-blur-1"></div>
+    <div class="bg-blur-2"></div>
+</div>

@@ -12,12 +12,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideTranslateService({
-      fallbackLang: 'es',
-      defaultLanguage: 'es'
+      fallbackLang: 'es'
     }),
     provideTranslateHttpLoader({
-      useHttpBackend: true,
-      prefix: '/assets/i18n/',
+      prefix: './assets/i18n/',
       suffix: '.json'
     })
   ]
