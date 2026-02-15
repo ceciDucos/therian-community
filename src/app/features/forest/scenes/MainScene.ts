@@ -141,11 +141,12 @@ export class MainScene extends Scene {
         let y = player.y;
 
         // Simple movement
-        if (this.cursors.left.isDown) x -= 2;
-        else if (this.cursors.right.isDown) x += 2;
+        const speed = 4;
+        if (this.cursors.left.isDown) x -= speed;
+        else if (this.cursors.right.isDown) x += speed;
 
-        if (this.cursors.up.isDown) y -= 2;
-        else if (this.cursors.down.isDown) y += 2;
+        if (this.cursors.up.isDown) y -= speed;
+        else if (this.cursors.down.isDown) y += speed;
 
         // Update local visual immediately (prediction)
         player.setPosition(x, y);

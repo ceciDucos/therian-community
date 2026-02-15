@@ -2,7 +2,8 @@
     @apply container mx-auto py-12 px-4 max-w-xl;
 
     &__loading {
-        @apply py-12 text-center text-muted-foreground animate-pulse;
+        @apply py-12 text-center animate-pulse;
+        color: hsl(var(--muted-foreground));
     }
 
     &__form {
@@ -12,9 +13,7 @@
     &__header {
         @apply flex flex-col items-center space-y-4;
 
-        &-avatar-wrapper {
-            @apply relative group;
-        }
+        @apply relative;
 
         &-avatar {
             @apply w-32 h-32 rounded-full bg-secondary/50 flex items-center justify-center text-4xl font-bold text-secondary-foreground overflow-hidden border-4 border-primary/20 shadow-lg;
@@ -32,7 +31,8 @@
             }
 
             p {
-                @apply text-sm text-muted-foreground;
+                @apply text-sm;
+                color: hsl(var(--muted-foreground));
             }
         }
     }
@@ -105,7 +105,8 @@
         }
 
         &-icon {
-            @apply absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground;
+            @apply absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none;
+            color: hsl(var(--muted-foreground));
         }
     }
 

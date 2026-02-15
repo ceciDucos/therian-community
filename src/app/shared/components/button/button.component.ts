@@ -9,15 +9,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
     selector: 'app-button',
     standalone: true,
     imports: [CommonModule],
-    template: `
-    <button
-      [type]="type"
-      [disabled]="disabled"
-      [class]="getClasses()"
-      (click)="onClick($event)">
-      <ng-content></ng-content>
-    </button>
-  `,
+    templateUrl: './button.component.html',
     styles: []
 })
 export class ButtonComponent {

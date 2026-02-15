@@ -9,9 +9,8 @@
     @if (!loading()) {
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile__form">
 
-      <!-- Header Section with Avatar -->
       <div class="profile__header">
-        <div class="profile__header-avatar-wrapper">
+        <div class="profile__header-avatar-wrapper group">
           <div class="profile__header-avatar">
             @if (profileForm.get('avatar_url')?.value) {
             <img [src]="profileForm.get('avatar_url')?.value">
@@ -29,7 +28,6 @@
 
       <hr class="profile__divider" />
 
-      <!-- Avatar Selection Grid -->
       <div class="profile__avatar-selection">
         <label>Choose an Avatar</label>
         <div class="profile__avatar-selection-grid">
@@ -56,7 +54,6 @@
 
       <hr class="profile__divider" />
 
-      <!-- Form Fields -->
       <div class="profile__fields">
         <app-input formControlName="display_name" [label]="'profile.displayName' | translate"
           [placeholder]="'profile.displayNamePlaceholder' | translate"></app-input>

@@ -1,0 +1,34 @@
+<div class="chat" [class.chat--closed]="!isOpen()">
+    <div class="chat__container">
+        <div class="chat__header">
+            <h3>{{ 'chat.title' | translate }}</h3>
+        </div>
+
+        <div class="chat__messages" #scrollContainer>
+            @for (msg of messages(); track msg.id) {
+            <div class="chat__message">
+                <div class="chat__message-content">
+                    <div class="chat__message-header">
+                        <span [style.color]="msg.color">{{ msg.username }}</span>
+                    </div>
+                    <div class="chat__message-bubble">
+                        {{ msg.text }}
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="chat__input">
+            <textarea #chatInput [placeholder]="'chat.placeholder' | translate"
+                (keydown.enter)="sendMessage(chatInput.value); chatInput.value = ''; $event.preventDefault()"
+                (keydown.e.stopPropagation)="$event.stopPropagation()"
+                (keydown.space.stopPropagation)="$event.stopPropagation()"
+                (keydown.w.stopPropagation)="$event.stopPropagation()"
+                (keydown.a.stopPropagation)="$event.stopPropagation()"
+                (keydown.s.stopPropagation)="$event.stopPropagation()"
+                (keydown.d.stopPropagation)="$event.stopPropagation()"></textarea>
+            <!-- Quick Actions / Emotes could go here -->
+        </div>
+    </div>
+</div>

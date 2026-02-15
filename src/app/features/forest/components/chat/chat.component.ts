@@ -1,74 +1,73 @@
-import { Component, inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <!-- Floating Toolbar (Club Penguin / Pony Town style) -->
-    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-50 pointer-events-auto">
-      
-      <!-- Chat Input Bar -->
-      <div class="bg-black/80 backdrop-blur-md border-[3px] border-white/20 rounded-full pl-4 pr-1 py-1 flex items-center gap-2 shadow-2xl transition-all hover:border-white/40 w-[600px]">
-        
-        <!-- Icon -->
-        <span class="text-xl">💬</span>
-        
-        <input 
-          #chatInput
-          type="text" 
-          [(ngModel)]="newMessage" 
-          (keydown)="stopProp($event)"
-          (keyup)="stopProp($event)"
-          (keydown.enter)="sendMessage()"
-          placeholder="Di algo..."
-          class="flex-1 bg-transparent text-white font-medium placeholder:text-white/50 focus:outline-none"
-        />
-
-        <button 
-          (click)="sendMessage()"
-          class="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-full transition-colors flex items-center justify-center h-10 w-10 shrink-0"
-          [disabled]="!newMessage.trim()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-        </button>
-      </div>
-
-      <!-- Action Buttons (Placeholders) -->
-      <div class="flex gap-2 ml-2">
-        <button class="bg-black/80 border-[3px] border-white/20 text-white w-12 h-12 rounded-full hover:bg-white/20 hover:scale-110 transition-all flex items-center justify-center text-xl shadow-xl" title="Emotes">
-          😊
-        </button>
-        <button class="bg-black/80 border-[3px] border-white/20 text-white w-12 h-12 rounded-full hover:bg-white/20 hover:scale-110 transition-all flex items-center justify-center text-xl shadow-xl" title="Actions">
-          💃
-        </button>
-      </div>
-
-    </div>
-  `,
-  styles: []
+  imports: [CommonModule, FormsModule, TranslatePipe],
+  templateUrl: './chat.component.html',
+  styleUrl: './chat.component.scss'
 })
 export class ChatComponent implements OnInit {
   private socketService = inject(SocketService);
-  newMessage = '';
 
-  @ViewChild('chatInput') chatInput!: ElementRef;
+  // Chat state
+  messages = signal<{ id: string, username: string, text: string, color?: string }[]>([]);
+  isOpen = signal(false); // TODO: Add logic to toggle chat visibility if needed, or default to true
 
-  ngOnInit() { }
+  @ViewChild('chatInput') chatInput!: ElementRef<HTMLTextAreaElement>;
 
-  sendMessage() {
-    if (!this.newMessage.trim()) return;
+  constructor() {
+    this.socketService.messages$
+      .pipe(takeUntilDestroyed())
+      .subscribe(msg => {
+        this.messages.update(msgs => [...msgs, {
+          id: msg.id,
+          username: msg.username,
+          text: msg.message,
+          color: this.getUsernameColor(msg.username) // Generate a consistent color
+        }]);
 
-    this.socketService.sendMessage(this.newMessage);
-    this.newMessage = '';
-
-    // Blur input to return focus to game
-    this.chatInput?.nativeElement?.blur();
+        // Auto-scroll to bottom (setTimeout to allow render)
+        setTimeout(() => this.scrollToBottom(), 50);
+      });
   }
 
-  stopProp(event: Event) {
-    event.stopPropagation();
+  ngOnInit() {
+  }
+
+  sendMessage(text: string) {
+    if (!text.trim()) return;
+
+    this.socketService.sendMessage(text);
+    // Don't modify local messages directly, wait for server echo which usually happens in MMOs, 
+    // BUT checking SocketService, it seems it listens to 'chatMessage', so we assume server broadcasts it back.
+    // If server doesn't echo back to sender, we might need to add it manually here.
+    // For now assume standard socket.io broadcast including sender (or strict mvp)
+  }
+
+  toggleChat() {
+    this.isOpen.update(v => !v);
+  }
+
+  private scrollToBottom() {
+    const container = document.querySelector('.chat__messages');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
+  private getUsernameColor(username: string): string {
+    // Simple hash for color
+    let hash = 0;
+    for (let i = 0; i < username.length; i++) {
+      hash = username.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+    return '#' + '00000'.substring(0, 6 - c.length) + c;
   }
 }

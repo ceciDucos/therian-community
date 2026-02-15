@@ -14,59 +14,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
   selector: 'app-comment-section',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, ButtonComponent, TranslatePipe],
-  template: `
-    <div class="mt-4 pt-4 border-t space-y-4">
-      <!-- Loading -->
-      <div *ngIf="loading()" class="text-sm text-muted-foreground text-center py-2">
-        {{ 'comments.loading' | translate }}
-      </div>
-
-      <!-- Comments List -->
-      <div *ngIf="!loading()" class="space-y-3 max-h-60 overflow-y-auto">
-        <div *ngFor="let comment of comments()" class="flex gap-3">
-          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
-            {{ (comment.author?.username?.charAt(0) || '?') | uppercase }}
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2">
-              <a [routerLink]="['/u', comment.author?.username]" class="text-sm font-medium hover:text-primary transition-colors">
-                {{ comment.author?.username || 'Anon' }}
-              </a>
-              <span class="text-xs text-muted-foreground">{{ comment.created_at | date:'short' }}</span>
-              <button
-                *ngIf="comment.author_id === authService.user()?.id"
-                (click)="deleteComment(comment.id)"
-                class="ml-auto text-xs text-destructive hover:underline"
-              >{{ 'comments.delete' | translate }}</button>
-            </div>
-            <p class="text-sm mt-0.5">{{ comment.content }}</p>
-          </div>
-        </div>
-
-        <div *ngIf="comments().length === 0" class="text-sm text-muted-foreground text-center py-2">
-          {{ 'comments.empty' | translate }}
-        </div>
-      </div>
-
-      <!-- New Comment -->
-      <div *ngIf="authService.isAuthenticated()" class="flex gap-2">
-        <input
-          [(ngModel)]="newComment"
-          [placeholder]="i18n.t('comments.placeholder')"
-          (keydown.enter)="submitComment()"
-          class="flex-1 px-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-primary/50"
-        />
-        <app-button size="sm" variant="primary" (click)="submitComment()" [disabled]="!newComment.trim()">
-          {{ 'comments.send' | translate }}
-        </app-button>
-      </div>
-
-      <!-- Login Prompt -->
-      <div *ngIf="!authService.isAuthenticated()" class="text-center text-sm text-muted-foreground py-2">
-        <a routerLink="/login" class="text-primary hover:underline">{{ 'comments.loginLink' | translate }}</a> {{ 'comments.loginToComment' | translate }}
-      </div>
-    </div>
-  `,
+  templateUrl: './comment-section.component.html',
   styles: []
 })
 export class CommentSectionComponent implements OnInit {

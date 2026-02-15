@@ -1,0 +1,44 @@
+<div class="space-y-12">
+    <!-- Hero Section -->
+    <section class="flex flex-col items-center justify-center space-y-4 text-center py-20">
+        <h1
+            class="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+            {{ 'home.heroTitle' | translate }}
+        </h1>
+        <p class="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
+            {{ 'home.heroSubtitle' | translate }}
+        </p>
+        <div class="flex gap-4">
+            <app-button variant="primary" size="lg" routerLink="/register">{{ 'home.joinCta' | translate }}</app-button>
+            <app-button variant="outline" size="lg" routerLink="/que-es-therian">{{ 'home.discoverCta' | translate
+                }}</app-button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <app-card [title]="i18n.t('home.communityTitle')" [description]="i18n.t('home.communityDesc')" [header]="true">
+            <p class="text-sm text-muted-foreground mb-4">
+                {{ 'home.communityText' | translate }}
+            </p>
+            <app-button variant="ghost" size="sm" class="w-full" routerLink="/feed">{{ 'home.communityBtn' | translate
+                }}</app-button>
+        </app-card>
+
+        <app-card [title]="i18n.t('home.storeTitle')" [description]="i18n.t('home.storeDesc')" [header]="true">
+            <p class="text-sm text-muted-foreground mb-4">
+                {{ 'home.storeText' | translate }}
+            </p>
+            <app-button variant="ghost" size="sm" class="w-full" routerLink="/store">{{ 'home.storeBtn' | translate
+                }}</app-button>
+        </app-card>
+
+        <app-card [title]="i18n.t('home.resourcesTitle')" [description]="i18n.t('home.resourcesDesc')" [header]="true">
+            <p class="text-sm text-muted-foreground mb-4">
+                {{ 'home.resourcesText' | translate }}
+            </p>
+            <app-button variant="ghost" size="sm" class="w-full" routerLink="/que-es-therian">{{ 'home.resourcesBtn' |
+                translate }}</app-button>
+        </app-card>
+    </section>
+</div>

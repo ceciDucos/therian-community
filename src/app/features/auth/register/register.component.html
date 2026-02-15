@@ -1,14 +1,10 @@
 <div class="register">
     <div class="register__container">
-        <!-- Register Card -->
         <div class="register__card">
-            <!-- Accent bar -->
             <div class="register__accent-bar"></div>
 
             <div class="register__content">
-                <!-- Header -->
                 <div class="register__header">
-                    <!-- Paw icon -->
                     <div class="register__icon">
                         <img src="assets/masks/register-wolf.png" alt="Wolf Mask">
                     </div>
@@ -18,7 +14,6 @@
                     </div>
                 </div>
 
-                <!-- Form -->
                 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__form">
                     <div class="register__fields">
                         <app-input formControlName="username" [label]="'auth.username' | translate"
@@ -75,12 +70,10 @@
                     </app-button>
                 </form>
 
-                <!-- Divider -->
                 <div class="register__divider">
                     <div class="register__divider-line"><span></span></div>
                 </div>
 
-                <!-- Sign in link -->
                 <p class="register__signin">
                     {{ 'auth.hasAccount' | translate }}
                     <a routerLink="/login">{{ 'auth.signIn' | translate }}</a>
