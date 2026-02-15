@@ -3,12 +3,7 @@
 
 @use 'assets/styles/global';
 
-// @tailwind base; // Contextual note: We are replacing this with our reset in global
-// @tailwind components;
-// @tailwind utilities;
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// Tailwind directives removed
 
 // Include theming for Angular Material with `mat.theme()`.
 
