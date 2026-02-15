@@ -3,10 +3,10 @@ import { SocketService } from '../services/socket.service';
 
 export class MainScene extends Scene {
     private socketService!: SocketService;
-    // Store sprite AND nametag
-    private players: Map<string, { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text }> = new Map();
+    // Store sprite, nametag AND bubble
+    private players: Map<string, { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text, bubble?: Phaser.GameObjects.Container }> = new Map();
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-    private myPlayer: { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text } | undefined;
+    private myPlayer: { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text, bubble?: Phaser.GameObjects.Container } | undefined;
 
     constructor() {
         super({ key: 'MainScene' });
@@ -47,10 +47,14 @@ export class MainScene extends Scene {
 
         const { sprite } = playerObj;
 
-        // Destroy existing bubble if any (simple implementation: storing bubble on playerObj would be better for cleanup)
-        // For MVP, just spawn new one and let it fade. Ideally we track it to remove old one.
+        // Destroy existing bubble if any
+        if (playerObj.bubble) {
+            playerObj.bubble.destroy();
+            playerObj.bubble = undefined;
+        }
 
-        const bubble = this.add.container(sprite.x, sprite.y - 70);
+        const bubble = this.add.container(sprite.x, sprite.y - 50); // Just above nametag
+        playerObj.bubble = bubble;
 
         const content = this.add.text(0, 0, text, {
             fontFamily: 'Arial',
@@ -73,7 +77,7 @@ export class MainScene extends Scene {
             -(bounds.height / 2) - padding,
             bounds.width + (padding * 2),
             bounds.height + (padding * 2),
-            10 // Radius
+            10
         );
         bg.strokeRoundedRect(
             -(bounds.width / 2) - padding,
@@ -109,12 +113,19 @@ export class MainScene extends Scene {
 
         // Destroy after 5 seconds
         this.time.delayedCall(5000, () => {
-            this.tweens.add({
-                targets: bubble,
-                alpha: 0,
-                duration: 500,
-                onComplete: () => bubble.destroy()
-            });
+            if (playerObj.bubble === bubble) { // Only destroy if it's still the same bubble
+                this.tweens.add({
+                    targets: bubble,
+                    alpha: 0,
+                    duration: 500,
+                    onComplete: () => {
+                        bubble.destroy();
+                        if (playerObj.bubble === bubble) {
+                            playerObj.bubble = undefined;
+                        }
+                    }
+                });
+            }
         });
     }
 
@@ -139,6 +150,7 @@ export class MainScene extends Scene {
         // Update local visual immediately (prediction)
         player.setPosition(x, y);
         this.myPlayer.nametag.setPosition(x, y - 40); // Nametag follows
+        this.myPlayer.bubble?.setPosition(x, y - 50); // Bubble follows
 
         // Send update if changed
         if (x !== prevX || y !== prevY) {
@@ -159,7 +171,8 @@ export class MainScene extends Scene {
                     color: '#ffffff',
                     stroke: '#000000',
                     strokeThickness: 3,
-                    fontFamily: 'Arial'
+                    fontFamily: 'Arial',
+                    align: 'center'
                 }).setOrigin(0.5);
 
                 const playerObj = { sprite, nametag };
@@ -175,6 +188,7 @@ export class MainScene extends Scene {
                 if (id !== this.socketService.socketId) {
                     playerObj?.sprite.setPosition(p.x, p.y);
                     playerObj?.nametag.setPosition(p.x, p.y - 40);
+                    playerObj?.bubble?.setPosition(p.x, p.y - 50);
                 }
             }
         });

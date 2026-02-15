@@ -1,0 +1,139 @@
+.profile {
+    @apply container mx-auto py-12 px-4 max-w-xl;
+
+    &__loading {
+        @apply py-12 text-center text-muted-foreground animate-pulse;
+    }
+
+    &__form {
+        @apply space-y-8;
+    }
+
+    &__header {
+        @apply flex flex-col items-center space-y-4;
+
+        &-avatar-wrapper {
+            @apply relative group;
+        }
+
+        &-avatar {
+            @apply w-32 h-32 rounded-full bg-secondary/50 flex items-center justify-center text-4xl font-bold text-secondary-foreground overflow-hidden border-4 border-primary/20 shadow-lg;
+
+            img {
+                @apply w-full h-full object-cover;
+            }
+        }
+
+        &-info {
+            @apply text-center space-y-1;
+
+            h3 {
+                @apply font-bold text-2xl text-foreground;
+            }
+
+            p {
+                @apply text-sm text-muted-foreground;
+            }
+        }
+    }
+
+    &__divider {
+        @apply border-border/50;
+    }
+
+    &__avatar-selection {
+        @apply space-y-4;
+
+        label {
+            @apply text-sm font-semibold text-foreground/80 block;
+        }
+
+        &-grid {
+            @apply grid grid-cols-5 gap-4;
+        }
+
+        &-button {
+            @apply relative aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-200 hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 bg-muted/20 cursor-pointer;
+
+            &--selected {
+                @apply border-primary opacity-100;
+            }
+
+            &--unselected {
+                @apply border-transparent opacity-50;
+            }
+
+            img {
+                @apply w-full h-full object-cover;
+            }
+
+            &-overlay {
+                @apply absolute inset-0 bg-primary/20 flex items-center justify-center backdrop-blur-[1px];
+
+                div {
+                    @apply bg-primary text-primary-foreground rounded-full p-1.5 shadow-sm;
+                }
+            }
+        }
+    }
+
+    &__fields {
+        @apply grid gap-6;
+
+        &-row {
+            @apply grid grid-cols-2 gap-6;
+        }
+    }
+
+    &__field {
+        @apply space-y-2;
+
+        label {
+            @apply text-sm font-medium leading-none text-foreground/80;
+        }
+
+        textarea {
+            @apply flex min-h-[120px] w-full rounded-xl border border-input bg-background px-4 py-3 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none shadow-sm;
+        }
+    }
+
+    &__select-wrapper {
+        @apply relative;
+
+        select {
+            @apply flex h-12 w-full rounded-xl border border-input bg-background px-4 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all appearance-none shadow-sm cursor-pointer hover:bg-muted/5;
+        }
+
+        &-icon {
+            @apply absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground;
+        }
+    }
+
+    &__message {
+        @apply p-4 text-sm rounded-xl flex items-center gap-2 animate-in fade-in slide-in-from-top-2;
+
+        &--success {
+            @apply bg-green-500/10 text-green-600 border border-green-500/20;
+        }
+
+        &--error {
+            @apply bg-red-500/10 text-red-600 border border-red-500/20;
+        }
+    }
+
+    &__actions {
+        @apply flex justify-end pt-4;
+
+        app-button {
+            @apply w-full sm:w-auto min-w-[150px] shadow-md hover:shadow-lg transition-all;
+        }
+    }
+
+    &__saving {
+        @apply flex items-center gap-2;
+
+        svg {
+            @apply animate-spin h-4 w-4;
+        }
+    }
+}

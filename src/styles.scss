@@ -32,11 +32,20 @@ body {
 
 /* ─── Custom Design System tokens for Tailwind-based components ─── */
 
+// Custom Design System tokens are now handled by Tailwind config and shadcn UI presets.
+// We keep :root here if we need to expose them to non-Tailwind contexts (like Angular Material),
+// but for this project we are moving to Tailwind-first.
+// Given we added them to tailwind.config.js as extend > colors, 
+// AND we are using `hsl(var(--param))` in tailwind config, 
+// WE MUST KEEP THE CSS VARIABLES DEFINITION HERE.
+
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
   --card: 0 0% 100%;
   --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
   --primary: 142.1 76.2% 36.3%;
   --primary-foreground: 355.7 100% 97.3%;
   --secondary: 210 40% 96.1%;
@@ -58,6 +67,8 @@ body {
   --foreground: 210 40% 98%;
   --card: 222.2 84% 6%;
   --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 6%;
+  --popover-foreground: 210 40% 98%;
   --primary: 142.1 70.6% 45.3%;
   --primary-foreground: 144.9 80% 10%;
   --secondary: 217.2 32.6% 17.5%;
@@ -76,86 +87,4 @@ body {
 /* You can add global styles to this file, and also import other style files */
 
 /* ─── Utility classes using our CSS vars ─── */
-.bg-background {
-  background-color: hsl(var(--background));
-}
-
-.bg-card {
-  background-color: hsl(var(--card));
-}
-
-.bg-muted {
-  background-color: hsl(var(--muted));
-}
-
-.bg-primary {
-  background-color: hsl(var(--primary));
-}
-
-.bg-secondary {
-  background-color: hsl(var(--secondary));
-}
-
-.text-foreground {
-  color: hsl(var(--foreground));
-}
-
-.text-card-foreground {
-  color: hsl(var(--card-foreground));
-}
-
-.text-muted-foreground {
-  color: hsl(var(--muted-foreground));
-}
-
-.text-primary {
-  color: hsl(var(--primary));
-}
-
-.text-primary-foreground {
-  color: hsl(var(--primary-foreground));
-}
-
-.text-secondary-foreground {
-  color: hsl(var(--secondary-foreground));
-}
-
-.text-accent-foreground {
-  color: hsl(var(--accent-foreground));
-}
-
-.text-destructive {
-  color: hsl(var(--destructive));
-}
-
-.text-destructive-foreground {
-  color: hsl(var(--destructive-foreground));
-}
-
-.border {
-  border-color: hsl(var(--border));
-}
-
-.border-t {
-  border-top-color: hsl(var(--border));
-}
-
-.border-b {
-  border-bottom-color: hsl(var(--border));
-}
-
-/* Container max-width override for consistency */
-.container {
-  max-width: 1200px;
-}
-
-/* Smooth transitions for theme changes */
-* {
-  transition-property: background-color, border-color, color;
-  transition-timing-function: ease;
-  transition-duration: 0s;
-}
-
-[data-theme] * {
-  transition-duration: 0.15s;
-}
+// Manual utility classes removed in favor of Tailwind utilities

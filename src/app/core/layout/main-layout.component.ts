@@ -32,7 +32,7 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 
               <!-- Aprender Dropdown -->
               <div class="relative group">
-                <button class="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 py-4">
+                <button class="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 py-4 cursor-pointer">
                   {{ 'nav.learn' | translate }}
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="transition-transform group-hover:rotate-180">
@@ -40,10 +40,10 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
                   </svg>
                 </button>
                 <div class="absolute top-full left-0 w-56 bg-card border rounded-lg shadow-lg py-1 z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-2 group-hover:translate-y-0">
-                  <a routerLink="/que-es-therian" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnWhat' | translate }}</a>
-                  <a routerLink="/glosario" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnGlossary' | translate }}</a>
-                  <a routerLink="/mitos" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnMyths' | translate }}</a>
-                  <a routerLink="/normas" class="block px-4 py-2 text-sm hover:bg-muted transition-colors">{{ 'nav.learnRules' | translate }}</a>
+                  <a routerLink="/que-es-therian" class="block px-4 py-2 text-sm hover:bg-muted transition-colors cursor-pointer">{{ 'nav.learnWhat' | translate }}</a>
+                  <a routerLink="/glosario" class="block px-4 py-2 text-sm hover:bg-muted transition-colors cursor-pointer">{{ 'nav.learnGlossary' | translate }}</a>
+                  <a routerLink="/mitos" class="block px-4 py-2 text-sm hover:bg-muted transition-colors cursor-pointer">{{ 'nav.learnMyths' | translate }}</a>
+                  <a routerLink="/normas" class="block px-4 py-2 text-sm hover:bg-muted transition-colors cursor-pointer">{{ 'nav.learnRules' | translate }}</a>
                 </div>
               </div>
             </nav>
@@ -53,8 +53,11 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
           <button class="inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 py-2 mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
                   (click)="toggleMobileMenu()">
             <span class="sr-only">{{ 'nav.toggleMenu' | translate }}</span>
-            <svg *ngIf="!mobileMenuOpen()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            <svg *ngIf="mobileMenuOpen()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            @if (!mobileMenuOpen()) {
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            }
           </button>
 
           <div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
@@ -76,38 +79,42 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
                 class="p-2 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                 [title]="themeService.theme() === 'dark' ? ('nav.toggleLight' | translate) : ('nav.toggleDark' | translate)"
               >
-                <svg *ngIf="themeService.theme() === 'light'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                <svg *ngIf="themeService.theme() === 'dark'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                @if (themeService.theme() === 'light') {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                }
               </button>
-              <ng-container *ngIf="authService.isAuthenticated(); else authButtons">
+              @if (authService.isAuthenticated()) {
                 <a routerLink="/profile" class="text-sm font-medium hidden md:inline-block mr-2 hover:text-primary transition-colors cursor-pointer">
                   {{ authService.user()?.user_metadata?.['username'] || 'User' }}
                 </a>
                 <app-button variant="outline" size="sm" (click)="logout()">{{ 'nav.logout' | translate }}</app-button>
-              </ng-container>
-              <ng-template #authButtons>
+              } @else {
                 <app-button variant="ghost" size="sm" routerLink="/login">{{ 'nav.login' | translate }}</app-button>
                 <app-button variant="primary" size="sm" routerLink="/register">{{ 'nav.register' | translate }}</app-button>
-              </ng-template>
+              }
             </nav>
           </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div *ngIf="mobileMenuOpen()" class="md:hidden border-t bg-background">
-          <div class="container py-4 space-y-3">
-            <a routerLink="/feed" class="block py-2 text-sm font-medium hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.community' | translate }}</a>
-            <a routerLink="/media" class="block py-2 text-sm font-medium hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.multimedia' | translate }}</a>
-            <a routerLink="/store" class="block py-2 text-sm font-medium hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.store' | translate }}</a>
-            <div class="border-t pt-3 mt-3">
-              <p class="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-2">{{ 'nav.learn' | translate }}</p>
-              <a routerLink="/que-es-therian" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnWhat' | translate }}</a>
-              <a routerLink="/glosario" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnGlossary' | translate }}</a>
-              <a routerLink="/mitos" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnMyths' | translate }}</a>
-              <a routerLink="/normas" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnRules' | translate }}</a>
+        @if (mobileMenuOpen()) {
+          <div class="md:hidden border-t bg-background">
+            <div class="container py-4 space-y-3">
+              <a routerLink="/feed" class="block py-2 text-sm font-medium hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.community' | translate }}</a>
+              <a routerLink="/media" class="block py-2 text-sm font-medium hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.multimedia' | translate }}</a>
+              <a routerLink="/store" class="block py-2 text-sm font-medium hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.store' | translate }}</a>
+              <div class="border-t pt-3 mt-3">
+                <p class="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-2">{{ 'nav.learn' | translate }}</p>
+                <a routerLink="/que-es-therian" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnWhat' | translate }}</a>
+                <a routerLink="/glosario" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnGlossary' | translate }}</a>
+                <a routerLink="/mitos" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnMyths' | translate }}</a>
+                <a routerLink="/normas" class="block py-1.5 text-sm hover:text-primary transition-colors" (click)="mobileMenuOpen.set(false)">{{ 'nav.learnRules' | translate }}</a>
+              </div>
             </div>
           </div>
-        </div>
+        }
       </nav>
 
       <!-- Main Content -->

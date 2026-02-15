@@ -1,0 +1,91 @@
+<div class="register">
+    <div class="register__container">
+        <!-- Register Card -->
+        <div class="register__card">
+            <!-- Accent bar -->
+            <div class="register__accent-bar"></div>
+
+            <div class="register__content">
+                <!-- Header -->
+                <div class="register__header">
+                    <!-- Paw icon -->
+                    <div class="register__icon">
+                        <img src="assets/masks/register-wolf.png" alt="Wolf Mask">
+                    </div>
+                    <div>
+                        <h1 class="register__title">{{ 'auth.joinPack' | translate }}</h1>
+                        <p class="register__subtitle">{{ 'auth.registerSubtitle' | translate }}</p>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__form">
+                    <div class="register__fields">
+                        <app-input formControlName="username" [label]="'auth.username' | translate"
+                            [placeholder]="'auth.usernamePlaceholder' | translate" [error]="usernameError()"
+                            [hint]="'auth.usernameHint' | translate"></app-input>
+
+                        <app-input formControlName="email" [label]="'auth.email' | translate" type="email"
+                            [placeholder]="'auth.emailPlaceholder' | translate" [error]="emailError()"></app-input>
+
+                        <app-input formControlName="password" [label]="'auth.password' | translate" type="password"
+                            [placeholder]="'auth.passwordPlaceholder' | translate"
+                            [error]="passwordError()"></app-input>
+                    </div>
+
+                    @if (errorMessage()) {
+                    <div class="register__error">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        {{ errorMessage() }}
+                    </div>
+                    }
+
+                    @if (successMessage()) {
+                    <div class="register__success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        {{ successMessage() }}
+                    </div>
+                    }
+
+                    <app-button type="submit" description="Register" [disabled]="registerForm.invalid || isLoading()"
+                        [fullWidth]="true" variant="primary" size="lg" class="w-full text-lg h-12">
+                        @if (isLoading()) {
+                        <span class="register__loading">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            {{ 'auth.creatingAccount' | translate }}
+                        </span>
+                        } @else {
+                        <span>{{ 'auth.createAccount' | translate }}</span>
+                        }
+                    </app-button>
+                </form>
+
+                <!-- Divider -->
+                <div class="register__divider">
+                    <div class="register__divider-line"><span></span></div>
+                </div>
+
+                <!-- Sign in link -->
+                <p class="register__signin">
+                    {{ 'auth.hasAccount' | translate }}
+                    <a routerLink="/login">{{ 'auth.signIn' | translate }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

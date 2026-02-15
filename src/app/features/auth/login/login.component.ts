@@ -1,5 +1,4 @@
-
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -13,76 +12,8 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, ButtonComponent, InputComponent, TranslatePipe],
-  template: `
-    <div class="flex min-h-[80vh] items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div class="w-full max-w-md">
-        <!-- Login Card -->
-        <div class="bg-card border rounded-2xl shadow-lg overflow-hidden">
-          <!-- Accent bar -->
-          <div class="h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"></div>
-          
-          <div class="p-8 space-y-6">
-            <!-- Header -->
-            <div class="text-center space-y-3">
-              <!-- Wolf icon -->
-              <div class="mx-auto w-28 h-28 flex items-center justify-center mb-2">
-                <img src="assets/masks/login-wolf.png" alt="Wolf Mask" class="w-full h-full object-contain drop-shadow-lg">
-              </div>
-              <div>
-                <h1 class="text-2xl font-bold tracking-tight">{{ 'auth.welcomeBack' | translate }}</h1>
-                <p class="text-sm text-muted-foreground mt-1">{{ 'auth.loginSubtitle' | translate }}</p>
-              </div>
-            </div>
-
-            <!-- Form -->
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
-              <app-input
-                formControlName="email"
-                [label]="i18n.t('auth.email')"
-                type="email"
-                [placeholder]="i18n.t('auth.emailPlaceholder')"
-                [error]="emailError"
-              ></app-input>
-
-              <app-input
-                formControlName="password"
-                [label]="i18n.t('auth.password')"
-                type="password"
-                [placeholder]="i18n.t('auth.passwordPlaceholder')"
-                [error]="passwordError"
-              ></app-input>
-
-              <div *ngIf="errorMessage" class="p-3 text-sm text-destructive bg-destructive/10 rounded-lg border border-destructive/20">
-                {{ errorMessage }}
-              </div>
-
-              <app-button
-                type="submit"
-                description="Login"
-                [disabled]="loginForm.invalid || isLoading"
-                [fullWidth]="true"
-                variant="primary"
-              >
-                {{ isLoading ? i18n.t('auth.loggingIn') : i18n.t('auth.loginBtn') }}
-              </app-button>
-            </form>
-
-            <!-- Divider -->
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center"><span class="w-full border-t"></span></div>
-            </div>
-
-            <!-- Sign up link -->
-            <p class="text-center text-sm text-muted-foreground">
-              {{ 'auth.noAccount' | translate }}
-              <a routerLink="/register" class="font-semibold text-primary hover:underline underline-offset-4 transition-colors">{{ 'auth.signUp' | translate }}</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: []
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
@@ -95,22 +26,53 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  isLoading = false;
-  errorMessage = '';
+  isLoading = signal(false);
+  errorMessage = signal('');
 
-  get emailError(): string {
-    const control = this.loginForm.get('email');
-    if (control?.touched && control?.errors?.['required']) return this.i18n.t('auth.emailRequired');
-    if (control?.touched && control?.errors?.['email']) return this.i18n.t('auth.emailInvalid');
+  // Computed signals for errors could be overkill if form structure is simple,
+  // but let's stick to methods or computed if we tracked form status in a signal.
+  // Since FormGroup is not signal-based by default in older Angular, we'll keep getters 
+  // or just simple methods, but the UI calls them.
+  // We can make them computed if we listen to valueChanges, but for now simple getters are fine
+  // or we can just invoke the logic in the template. 
+  // Let's keep the logic simple as getters but mapped to signals isn't direct without RxJS interop.
+  // So we will just use standard getters but return the value, and the template uses () for signals where appropriate.
+  // Actually, wait, the template uses error="emailError()" which implies it's a signal or function.
+  // Let's make them functions to match the template call style if I used () in template.
+  // In the template I wrote: [error]="emailError()" - so it expects a signal or function.
+
+
+
+  // Better approach: straightforward methods called by template, 
+  // or wrapping the form state. 
+  // For now I'll use signals for loading/error state provided by the component logic.
+
+  // NOTE: In the template I used `emailError()` which tries to call the signal.
+  // But since form controls aren't signals, I can't easily make a computed signal that updates automatically
+  // without `toSignal(this.loginForm.valueChanges)`.
+  // I'll stick to methods for validation messages to avoid complex setup, 
+  // but call them as functions in template.
+
+  getEmailError(): string {
+    const control = this.loginForm.controls.email;
+    if (control.touched && control.hasError('required')) return this.i18n.t('auth.emailRequired');
+    if (control.touched && control.hasError('email')) return this.i18n.t('auth.emailInvalid');
     return '';
   }
 
-  get passwordError(): string {
-    const control = this.loginForm.get('password');
-    if (control?.touched && control?.errors?.['required']) return this.i18n.t('auth.passwordRequired');
-    if (control?.touched && control?.errors?.['minlength']) return this.i18n.t('auth.passwordMin');
+  getPasswordError(): string {
+    const control = this.loginForm.controls.password;
+    if (control.touched && control.hasError('required')) return this.i18n.t('auth.passwordRequired');
+    if (control.touched && control.hasError('minlength')) return this.i18n.t('auth.passwordMin');
     return '';
   }
+
+  emailError() { return this.getEmailError(); }
+  passwordError() { return this.getPasswordError(); }
+
+  // To make the template `emailError()` work if it refers to the computed signal:
+  // I will just define methods and change template to `emailError()` (method call).
+  // Wait, I already wrote the template to use `emailError()`.
 
   async onSubmit() {
     if (this.loginForm.invalid) {
@@ -118,8 +80,8 @@ export class LoginComponent {
       return;
     }
 
-    this.isLoading = true;
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.errorMessage.set('');
 
     const { email, password } = this.loginForm.getRawValue();
 
@@ -128,9 +90,9 @@ export class LoginComponent {
       if (error) throw error;
       this.router.navigate(['/']);
     } catch (err: any) {
-      this.errorMessage = err.message || this.i18n.t('auth.loginError');
+      this.errorMessage.set(err.message || this.i18n.t('auth.loginError'));
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 }

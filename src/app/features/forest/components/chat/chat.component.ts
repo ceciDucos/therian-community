@@ -1,14 +1,7 @@
-import { Component, inject, OnInit, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SocketService } from '../../services/socket.service';
-
-interface ChatMessage {
-  id: string;
-  username: string;
-  message: string;
-  isSelf: boolean;
-}
 
 @Component({
   selector: 'app-chat',
@@ -54,29 +47,28 @@ interface ChatMessage {
       </div>
 
     </div>
-
-    <!-- Optional: Minimal Log for History (Fades out) -->
-    <!-- We can keep this hidden or very subtle since we have bubbles now -->
   `,
   styles: []
 })
-@ViewChild('chatInput') chatInput!: ElementRef;
+export class ChatComponent implements OnInit {
+  private socketService = inject(SocketService);
+  newMessage = '';
 
-// We don't strictly need to subscribe to messages here anymore if we only use bubbles
-// But keeping it might be useful for a future log or debug
-ngOnInit() { }
+  @ViewChild('chatInput') chatInput!: ElementRef;
 
-sendMessage() {
-  if (!this.newMessage.trim()) return;
+  ngOnInit() { }
 
-  this.socketService.sendMessage(this.newMessage);
-  this.newMessage = '';
+  sendMessage() {
+    if (!this.newMessage.trim()) return;
 
-  // Blur input to return focus to game
-  this.chatInput?.nativeElement?.blur();
-}
+    this.socketService.sendMessage(this.newMessage);
+    this.newMessage = '';
 
-stopProp(event: Event) {
-  event.stopPropagation();
-}
+    // Blur input to return focus to game
+    this.chatInput?.nativeElement?.blur();
+  }
+
+  stopProp(event: Event) {
+    event.stopPropagation();
+  }
 }
