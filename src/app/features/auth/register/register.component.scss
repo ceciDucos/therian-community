@@ -5,9 +5,7 @@
         @apply w-full max-w-lg;
     }
 
-    &__card {
-        @apply bg-card/95 backdrop-blur-sm border border-white/10 rounded-3xl shadow-2xl overflow-hidden ring-1 ring-white/5;
-    }
+
 
     &__accent-bar {
         @apply h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500;

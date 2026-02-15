@@ -453,6 +453,10 @@
         "navGlossary": "Glosario",
         "navJoin": "Unirse a la Comunidad"
     },
+    "chat": {
+        "title": "Chat de la Manada",
+        "placeholder": "Aúlla a tu manada..."
+    },
     "admin": {
         "title": "Panel de Moderación",
         "pendingReports": "Reportes Pendientes",

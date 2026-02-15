@@ -453,6 +453,10 @@
         "navGlossary": "Glossary",
         "navJoin": "Join the Community"
     },
+    "chat": {
+        "title": "Pack Chat",
+        "placeholder": "Howl to your pack..."
+    },
     "admin": {
         "title": "Moderation Panel",
         "pendingReports": "Pending Reports",

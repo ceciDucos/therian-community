@@ -1,20 +1,77 @@
 .chat {
     &__container {
-        @apply flex flex-col h-[600px] w-full max-w-2xl mx-auto bg-card border border-white/10 rounded-3xl shadow-2xl overflow-hidden ring-1 ring-white/5;
+        position: absolute;
+        bottom: 1.5rem;
+        /* bottom-6 */
+        left: 1.5rem;
+        /* left-6 */
+        display: flex;
+        flex-direction: column;
+        height: 400px;
+        width: 20rem;
+        /* w-80 */
+
+        @media (min-width: 640px) {
+            width: 24rem;
+            /* sm:w-96 */
+        }
+
+        background-color: rgba(0, 0, 0, 0.6);
+        /* bg-black/60 */
+        backdrop-filter: blur(12px);
+        /* backdrop-blur-md */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        /* border-white/10 */
+        border-radius: 1.5rem;
+        /* rounded-3xl */
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        /* shadow-2xl */
+        overflow: hidden;
+        /* ring-1 ring-white/5 equivalent */
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        pointer-events: auto;
+        transition: all 0.3s ease;
     }
 
     &__header {
-        @apply p-4 border-b border-white/10 bg-muted/30 flex items-center justify-between;
+        padding: 0.75rem;
+        /* p-3 */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
 
         h3 {
-            @apply font-bold text-lg text-foreground flex items-center gap-2;
+            font-weight: 700;
+            font-size: 0.875rem;
+            /* text-sm */
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
         }
     }
 
     &__messages {
-        @apply flex-1 overflow-y-auto p-4 space-y-4 bg-black/20;
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        /* space-y-3 */
+        background-color: transparent;
 
-        // Custom scrollbar
+        /* Custom scrollbar */
         &::-webkit-scrollbar {
             width: 8px;
         }
@@ -24,57 +81,131 @@
         }
 
         &::-webkit-scrollbar-thumb {
-            @apply bg-white/10 rounded-full hover:bg-white/20;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
         }
     }
 
     &__message {
-        @apply flex gap-3 max-w-[80%];
+        display: flex;
+        gap: 0.75rem;
+        max-width: 85%;
 
         &--mine {
-            @apply ml-auto flex-row-reverse;
+            margin-left: auto;
+            flex-direction: row-reverse;
 
             .chat__message-bubble {
-                @apply bg-primary text-primary-foreground rounded-br-sm;
+                background-color: hsl(var(--primary));
+                color: hsl(var(--primary-foreground));
+                border-bottom-right-radius: 0.125rem;
+                /* rounded-br-sm */
             }
         }
 
         &--others {
             .chat__message-bubble {
-                @apply bg-muted text-foreground rounded-bl-sm;
+                /* Glass effect for others */
+                background-color: rgba(255, 255, 255, 0.1);
+                color: white;
+                border-bottom-left-radius: 0.125rem;
+                /* rounded-bl-sm */
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .chat__message-header {
+                /* Name color logic handled inline but base style here */
             }
         }
 
         &-avatar {
-            @apply flex-shrink-0 w-8 h-8 rounded-full overflow-hidden bg-background border border-border;
+            flex-shrink: 0;
+            width: 2rem;
+            /* w-8 */
+            height: 2rem;
+            /* h-8 */
+            border-radius: 9999px;
+            overflow: hidden;
+            background-color: hsl(var(--background));
+            border: 1px solid hsl(var(--border) / 0.2);
 
             img {
-                @apply w-full h-full object-cover;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         }
 
         &-content {
-            @apply flex flex-col gap-1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
 
         &-header {
-            @apply flex items-center gap-2 text-xs text-muted-foreground;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            /* text-xs */
+            color: rgba(255, 255, 255, 0.6);
+            /* muted-foreground equivalent for dark bg */
         }
 
         &-bubble {
-            @apply p-3 rounded-2xl text-sm shadow-sm break-words;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            /* rounded-2xl */
+            font-size: 0.875rem;
+            /* text-sm */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            word-break: break-word;
+            line-height: 1.4;
         }
 
         &-time {
-            @apply text-[10px] opacity-70 mt-1 block text-right;
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 0.25rem;
+            display: block;
+            text-align: right;
         }
     }
 
     &__input {
-        @apply p-4 border-t border-white/10 bg-card/50 flex gap-2 items-end;
+        padding: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        gap: 0.5rem;
+        align-items: flex-end;
 
         textarea {
-            @apply flex-1 bg-muted/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none max-h-32 min-h-[44px];
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            /* rounded-xl */
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            color: white;
+            resize: none;
+            max-height: 6rem;
+            min-height: 36px;
+            font-family: inherit;
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.4);
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px hsl(var(--primary) / 0.5);
+            }
         }
     }
 }

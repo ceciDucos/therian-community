@@ -111,7 +111,7 @@
     }
 
     &__message {
-        @apply p-4 text-sm rounded-xl flex items-center gap-2 animate-in fade-in slide-in-from-top-2;
+        @apply p-4 text-sm rounded-xl flex items-center gap-2;
 
         &--success {
             @apply bg-green-500/10 text-green-600 border border-green-500/20;
