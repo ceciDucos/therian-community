@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base-href /therian-community/
+        run: npm run build -- --base-href /
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
