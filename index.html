@@ -6,6 +6,16 @@
   <title>TherianCommunity</title>
 
   <base href="/">
+  <!-- Restores the original path after GitHub Pages 404 redirect -->
+  <script>
+    (function () {
+      var p = new URLSearchParams(window.location.search).get('p');
+      if (p) {
+        window.history.replaceState(null, '', decodeURIComponent(p));
+      }
+    })();
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +26,6 @@
 
 <body>
   <app-root></app-root>
-<link rel="modulepreload" href="chunk-BXXIC26L.js"><link rel="modulepreload" href="chunk-A7VTSCNG.js"><link rel="modulepreload" href="chunk-H32VASCQ.js"><link rel="modulepreload" href="chunk-TMZRTJDE.js"><link rel="modulepreload" href="chunk-M6UWFHQV.js"><link rel="modulepreload" href="chunk-R2LU7DUE.js"><link rel="modulepreload" href="chunk-DB7Y4EIF.js"><script src="main-SJF6754V.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-66KFOJ6N.js"><link rel="modulepreload" href="chunk-KDZ2QLQ7.js"><link rel="modulepreload" href="chunk-XNGQBVSH.js"><link rel="modulepreload" href="chunk-A7VTSCNG.js"><link rel="modulepreload" href="chunk-P6I3TYY4.js"><link rel="modulepreload" href="chunk-AMCF2LO2.js"><link rel="modulepreload" href="chunk-NQGW4V7S.js"><script src="main-KDTUGTII.js" type="module"></script></body>
 
 </html>
