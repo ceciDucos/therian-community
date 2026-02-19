@@ -1,12 +1,23 @@
 <div class="chat" [class.chat--closed]="!isOpen()" [class.chat--inactive]="!isUserActive()">
     <div class="chat__container">
-        <div class="chat__header">
-            <h3>{{ 'chat.title' | translate }}</h3>
+        <div class="chat__header" (click)="toggleChat()">
+            <h3>
+                <span>{{ 'chat.title' | translate }}</span>
+                <span class="indicator"></span>
+            </h3>
+            <button class="toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    class="transition-transform duration-200" [class.rotate-180]="!isOpen()" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m18 15-6-6-6 6" />
+                </svg>
+            </button>
         </div>
 
         <div class="chat__messages" #scrollContainer>
             @for (msg of messages(); track msg.id) {
-            <div class="chat__message">
+            <div class="chat__message" [class.chat__message--mine]="isMyMessage(msg.username)"
+                [class.chat__message--others]="!isMyMessage(msg.username)">
                 <div class="chat__message-content">
                     <div class="chat__message-header">
                         <span [style.color]="msg.color">{{ msg.username }}</span>
@@ -38,4 +49,3 @@
             </div>
         </div>
     </div>
-</div>

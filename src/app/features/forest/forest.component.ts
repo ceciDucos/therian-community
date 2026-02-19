@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, ElementRef, ViewChild, inject, computed, ChangeDetectorRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Game } from 'phaser';
 import { BootScene } from './scenes/BootScene';
@@ -12,38 +12,45 @@ import { ChatComponent } from './components/chat/chat.component';
     standalone: true,
     imports: [CommonModule, ChatComponent],
     templateUrl: './forest.component.html',
-    styles: [`
-    #game-container {
-        width: 800px;
-        height: 600px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-  `]
+    styleUrl: './forest.component.scss'
 })
-export class ForestComponent implements OnInit, OnDestroy {
+export class ForestComponent implements AfterViewInit, OnDestroy {
     @ViewChild('gameContainer') gameContainer!: ElementRef;
 
     private game: Game | undefined;
     private authService = inject(AuthService);
     private socketService = inject(SocketService);
+    private cdr = inject(ChangeDetectorRef);
+    private viewReady = false;
 
-    authenticated = false;
+    // Signal-based: no manual mutation, no ExpressionChanged error
+    authenticated = computed(() => !!this.authService.user());
 
-    async ngOnInit() {
-        this.authenticated = this.authService.isAuthenticated(); // Sync check usually sufficient if signal/observable
-        if (this.authenticated) {
-            this.socketService.connect();
-            // Delay game init slightly to ensure container is ready (ngAfterViewInit is safer but this works with setTimeout usually, or just move to AfterViewInit)
-        }
+    constructor() {
+        // React to auth changes (e.g. on page refresh session restores async)
+        effect(() => {
+            const isAuth = this.authenticated();
+            if (isAuth && this.viewReady && !this.game) {
+                this.startGame();
+                // Trigger CD so template reacts to the signal
+                this.cdr.detectChanges();
+            }
+        });
     }
 
     ngAfterViewInit() {
-        if (this.authenticated) {
-            this.initGame();
+        this.viewReady = true;
+        // If already authenticated when view is ready, start immediately
+        if (this.authenticated() && !this.game) {
+            this.startGame();
         }
     }
 
-    initGame() {
+    private startGame() {
+        if (this.game) return; // Guard against double-init
+
+        this.socketService.connect();
+
         const config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
             width: 800,
@@ -53,33 +60,24 @@ export class ForestComponent implements OnInit, OnDestroy {
             physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { x: 0, y: 0 }, // Top down
+                    gravity: { x: 0, y: 0 },
                     debug: false
                 }
             },
-            backgroundColor: '#2d2d2d',
-            pixelArt: true, // Crucial for pixel art crispness
-            roundPixels: true
+            backgroundColor: '#1a2a0d',
+            pixelArt: true,
+            roundPixels: true,
         };
 
         this.game = new Game(config);
 
-        // Pass services to scene
         this.game.registry.set('socketService', this.socketService);
         const user = this.authService.user();
-        // Force cast or check if property exists, or use metadata
-        const username = (user as any)?.user_metadata?.username || (user as any)?.username || user?.email?.split('@')[0] || 'Guest';
+        const username = (user as any)?.user_metadata?.username
+            || (user as any)?.username
+            || user?.email?.split('@')[0]
+            || 'Guest';
         this.game.registry.set('username', username);
-        // Alternatively, scenes can inject via constructor if we manage them, but Phaser manages scenes.
-        // Better way: pass data to scene.start, but BootScene starts first.
-        // We can use the registry or data manager.
-        // Or we can modify MainScene to look up from registry?
-        // In MainScene.ts I wrote `init(data)`.
-        // I need to pass data when starting MainScene.
-        // BootScene starts MainScene. I should pass data there?
-        // Or just use a singleton/service pattern.
-        // Actually, in `MainScene.ts` I wrote: `init(data: { socketService: SocketService })`.
-        // So BootScene needs to pass it.
     }
 
     ngOnDestroy() {

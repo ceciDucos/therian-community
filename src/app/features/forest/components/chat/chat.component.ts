@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild, ElementRef, signal } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef, signal, ViewEncapsulation, HostBinding } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +10,8 @@ import { SocketService } from '../../services/socket.service';
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
+  encapsulation: ViewEncapsulation.None  // Global styles — bypasses Angular scoping
 })
 export class ChatComponent implements OnInit {
   private socketService = inject(SocketService);
@@ -20,6 +21,13 @@ export class ChatComponent implements OnInit {
   isOpen = signal(true);
   isUserActive = signal(true);
   private activityTimeout: any;
+
+  // Control host size — snaps+animates height so bottom edge stays fixed
+  @HostBinding('style.height')
+  get hostHeight() { return this.isOpen() ? '450px' : '3.25rem'; }
+
+  @HostBinding('style.transition')
+  hostTransition = 'height 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
 
   @ViewChild('chatInput') chatInput!: ElementRef<HTMLTextAreaElement>;
 
@@ -62,6 +70,16 @@ export class ChatComponent implements OnInit {
         this.isUserActive.set(false);
       }
     }, 10000); // 10 seconds of inactivity
+  }
+
+  isMyMessage(username: string): boolean {
+    // Basic check - good enough for now, ideally check against session ID or current username from auth
+    // We don't have current username stored readily in component, but let's see.
+    // Actually, we can just check if we have a way to know "me".
+    // For now, let's just assume we can get it from authService if we inject it, or just use a simple heuristic if the server sent it back to us.
+    // Wait, the message list doesn't distinguish "me".
+    // Let's inject AuthService.
+    return username === this.socketService.username();
   }
 
   toggleChat() {

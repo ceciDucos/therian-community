@@ -1,0 +1,65 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+:host {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 64px);
+    overflow: hidden;
+    background-color: #111;
+    align-items: center;
+    justify-content: center;
+}
+
+.forest-wrapper {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    flex-shrink: 0;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
+}
+
+#game-container {
+    width: 800px;
+    height: 600px;
+    position: relative;
+    z-index: 1;
+
+    canvas {
+        display: block;
+    }
+}
+
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    backdrop-filter: blur(4px);
+
+    p {
+        font-size: $text-xl;
+        font-weight: 700;
+        color: #f97316;
+    }
+}
+
+.controls-hint {
+    position: fixed;
+    top: 80px;
+    right: $spacing-4;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    color: white;
+    font-size: $text-xs;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+}

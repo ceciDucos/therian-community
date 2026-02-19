@@ -5,11 +5,23 @@ export class MainScene extends Scene {
     private socketService!: SocketService;
     // Store sprite, nametag AND bubble
     private players: Map<string, { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text, bubble?: Phaser.GameObjects.Container }> = new Map();
-    private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-    private wasd!: { [key: string]: Phaser.Input.Keyboard.Key };
     private myPlayer: { sprite: Phaser.GameObjects.Sprite, nametag: Phaser.GameObjects.Text, bubble?: Phaser.GameObjects.Container } | undefined;
     private restArea!: Phaser.Geom.Circle;
     private inRestArea = false;
+
+    // Native key tracking — no Phaser keyboard, no blanket preventDefault
+    private keysDown = new Set<string>();
+    private readonly MOVEMENT_KEYS = new Set(['arrowleft', 'arrowright', 'arrowup', 'arrowdown', 'a', 's', 'd', 'w']);
+
+    private onKeyDown = (e: KeyboardEvent) => {
+        const key = e.key.toLowerCase();
+        this.keysDown.add(key);
+        // Prevent page scroll for movement keys, but only when not typing in a field
+        const active = document.activeElement;
+        const isTyping = active instanceof HTMLTextAreaElement || active instanceof HTMLInputElement;
+        if (!isTyping && this.MOVEMENT_KEYS.has(key)) e.preventDefault();
+    };
+    private onKeyUp = (e: KeyboardEvent) => this.keysDown.delete(e.key.toLowerCase());
 
     constructor() {
         super({ key: 'MainScene' });
@@ -22,11 +34,10 @@ export class MainScene extends Scene {
     create() {
         this.add.image(400, 300, 'forest-bg').setDisplaySize(800, 600);
 
-        // Setup input
-        if (this.input.keyboard) {
-            this.cursors = this.input.keyboard.createCursorKeys();
-            this.wasd = this.input.keyboard.addKeys('W,A,S,D') as any;
-        }
+        // Use native DOM listeners — no Phaser keyboard capture, no preventDefault,
+        // so WASD can be freely typed in the chat textarea
+        window.addEventListener('keydown', this.onKeyDown);
+        window.addEventListener('keyup', this.onKeyUp);
 
         // Create Rest Area (Interactive)
         const restX = 650;
@@ -192,26 +203,27 @@ export class MainScene extends Scene {
     }
 
     override update() {
-        if (!this.cursors || !this.myPlayer) return;
+        // Block game input when user is typing in chat or any text field
+        const active = document.activeElement;
+        if (active instanceof HTMLTextAreaElement || active instanceof HTMLInputElement) return;
+
+        if (!this.myPlayer) return;
 
         const player = this.myPlayer.sprite;
         const prevX = player.x;
         const prevY = player.y;
 
-        // reset velocity logic if using physics, or just update position for MVP
         let x = player.x;
         let y = player.y;
 
-        // Simple movement
         const speed = 4;
-        const left = this.cursors.left.isDown || this.wasd['A'].isDown;
-        const right = this.cursors.right.isDown || this.wasd['D'].isDown;
-        const up = this.cursors.up.isDown || this.wasd['W'].isDown;
-        const down = this.cursors.down.isDown || this.wasd['S'].isDown;
+        const left = this.keysDown.has('arrowleft') || this.keysDown.has('a');
+        const right = this.keysDown.has('arrowright') || this.keysDown.has('d');
+        const up = this.keysDown.has('arrowup') || this.keysDown.has('w');
+        const down = this.keysDown.has('arrowdown') || this.keysDown.has('s');
 
         if (left) x -= speed;
         else if (right) x += speed;
-
         if (up) y -= speed;
         else if (down) y += speed;
 
@@ -224,15 +236,19 @@ export class MainScene extends Scene {
             this.inRestArea = false;
         }
 
-        // Update local visual immediately (prediction)
         player.setPosition(x, y);
-        this.myPlayer.nametag.setPosition(x, y - 40); // Nametag follows
-        this.myPlayer.bubble?.setPosition(x, y - 50); // Bubble follows
+        this.myPlayer.nametag.setPosition(x, y - 40);
+        this.myPlayer.bubble?.setPosition(x, y - 50);
 
-        // Send update if changed
         if (x !== prevX || y !== prevY) {
             this.socketService.emit('move', { x, y });
         }
+    }
+
+    shutdown() {
+        // Clean up native listeners when scene is destroyed
+        window.removeEventListener('keydown', this.onKeyDown);
+        window.removeEventListener('keyup', this.onKeyUp);
     }
 
     private updatePlayers(serverPlayers: any) {

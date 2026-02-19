@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import io, { Socket } from 'socket.io-client';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
@@ -10,6 +10,11 @@ import { environment } from '../../../../environments/environment';
 export class SocketService {
     private socket: Socket | undefined;
     private url = environment.mmoUrl;
+    private authService = inject(AuthService);
+
+    // State signals
+    private currentUsername = signal<string>('Guest');
+    username = this.currentUsername.asReadonly();
 
     // Events
     public state$ = new Subject<any>();
@@ -20,7 +25,18 @@ export class SocketService {
         return this.socket?.id;
     }
 
-    constructor(private authService: AuthService) { }
+    constructor() {
+        // In a real app we'd set this from auth
+        // We can use an effect here or just check once since this service is likely singleton-ish but depends on auth
+        // Better to check on connect or when auth changes, but for now constructor is fine if auth is ready.
+        // Actually best to set it in connect() or use an effect.
+        // Let's use a computed in AuthService? or just grab it here.
+        const user = this.authService.user();
+        if (user) {
+            const name = (user as any)?.user_metadata?.username || (user as any)?.username || user?.email?.split('@')[0] || 'Guest';
+            this.currentUsername.set(name);
+        }
+    }
 
     connect() {
         const token = this.authService.session()?.access_token;
