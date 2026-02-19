@@ -54,5 +54,5 @@ export const routes: Routes = [
             { path: 'forest', loadComponent: () => import('./features/forest/forest.component').then(m => m.ForestComponent) },
         ]
     },
-    { path: '**', redirectTo: 'welcome' }
+    { path: '**', loadComponent: () => import('./features/public/not-found/not-found.component').then(m => m.NotFoundComponent) }
 ];

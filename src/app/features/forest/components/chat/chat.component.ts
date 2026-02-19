@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild, ElementRef, signal, ViewEncapsulation, HostBinding } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef, signal, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,13 +21,6 @@ export class ChatComponent implements OnInit {
   isOpen = signal(true);
   isUserActive = signal(true);
   private activityTimeout: any;
-
-  // Control host size — snaps+animates height so bottom edge stays fixed
-  @HostBinding('style.height')
-  get hostHeight() { return this.isOpen() ? '450px' : '3.25rem'; }
-
-  @HostBinding('style.transition')
-  hostTransition = 'height 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
 
   @ViewChild('chatInput') chatInput!: ElementRef<HTMLTextAreaElement>;
 
