@@ -6,6 +6,16 @@
   <title>TherianCommunity</title>
 
   <base href="/">
+  <!-- Restores the original path after GitHub Pages 404 redirect -->
+  <script>
+    (function () {
+      var p = new URLSearchParams(window.location.search).get('p');
+      if (p) {
+        window.history.replaceState(null, '', decodeURIComponent(p));
+      }
+    })();
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">

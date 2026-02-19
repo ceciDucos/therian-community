@@ -1,60 +1,51 @@
-
-import { Injectable, inject, signal } from '@angular/core';
-import { SupabaseService } from './supabase.service';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { Profile } from '../../models/profile.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-    private supabase = inject(SupabaseService);
+    private http = inject(HttpClient);
+    private readonly API = environment.mmoUrl;
 
     async getProfile(userId: string): Promise<{ data: Profile | null; error: any }> {
-        const { data, error } = await this.supabase.client
-            .from('profiles')
-            .select('*')
-            .eq('id', userId)
-            .maybeSingle();
-
-        return { data, error };
+        try {
+            const data = await firstValueFrom(this.http.get<Profile>(`${this.API}/profiles/${userId}`));
+            return { data, error: null };
+        } catch (error) {
+            return { data: null, error };
+        }
     }
 
     async getProfileByUsername(username: string): Promise<{ data: Profile | null; error: any }> {
-        const { data, error } = await this.supabase.client
-            .from('profiles')
-            .select('*')
-            .eq('username', username)
-            .maybeSingle();
-
-        return { data, error };
+        try {
+            const data = await firstValueFrom(this.http.get<Profile>(`${this.API}/profiles/by-username/${username}`));
+            return { data, error: null };
+        } catch (error) {
+            return { data: null, error };
+        }
     }
 
     async updateProfile(userId: string, updates: Partial<Profile>): Promise<{ error: any }> {
-        const { error } = await this.supabase.client
-            .from('profiles')
-            .upsert({ id: userId, ...updates, updated_at: new Date() });
-
-        return { error };
+        try {
+            await firstValueFrom(this.http.put(`${this.API}/profiles/${userId}`, updates));
+            return { error: null };
+        } catch (error) {
+            return { error };
+        }
     }
 
     async uploadAvatar(userId: string, file: File): Promise<{ url: string | null; error: any }> {
-        // 1. Upload file to 'avatars' bucket
-        const fileExt = file.name.split('.').pop();
-        const filePath = `${userId}/${Math.random()}.${fileExt}`;
-
-        const { error: uploadError } = await this.supabase.client.storage
-            .from('avatars')
-            .upload(filePath, file);
-
-        if (uploadError) {
-            return { url: null, error: uploadError };
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            const res = await firstValueFrom(this.http.post<{ url: string }>(`${this.API}/profiles/${userId}/avatar`, formData));
+            return { url: res.url, error: null };
+        } catch (error) {
+            return { url: null, error };
         }
-
-        // 2. Get public URL
-        const { data } = this.supabase.client.storage
-            .from('avatars')
-            .getPublicUrl(filePath);
-
-        return { url: data.publicUrl, error: null };
     }
 }
