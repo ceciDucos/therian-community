@@ -16,7 +16,7 @@ interface MythFact {
   standalone: true,
   imports: [CommonModule, RouterLink, ButtonComponent, TranslateModule],
   templateUrl: './mitos.component.html',
-  styles: []
+  styleUrl: './mitos.component.scss'
 })
 export class MitosComponent {
   private translate = inject(TranslateService);

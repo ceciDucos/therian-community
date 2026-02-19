@@ -15,7 +15,7 @@ interface GlossaryTerm {
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, TranslateModule],
   templateUrl: './glosario.component.html',
-  styles: []
+  styleUrl: './glosario.component.scss'
 })
 export class GlosarioComponent {
   private translate = inject(TranslateService);

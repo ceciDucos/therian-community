@@ -1,26 +1,19 @@
-<div class="max-w-4xl mx-auto py-8 px-4 space-y-10">
+<div class="myths-container">
     <!-- Header -->
-    <section class="text-center space-y-4">
-        <h1
-            class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-600">
-            {{ 'mitos.title' | translate }}
-        </h1>
-        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {{ 'mitos.subtitle' | translate }}
-        </p>
+    <section class="myths-header">
+        <h1>{{ 'mitos.title' | translate }}</h1>
+        <p>{{ 'mitos.subtitle' | translate }}</p>
     </section>
 
     <!-- Myths List -->
-    <div class="space-y-4">
+    <div class="myths-list">
         @for (item of myths; track i; let i = $index) {
-        <div class="bg-card rounded-xl border overflow-hidden transition-all hover:shadow-md">
+        <div class="myth-card">
             <!-- Header (clickable) -->
-            <button (click)="toggle(i)"
-                class="w-full flex items-center gap-4 p-5 text-left hover:bg-muted/30 transition-colors">
+            <button (click)="toggle(i)" class="myth-trigger">
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
-                        <span
-                            class="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                        <span class="badge badge-myth">
                             {{ 'mitos.mythLabel' | translate }}
                         </span>
                     </div>
@@ -28,21 +21,19 @@
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="flex-shrink-0 text-muted-foreground transition-transform duration-200"
-                    [class.rotate-180]="item.expanded">
+                    class="myth-icon" [class.expanded]="item.expanded">
                     <path d="m6 9 6 6 6-6" />
                 </svg>
             </button>
 
             <!-- Expanded Content -->
             @if (item.expanded) {
-            <div class="px-5 pb-5 border-t bg-emerald-50/50 dark:bg-emerald-950/20">
-                <div class="pt-4 flex items-start gap-3">
-                    <span
-                        class="px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 mt-0.5 flex-shrink-0">
+            <div class="myth-content">
+                <div class="myth-content-inner">
+                    <span class="badge badge-reality">
                         {{ 'mitos.realityLabel' | translate }}
                     </span>
-                    <p class="text-sm leading-relaxed text-muted-foreground">{{ item.reality }}</p>
+                    <p>{{ item.reality }}</p>
                 </div>
             </div>
             }
@@ -51,9 +42,8 @@
     </div>
 
     <!-- Additional Context -->
-    <section
-        class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6 space-y-3">
-        <h3 class="font-semibold text-amber-700 dark:text-amber-400 flex items-center gap-2">
+    <section class="why-context">
+        <h3>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2v4" />
@@ -67,13 +57,13 @@
             </svg>
             {{ 'mitos.whyTitle' | translate }}
         </h3>
-        <p class="text-sm text-amber-600 dark:text-amber-300 leading-relaxed">
+        <p>
             {{ 'mitos.whyText' | translate }}
         </p>
     </section>
 
     <!-- Navigation -->
-    <div class="flex flex-wrap justify-center gap-4 pt-4">
+    <div class="nav-buttons">
         <app-button variant="outline" routerLink="/que-es-therian">{{ 'mitos.navBack' | translate }}</app-button>
         <app-button variant="outline" routerLink="/glosario">{{ 'mitos.navGlossary' | translate }}</app-button>
         <app-button variant="primary" routerLink="/normas">{{ 'mitos.navRules' | translate }}</app-button>

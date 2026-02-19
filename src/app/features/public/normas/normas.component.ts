@@ -9,16 +9,16 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
   standalone: true,
   imports: [CommonModule, RouterLink, ButtonComponent, TranslateModule],
   templateUrl: './normas.component.html',
-  styles: []
+  styleUrl: './normas.component.scss'
 })
 export class NormasComponent {
   private translate = inject(TranslateService);
 
   stepColors = [
-    'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
-    'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300',
-    'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300',
-    'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300'
+    'step-1',
+    'step-2',
+    'step-3',
+    'step-4'
   ];
 
   get coreValues(): any[] {

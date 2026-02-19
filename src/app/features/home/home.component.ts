@@ -11,7 +11,7 @@ import { CardComponent } from '../../shared/components/card/card.component';
   standalone: true,
   imports: [CommonModule, RouterLink, ButtonComponent, CardComponent, TranslateModule],
   templateUrl: './home.component.html',
-  styles: []
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 }

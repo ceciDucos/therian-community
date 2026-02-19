@@ -6,12 +6,12 @@
     top: 0;
     z-index: 40;
     width: 100%;
-    border-bottom: 1px solid color(border);
-    background-color: color(background, 0.95);
+    border-bottom: 1px solid hsl(var(--border));
+    background-color: hsl(var(--background) / 0.95);
     backdrop-filter: blur(8px);
 
     @supports (backdrop-filter: blur(8px)) {
-        background-color: color(background, 0.6);
+        background-color: hsl(var(--background) / 0.6);
     }
 }
 
@@ -38,7 +38,7 @@
     gap: $spacing-2;
     margin-right: $spacing-6;
     font-weight: 700;
-    color: color(foreground);
+    color: hsl(var(--foreground));
 
     @include tablet {
         display: flex;
@@ -57,16 +57,17 @@
     }
 
     a {
-        color: color(foreground, 0.6);
+        color: hsl(var(--foreground) / 0.6);
         transition: color 0.2s;
+        text-decoration: none;
 
         &:hover {
-            color: color(foreground, 0.8);
+            color: hsl(var(--foreground) / 0.8);
         }
 
         &.active,
         &.text-emerald-600 {
-            color: color(foreground);
+            color: hsl(var(--foreground));
         }
     }
 }
@@ -94,11 +95,11 @@
         padding-top: $spacing-4;
         padding-bottom: $spacing-4;
         cursor: pointer;
-        color: color(foreground, 0.6);
+        color: hsl(var(--foreground) / 0.6);
         transition: color 0.2s;
 
         &:hover {
-            color: color(foreground, 0.8);
+            color: hsl(var(--foreground) / 0.8);
         }
 
         svg {
@@ -115,8 +116,9 @@
         top: 100%;
         left: 0;
         width: 14rem; // w-56
-        background-color: color(card);
-        border: 1px solid color(border);
+        width: 14rem; // w-56
+        background-color: hsl(var(--card));
+        border: 1px solid hsl(var(--border));
         border-radius: $radius-lg;
         box-shadow: $shadow-lg;
         padding-top: $spacing-1;
@@ -144,10 +146,10 @@
     font-size: $text-sm;
     cursor: pointer;
     transition: background-color 0.2s;
-    color: color(foreground);
+    color: hsl(var(--foreground));
 
     &:hover {
-        background-color: color(muted);
+        background-color: hsl(var(--muted));
     }
 }
 
@@ -168,7 +170,7 @@
     }
 
     &:hover {
-        color: color(accent-foreground);
+        color: hsl(var(--accent-foreground));
     }
 }
 
@@ -207,16 +209,16 @@
     font-size: $text-xs;
     font-weight: 700;
     transition: background-color 0.2s;
-    color: color(muted-foreground);
+    color: hsl(var(--muted-foreground));
     border: 1px solid transparent;
 
     &:hover {
-        background-color: color(muted);
-        color: color(foreground);
+        background-color: hsl(var(--muted));
+        color: hsl(var(--foreground));
     }
 
     &.lang-toggle {
-        border-color: color(border);
+        border-color: hsl(var(--border));
         padding-top: $spacing-1;
         padding-bottom: $spacing-1;
     }
@@ -231,7 +233,7 @@
     transition: color 0.2s;
 
     &:hover {
-        color: color(primary);
+        color: hsl(var(--primary));
     }
 
     @include tablet {
@@ -241,8 +243,8 @@
 
 // Mobile Menu
 .mobile-menu {
-    border-top: 1px solid color(border);
-    background-color: color(background);
+    border-top: 1px solid hsl(var(--border));
+    background-color: hsl(var(--background));
 
     @include tablet {
         display: none;
@@ -268,19 +270,19 @@
         transition: color 0.2s;
 
         &:hover {
-            color: color(primary);
+            color: hsl(var(--primary));
         }
     }
 
     &__divider {
-        border-top: 1px solid color(border);
+        border-top: 1px solid hsl(var(--border));
         padding-top: $spacing-3;
         margin-top: $spacing-3;
     }
 
     &__title {
         font-size: $text-xs;
-        color: color(muted-foreground);
+        color: hsl(var(--muted-foreground));
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -295,7 +297,7 @@
         transition: color 0.2s;
 
         &:hover {
-            color: color(primary);
+            color: hsl(var(--primary));
         }
     }
 }

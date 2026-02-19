@@ -4,7 +4,7 @@
 .footer {
     padding-top: $spacing-6;
     padding-bottom: $spacing-6;
-    border-top: 1px solid color(border);
+    border-top: 1px solid hsl(var(--border));
 
     @include tablet {
         padding-top: 0;
@@ -37,7 +37,7 @@
     text-align: center;
     font-size: $text-sm;
     line-height: 2; // leading-loose
-    color: color(muted-foreground);
+    color: hsl(var(--muted-foreground));
 
     @include tablet {
         text-align: left;
@@ -50,7 +50,7 @@
         color: inherit;
 
         &:hover {
-            color: color(foreground);
+            color: hsl(var(--foreground));
         }
     }
 }
@@ -60,13 +60,13 @@
     align-items: center;
     gap: $spacing-4;
     font-size: $text-sm;
-    color: color(muted-foreground);
+    color: hsl(var(--muted-foreground));
 
     a {
         transition: color 0.2s;
 
         &:hover {
-            color: color(foreground);
+            color: hsl(var(--foreground));
         }
     }
 }

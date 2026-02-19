@@ -9,7 +9,7 @@ import { firstValueFrom } from 'rxjs';
 export class AccessService {
     private readonly STORAGE_KEY = 'tc_unlocked';
     private http = inject(HttpClient);
-    private readonly API_URL = environment.mmoUrl || 'http://localhost:3000';
+    private readonly API_URL = environment.mmoUrl;
     private unlockedSignal = signal<boolean>(false);
     isUnlocked = this.unlockedSignal.asReadonly();
 

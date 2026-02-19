@@ -171,6 +171,14 @@
             align-items: center;
             gap: $spacing-3;
 
+            svg {
+                color: #3b82f6; // blue-500
+
+                @media (prefers-color-scheme: dark) {
+                    color: #60a5fa; // blue-400
+                }
+            }
+
             h3 {
                 font-weight: 600;
                 color: #1d4ed8; // blue-700
