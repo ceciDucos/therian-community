@@ -71,7 +71,7 @@
                 </button>
 
                 <!-- Theme Toggle -->
-                <button (click)="themeService.toggle()" class="icon-btn"
+                <button (click)="themeService.toggle()" class="icon-btn theme-toggle"
                     [title]="themeService.theme() === 'dark' ? ('nav.toggleLight' | translate) : ('nav.toggleDark' | translate)">
                     @if (themeService.theme() === 'light') {
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
