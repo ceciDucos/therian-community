@@ -63,9 +63,37 @@ export class MainScene extends Scene {
             color: '#aaffaa'
         }).setOrigin(0.5);
 
-        // Listen for state updates
+        // Listen for state updates (initial join snapshot)
         this.socketService.state$.subscribe((state: any) => {
             this.updatePlayers(state.players);
+        });
+
+        // Listen for new players joining AFTER you're already connected
+        this.socketService.playerJoined$.subscribe(p => {
+            if (!this.players.has(p.id)) {
+                this.createPlayerSprite(p.id, p.x, p.y, p.username);
+            }
+        });
+
+        // Listen for individual player movement updates
+        this.socketService.playerMoved$.subscribe(data => {
+            const playerObj = this.players.get(data.id);
+            if (playerObj && data.id !== this.socketService.socketId) {
+                playerObj.sprite.setPosition(data.x, data.y);
+                playerObj.nametag.setPosition(data.x, data.y - 40);
+                playerObj.bubble?.setPosition(data.x, data.y - 50);
+            }
+        });
+
+        // Listen for players leaving
+        this.socketService.playerLeft$.subscribe(data => {
+            const playerObj = this.players.get(data.id);
+            if (playerObj) {
+                playerObj.sprite.destroy();
+                playerObj.nametag.destroy();
+                playerObj.bubble?.destroy();
+                this.players.delete(data.id);
+            }
         });
 
         // Listen for chat messages to spawn bubbles
@@ -262,30 +290,33 @@ export class MainScene extends Scene {
         window.removeEventListener('keyup', this.onKeyUp);
     }
 
+    private createPlayerSprite(id: string, x: number, y: number, username: string) {
+        const sprite = this.add.sprite(x, y, 'wolf').setDisplaySize(50, 50);
+        const nametag = this.add.text(x, y - 40, username || 'Wolf', {
+            fontSize: '14px',
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 3,
+            fontFamily: 'Arial',
+            align: 'center'
+        }).setOrigin(0.5);
+
+        const playerObj = { sprite, nametag };
+        this.players.set(id, playerObj);
+
+        // Check if this is me
+        if (id === this.socketService.socketId) {
+            this.myPlayer = playerObj;
+        }
+
+        return playerObj;
+    }
+
     private updatePlayers(serverPlayers: any) {
         Object.keys(serverPlayers).forEach(id => {
             const p = serverPlayers[id];
             if (!this.players.has(id)) {
-                // Create sprite
-                const sprite = this.add.sprite(p.x, p.y, 'wolf').setDisplaySize(50, 50);
-
-                // Create Nametag
-                const nametag = this.add.text(p.x, p.y - 40, p.username || 'Wolf', {
-                    fontSize: '14px',
-                    color: '#ffffff',
-                    stroke: '#000000',
-                    strokeThickness: 3,
-                    fontFamily: 'Arial',
-                    align: 'center'
-                }).setOrigin(0.5);
-
-                const playerObj = { sprite, nametag };
-                this.players.set(id, playerObj);
-
-                // Check if this is me
-                if (id === this.socketService.socketId) {
-                    this.myPlayer = playerObj;
-                }
+                this.createPlayerSprite(id, p.x, p.y, p.username);
             } else {
                 const playerObj = this.players.get(id);
                 // Only update others, not myself (prevent jitter from server lag)

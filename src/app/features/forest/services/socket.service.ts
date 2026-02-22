@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class SocketService {
     private socket: Socket | undefined;
+    private mySocketId: string | undefined;
     private url = environment.mmoUrl;
     private authService = inject(AuthService);
 
@@ -18,11 +19,14 @@ export class SocketService {
 
     // Events
     public state$ = new Subject<any>();
+    public playerJoined$ = new Subject<{ id: string, username: string, x: number, y: number }>();
+    public playerMoved$ = new Subject<{ id: string, x: number, y: number }>();
+    public playerLeft$ = new Subject<{ id: string }>();
     public messages$ = new Subject<{ id: string, username: string, message: string }>();
     public emotes$ = new Subject<{ id: string, emote: string }>();
 
     get socketId() {
-        return this.socket?.id;
+        return this.mySocketId;
     }
 
     constructor() {
@@ -52,11 +56,24 @@ export class SocketService {
         });
 
         this.socket.on('connect', () => {
-            console.log('Connected to MMO Server:', this.socket?.id);
+            this.mySocketId = this.socket?.id;
+            console.log('Connected to MMO Server:', this.mySocketId);
         });
 
         this.socket.on('state', (state: any) => {
             this.state$.next(state);
+        });
+
+        this.socket.on('playerJoined', (data: any) => {
+            this.playerJoined$.next(data);
+        });
+
+        this.socket.on('playerMoved', (data: any) => {
+            this.playerMoved$.next(data);
+        });
+
+        this.socket.on('playerLeft', (data: any) => {
+            this.playerLeft$.next(data);
         });
 
         this.socket.on('chatMessage', (msg: any) => {
