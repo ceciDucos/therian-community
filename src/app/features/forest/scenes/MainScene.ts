@@ -38,23 +38,10 @@ export class MainScene extends Scene {
         this.socketService = data.socketService;
     }
 
-    /** Zoom the camera so the fixed world always fills the available screen */
-    private fitCameraToWorld() {
-        const scaleX = this.scale.width / this.WORLD_W;
-        const scaleY = this.scale.height / this.WORLD_H;
-        // Use the smaller ratio so the whole world always fits (letterbox)
-        this.cameras.main.setZoom(Math.min(scaleX, scaleY));
-        this.cameras.main.centerOn(this.WORLD_W / 2, this.WORLD_H / 2);
-    }
-
     create() {
-        // Background fills the fixed world
+        // Background fills the fixed world (1280x720 — same for all clients)
         this.add.image(this.WORLD_W / 2, this.WORLD_H / 2, 'forest-bg')
             .setDisplaySize(this.WORLD_W, this.WORLD_H);
-
-        // Camera fits to world, and re-fits on resize
-        this.fitCameraToWorld();
-        this.scale.on('resize', () => this.fitCameraToWorld());
 
         // Use native DOM listeners — no Phaser keyboard capture
         window.addEventListener('keydown', this.onKeyDown);

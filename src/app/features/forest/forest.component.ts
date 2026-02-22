@@ -66,10 +66,10 @@ export class ForestComponent implements AfterViewInit, OnDestroy {
             pixelArt: true,
             roundPixels: true,
             scale: {
-                mode: Phaser.Scale.RESIZE,
+                mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH,
-                width: this.gameContainer.nativeElement.clientWidth || window.innerWidth,
-                height: this.gameContainer.nativeElement.clientHeight || (window.innerHeight - 64),
+                width: 1280,
+                height: 720,
             }
         };
 
