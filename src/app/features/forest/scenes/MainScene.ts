@@ -32,16 +32,24 @@ export class MainScene extends Scene {
     }
 
     create() {
-        this.add.image(400, 300, 'forest-bg').setDisplaySize(800, 600);
+        const W = this.scale.width;
+        const H = this.scale.height;
 
-        // Use native DOM listeners — no Phaser keyboard capture, no preventDefault,
-        // so WASD can be freely typed in the chat textarea
+        const bg = this.add.image(W / 2, H / 2, 'forest-bg').setDisplaySize(W, H);
+
+        // Reposition background on resize
+        this.scale.on('resize', (gameSize: Phaser.Structs.Size) => {
+            bg.setPosition(gameSize.width / 2, gameSize.height / 2);
+            bg.setDisplaySize(gameSize.width, gameSize.height);
+        });
+
+        // Use native DOM listeners — no Phaser keyboard capture
         window.addEventListener('keydown', this.onKeyDown);
         window.addEventListener('keyup', this.onKeyUp);
 
-        // Create Rest Area (Interactive)
-        const restX = 650;
-        const restY = 450;
+        // Create Rest Area / Campfire zone (relative to map)
+        const restX = W * 0.81;
+        const restY = H * 0.75;
         this.restArea = new Phaser.Geom.Circle(restX, restY, 60);
 
         const restGfx = this.add.graphics();
@@ -236,7 +244,10 @@ export class MainScene extends Scene {
             this.inRestArea = false;
         }
 
-        player.setPosition(x, y);
+        player.setPosition(
+            Phaser.Math.Clamp(x, 25, this.scale.width - 25),
+            Phaser.Math.Clamp(y, 25, this.scale.height - 25)
+        );
         this.myPlayer.nametag.setPosition(x, y - 40);
         this.myPlayer.bubble?.setPosition(x, y - 50);
 

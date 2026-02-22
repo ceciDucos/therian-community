@@ -30,9 +30,25 @@ export class AuthService {
     }
 
     private async initAuthListener() {
-        const { data: { session } } = await this.authClient.auth.getSession();
-        this.currentUser.set(session?.user ?? null);
-        this.currentSession.set(session);
+        try {
+            const { data: { session }, error } = await this.authClient.auth.getSession();
+
+            if (error) {
+                // Invalid/expired refresh token — clear stale session silently
+                console.warn('[Auth] Session inválida, limpiando...', error.message);
+                await this.authClient.auth.signOut();
+                this.currentUser.set(null);
+                this.currentSession.set(null);
+            } else {
+                this.currentUser.set(session?.user ?? null);
+                this.currentSession.set(session);
+            }
+        } catch (err) {
+            // Unexpected error (network, etc.) — fail safe
+            console.warn('[Auth] Error inesperado al inicializar sesión:', err);
+            this.currentUser.set(null);
+            this.currentSession.set(null);
+        }
 
         this.authClient.auth.onAuthStateChange((_event, session) => {
             this.currentUser.set(session?.user ?? null);

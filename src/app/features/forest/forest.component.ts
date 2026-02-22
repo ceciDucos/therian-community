@@ -53,8 +53,6 @@ export class ForestComponent implements AfterViewInit, OnDestroy {
 
         const config: Phaser.Types.Core.GameConfig = {
             type: Phaser.AUTO,
-            width: 800,
-            height: 600,
             parent: this.gameContainer.nativeElement,
             scene: [BootScene, MainScene],
             physics: {
@@ -67,6 +65,12 @@ export class ForestComponent implements AfterViewInit, OnDestroy {
             backgroundColor: '#1a2a0d',
             pixelArt: true,
             roundPixels: true,
+            scale: {
+                mode: Phaser.Scale.RESIZE,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: this.gameContainer.nativeElement.clientWidth || window.innerWidth,
+                height: this.gameContainer.nativeElement.clientHeight || (window.innerHeight - 64),
+            }
         };
 
         this.game = new Game(config);
