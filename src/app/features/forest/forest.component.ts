@@ -62,7 +62,7 @@ export class ForestComponent implements AfterViewInit, OnDestroy {
                     debug: false
                 }
             },
-            backgroundColor: '#1a2a0d',
+            backgroundColor: '#0d1a07',
             pixelArt: true,
             roundPixels: true,
             scale: {
