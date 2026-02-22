@@ -9,6 +9,13 @@ export class MainScene extends Scene {
     private restArea!: Phaser.Geom.Circle;
     private inRestArea = false;
 
+    // Fixed world size — ALL clients share these coordinates regardless of screen size
+    private readonly WORLD_W = 1280;
+    private readonly WORLD_H = 720;
+    // Rest Area position in world coordinates (consistent for every client)
+    private readonly REST_X = 1280 * 0.81;
+    private readonly REST_Y = 720 * 0.75;
+
     // Native key tracking — no Phaser keyboard, no blanket preventDefault
     private keysDown = new Set<string>();
     private readonly MOVEMENT_KEYS = new Set(['arrowleft', 'arrowright', 'arrowup', 'arrowdown', 'a', 's', 'd', 'w']);
@@ -31,34 +38,38 @@ export class MainScene extends Scene {
         this.socketService = data.socketService;
     }
 
+    /** Zoom the camera so the fixed world always fills the available screen */
+    private fitCameraToWorld() {
+        const scaleX = this.scale.width / this.WORLD_W;
+        const scaleY = this.scale.height / this.WORLD_H;
+        // Use the smaller ratio so the whole world always fits (letterbox)
+        this.cameras.main.setZoom(Math.min(scaleX, scaleY));
+        this.cameras.main.centerOn(this.WORLD_W / 2, this.WORLD_H / 2);
+    }
+
     create() {
-        const W = this.scale.width;
-        const H = this.scale.height;
+        // Background fills the fixed world
+        this.add.image(this.WORLD_W / 2, this.WORLD_H / 2, 'forest-bg')
+            .setDisplaySize(this.WORLD_W, this.WORLD_H);
 
-        const bg = this.add.image(W / 2, H / 2, 'forest-bg').setDisplaySize(W, H);
-
-        // Reposition background on resize
-        this.scale.on('resize', (gameSize: Phaser.Structs.Size) => {
-            bg.setPosition(gameSize.width / 2, gameSize.height / 2);
-            bg.setDisplaySize(gameSize.width, gameSize.height);
-        });
+        // Camera fits to world, and re-fits on resize
+        this.fitCameraToWorld();
+        this.scale.on('resize', () => this.fitCameraToWorld());
 
         // Use native DOM listeners — no Phaser keyboard capture
         window.addEventListener('keydown', this.onKeyDown);
         window.addEventListener('keyup', this.onKeyUp);
 
-        // Create Rest Area / Campfire zone (relative to map)
-        const restX = W * 0.81;
-        const restY = H * 0.75;
-        this.restArea = new Phaser.Geom.Circle(restX, restY, 60);
+        // Rest Area in WORLD coordinates — identical position on every client
+        this.restArea = new Phaser.Geom.Circle(this.REST_X, this.REST_Y, 60);
 
         const restGfx = this.add.graphics();
         restGfx.fillStyle(0x00ff00, 0.2);
-        restGfx.fillCircle(restX, restY, 60);
+        restGfx.fillCircle(this.REST_X, this.REST_Y, 60);
         restGfx.lineStyle(2, 0x00ff00, 0.5);
-        restGfx.strokeCircle(restX, restY, 60);
+        restGfx.strokeCircle(this.REST_X, this.REST_Y, 60);
 
-        this.add.text(restX, restY, '💤 Rest Area', {
+        this.add.text(this.REST_X, this.REST_Y, '💤 Rest Area', {
             fontSize: '12px',
             color: '#aaffaa'
         }).setOrigin(0.5);
@@ -273,8 +284,8 @@ export class MainScene extends Scene {
         }
 
         player.setPosition(
-            Phaser.Math.Clamp(x, 25, this.scale.width - 25),
-            Phaser.Math.Clamp(y, 25, this.scale.height - 25)
+            Phaser.Math.Clamp(x, 25, this.WORLD_W - 25),
+            Phaser.Math.Clamp(y, 25, this.WORLD_H - 25)
         );
         this.myPlayer.nametag.setPosition(x, y - 40);
         this.myPlayer.bubble?.setPosition(x, y - 50);
