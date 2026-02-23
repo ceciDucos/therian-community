@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild, ElementRef, signal, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ElementRef, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,10 +10,9 @@ import { SocketService } from '../../services/socket.service';
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
-  encapsulation: ViewEncapsulation.None  // Global styles — bypasses Angular scoping
+  styleUrl: './chat.component.scss'
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent {
   private socketService = inject(SocketService);
 
   // Chat state
@@ -22,7 +21,7 @@ export class ChatComponent implements OnInit {
   isUserActive = signal(true);
   private activityTimeout: any;
 
-  @ViewChild('chatInput') chatInput!: ElementRef<HTMLTextAreaElement>;
+  chatInput = viewChild<ElementRef<HTMLTextAreaElement>>('chatInput');
 
   constructor() {
     this.socketService.messages$
@@ -38,9 +37,6 @@ export class ChatComponent implements OnInit {
         // Auto-scroll to bottom (setTimeout to allow render)
         setTimeout(() => this.scrollToBottom(), 50);
       });
-  }
-
-  ngOnInit() {
   }
 
   sendMessage(text: string) {
@@ -59,7 +55,9 @@ export class ChatComponent implements OnInit {
     this.isUserActive.set(true);
     if (this.activityTimeout) clearTimeout(this.activityTimeout);
     this.activityTimeout = setTimeout(() => {
-      if (!this.chatInput?.nativeElement?.value) {
+      // Access the signal value
+      const inputEl = this.chatInput()?.nativeElement;
+      if (!inputEl?.value) {
         this.isUserActive.set(false);
       }
     }, 10000); // 10 seconds of inactivity
@@ -80,7 +78,7 @@ export class ChatComponent implements OnInit {
   }
 
   private scrollToBottom() {
-    const container = document.querySelector('.chat__messages');
+    const container = document.querySelector('.chat__message-list');
     if (container) {
       container.scrollTop = container.scrollHeight;
     }

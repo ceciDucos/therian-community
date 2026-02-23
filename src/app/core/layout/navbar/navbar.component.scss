@@ -36,7 +36,7 @@
     display: none;
     align-items: center;
     gap: $spacing-2;
-    margin-right: $spacing-6;
+    margin-right: $spacing-12; // Increased spacing to separate brand from links
     font-weight: 700;
     color: hsl(var(--foreground));
 
@@ -48,7 +48,7 @@
 .navbar-links {
     display: none;
     align-items: center;
-    gap: $spacing-6;
+    gap: $spacing-12; // Increased gap between navigation links to separate Bosque and Library more distinctly
     font-size: $text-sm;
     font-weight: 500;
 
@@ -97,6 +97,8 @@
         cursor: pointer;
         color: hsl(var(--foreground) / 0.6);
         transition: color 0.2s;
+        border: none;
+        background-color: transparent;
 
         &:hover {
             color: hsl(var(--foreground) / 0.8);

@@ -1,5 +1,5 @@
 
-import { Component, Input, forwardRef, signal, computed } from '@angular/core';
+import { Component, input, forwardRef, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 
@@ -18,13 +18,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/f
     styleUrl: './input.component.scss'
 })
 export class InputComponent implements ControlValueAccessor {
-    @Input() label: string = '';
-    @Input() placeholder: string = '';
-    @Input() type: string = 'text';
-    @Input() id: string = `input-${Math.random().toString(36).substr(2, 9)}`;
-    @Input() error: string = '';
-    @Input() hint: string = '';
-    @Input() inputClasses: string = '';
+    label = input<string>('');
+    placeholder = input<string>('');
+    type = input<string>('text');
+    id = input<string>(`input-${Math.random().toString(36).substr(2, 9)}`);
+    error = input<string>('');
+    hint = input<string>('');
+    inputClasses = input<string>('');
 
     value = signal<string>('');
     disabled = signal(false);

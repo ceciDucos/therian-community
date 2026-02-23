@@ -6,10 +6,7 @@
     min-height: 90vh;
     align-items: center;
     justify-content: center;
-    padding-top: 5rem; // py-20
-    padding-bottom: 5rem;
-    padding-left: $spacing-4;
-    padding-right: $spacing-4;
+    padding: 5rem $spacing-4;
 
     @include tablet {
         padding-left: $spacing-6;
@@ -23,135 +20,60 @@
 
     &__container {
         width: 100%;
-        max-width: 32rem;
+        max-width: 28rem; // Tightened width for purely form-based card center
 
         @include desktop {
-            max-width: 56rem; // 896px
+            max-width: 30rem;
         }
     }
 
     &__card {
-        background-color: color(card, 0.95);
-        backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: $radius-3xl;
-        box-shadow: $shadow-2xl;
+        background-color: color(card);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: $radius-2xl;
+        box-shadow: $shadow-xl;
         overflow: hidden;
-        // ring-1 ring-white/5
-        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), $shadow-2xl;
+
+        [data-theme="dark"] & {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
     }
 
     &__accent-bar {
-        height: 0.5rem; // h-2
-        background: linear-gradient(to right, #10b981, #14b8a6, #06b6d4); // emerald-500, teal-500, cyan-500
+        height: 6px;
+        background: linear-gradient(to right, color(primary, 0.8), color(primary));
     }
 
     &__content {
         padding: $spacing-8;
         display: flex;
         flex-direction: column;
-        gap: $spacing-8;
+        gap: $spacing-6;
 
         @include desktop {
-            flex-direction: row;
-            padding: 0;
-            gap: 0;
-            min-height: 500px;
-        }
-    }
-
-    &__left {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: radial-gradient(circle at center, color(primary, 0.15) 0%, transparent 70%);
-        padding: $spacing-8;
-
-        @include desktop {
-            flex: 1.1;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            padding: $spacing-12;
-        }
-    }
-
-    &__illustration {
-        width: 100%;
-        max-width: 180px;
-        aspect-ratio: 1;
-        position: relative;
-
-        @include desktop {
-            max-width: 260px;
-        }
-
-        &::after {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            background: radial-gradient(circle, color(primary, 0.2) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(20px);
-        }
-    }
-
-    &__image {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        filter: drop-shadow(0 0 30px color(primary, 0.2));
-        transition: transform 0.3s ease;
-
-        &:hover {
-            transform: scale(1.02);
+            padding: $spacing-12 $spacing-10;
         }
     }
 
     &__right {
+        // Kept class name for minimal HTML changes, but acts as main wrapper
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: $spacing-4;
-
-        @include desktop {
-            flex: 1;
-            padding: $spacing-12;
-        }
     }
 
     &__header {
         text-align: center;
         display: flex;
         flex-direction: column;
-        gap: $spacing-4;
-    }
-
-    &__logo {
-        margin-left: auto;
-        margin-right: auto;
-        width: 8rem; // w-32
-        height: 8rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: $spacing-4;
-        transition: transform 0.5s;
-
-        &:hover {
-            transform: scale(1.05);
-        }
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15)); // drop-shadow-2xl approximate
-        }
+        gap: $spacing-3;
+        margin-bottom: $spacing-8;
     }
 
     &__title {
         font-size: $text-3xl;
         font-weight: 700;
-        letter-spacing: -0.025em; // tracking-tight
+        letter-spacing: -0.025em;
         color: color(foreground);
         margin: 0;
     }
@@ -159,7 +81,7 @@
     &__subtitle {
         font-size: $text-base;
         color: color(muted-foreground);
-        margin-top: $spacing-2;
+        margin: 0;
     }
 
     &__form {
@@ -171,36 +93,28 @@
     &__fields {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 0.55rem;
+    }
+
+    &__action-btn {
+        margin-top: $spacing-4;
     }
 
     &__error {
         padding: $spacing-4;
         font-size: $text-sm;
-        color: #fecaca;
-        background-color: rgba(127, 29, 29, 0.2);
-        border-radius: 0.75rem;
+        color: #ef4444; // red-500
+        background-color: rgba(239, 68, 68, 0.1);
+        border-radius: $radius-md;
         border: 1px solid rgba(239, 68, 68, 0.2);
         display: flex;
         align-items: center;
         gap: $spacing-3;
-    }
 
-    &__divider {
-        position: relative;
-        padding-top: $spacing-2;
-        padding-bottom: $spacing-2;
-
-        &-line {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-
-            span {
-                width: 100%;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
+        [data-theme="dark"] & {
+            color: #fca5a5; // red-300
+            background-color: rgba(127, 29, 29, 0.2);
+            border-color: rgba(239, 68, 68, 0.2);
         }
     }
 
@@ -215,10 +129,11 @@
             color: color(primary);
             transition: all 0.2s;
             cursor: pointer;
+            text-decoration: none;
 
             &:hover {
                 text-decoration: underline;
-                filter: brightness(1.2);
+                filter: brightness(1.1);
             }
         }
     }

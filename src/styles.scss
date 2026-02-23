@@ -29,19 +29,3 @@ body {
   height: 100%;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-/* ─── Custom Design System tokens for Tailwind-based components ─── */
-
-// Custom Design System tokens are now handled by Tailwind config and shadcn UI presets.
-// We keep :root here if we need to expose them to non-Tailwind contexts (like Angular Material),
-// but for this project we are moving to Tailwind-first.
-// Given we added them to tailwind.config.js as extend > colors, 
-// AND we are using `hsl(var(--param))` in tailwind config, 
-// WE MUST KEEP THE CSS VARIABLES DEFINITION HERE.
-
-
-
-/* You can add global styles to this file, and also import other style files */
-
-/* ─── Utility classes using our CSS vars ─── */
-// Manual utility classes removed in favor of Tailwind utilities

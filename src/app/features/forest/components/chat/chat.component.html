@@ -1,11 +1,11 @@
 <div class="chat" [class.chat--closed]="!isOpen()" [class.chat--inactive]="!isUserActive()">
     <div class="chat__container">
         <div class="chat__header" (click)="toggleChat()">
-            <h3>
+            <h3 class="chat__title">
                 <span>{{ 'chat.title' | translate }}</span>
-                <span class="indicator"></span>
+                <span class="chat__indicator"></span>
             </h3>
-            <button class="toggle-btn">
+            <button class="chat__toggle-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     class="transition-transform duration-200" [class.rotate-180]="!isOpen()" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -14,24 +14,22 @@
             </button>
         </div>
 
-        <div class="chat__messages" #scrollContainer>
+        <div class="chat__message-list" #scrollContainer>
             @for (msg of messages(); track msg.id) {
             <div class="chat__message" [class.chat__message--mine]="isMyMessage(msg.username)"
                 [class.chat__message--others]="!isMyMessage(msg.username)">
-                <div class="chat__message-content">
-                    <div class="chat__message-header">
-                        <span [style.color]="msg.color">{{ msg.username }}</span>
-                    </div>
-                    <div class="chat__message-bubble">
-                        {{ msg.text }}
-                    </div>
+                <div class="chat__message-header">
+                    <span [style.color]="msg.color">{{ msg.username }}</span>
+                </div>
+                <div class="chat__message-bubble">
+                    {{ msg.text }}
                 </div>
             </div>
             }
         </div>
 
-        <div class="chat__input">
-            <textarea #chatInput [placeholder]="'chat.placeholder' | translate"
+        <div class="chat__input-area">
+            <textarea class="chat__textarea" #chatInput [placeholder]="'chat.placeholder' | translate"
                 (keydown.enter)="sendMessage(chatInput.value); chatInput.value = ''; $event.preventDefault()"
                 (keydown.e.stopPropagation)="$event.stopPropagation()"
                 (keydown.space.stopPropagation)="$event.stopPropagation()"
@@ -41,11 +39,11 @@
                 (keydown.d.stopPropagation)="$event.stopPropagation()"></textarea>
             <!-- Quick Actions / Emotes -->
             <div class="chat__emotes">
-                <button (click)="sendEmote('🐾')">🐾</button>
-                <button (click)="sendEmote('🐺')">🐺</button>
-                <button (click)="sendEmote('✨')">✨</button>
-                <button (click)="sendEmote('💤')">💤</button>
-                <button (click)="sendEmote('🦴')">🦴</button>
+                <button class="chat__emote-btn" (click)="sendEmote('🐾')">🐾</button>
+                <button class="chat__emote-btn" (click)="sendEmote('🐺')">🐺</button>
+                <button class="chat__emote-btn" (click)="sendEmote('✨')">✨</button>
+                <button class="chat__emote-btn" (click)="sendEmote('💤')">💤</button>
+                <button class="chat__emote-btn" (click)="sendEmote('🦴')">🦴</button>
             </div>
         </div>
     </div>
